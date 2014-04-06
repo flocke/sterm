@@ -55,7 +55,6 @@ STermConfig* parse_config_file ( gchar *config_file )
 
   /* Cursor configuration */
   temp = g_key_file_get_string ( keyfile, "cursor", "shape", NULL );
-  g_printf ( "SHAPE: %s\n", temp );
   if ( g_strcmp0 ( temp, "block" ) == 0 )
     config->cursor_shape = VTE_CURSOR_SHAPE_BLOCK;
   else if ( g_strcmp0 ( temp, "beam" ) == 0 )

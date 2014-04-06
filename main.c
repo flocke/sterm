@@ -1,4 +1,4 @@
-#include <vte/vte.h>
+#include <gtk/gtk.h>
 
 #include "terminal.h"
 #include "configuration.h"
