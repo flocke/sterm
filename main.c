@@ -21,14 +21,14 @@
 #include "configuration.h"
 
 static gchar *config_file = NULL;
-static gchar *run_app = NULL;
+static gchar *start_program = NULL;
 
 static STermTerminal *sterm;
 static STermConfig *config;
 
 static GOptionEntry options[] = {
   { "config", 'c', 0, G_OPTION_ARG_FILENAME, &config_file, "Path to the configuration file to use.", NULL },
-  { "execute", 'e', 0, G_OPTION_ARG_STRING, &run_app, "Execute the given command.", NULL },
+  { "execute", 'e', 0, G_OPTION_ARG_STRING, &start_program, "Execute the given command.", NULL },
   { NULL }
 };
 
@@ -62,7 +62,7 @@ int main ( int argc, char* argv[] )
 
   sterm = sterm_terminal_new ( config );
   sterm_terminal_setup ( sterm );
-  sterm_terminal_start_child ( sterm, run_app );
+  sterm_terminal_start_child ( sterm, start_program );
 
   gtk_widget_show_all ( sterm->main_window );
   gtk_main ();

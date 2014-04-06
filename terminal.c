@@ -73,15 +73,22 @@ void sterm_terminal_setup ( STermTerminal *sterm )
 
 void sterm_terminal_start_child ( STermTerminal *sterm, gchar *command )
 {
+  GError *error = NULL;
+  gchar **args = 0;
+  GSpawnFlags spawn_flags = G_SPAWN_SEARCH_PATH;
+
+  gchar *user_shell = vte_get_user_shell ();
+
   if ( command == NULL )
-    command = vte_get_user_shell ();
+    g_shell_parse_argv ( user_shell, 0, &args, 0 );
+  else
+    g_shell_parse_argv ( command, 0, &args, 0 );
 
-  gchar *child_command[2] = { command, 0 };
-
-  vte_terminal_fork_command_full ( sterm->terminal, VTE_PTY_DEFAULT, NULL, child_command, NULL,
-                                   G_SPAWN_SEARCH_PATH, NULL, NULL, &sterm->child_pid, NULL );
-
-  g_signal_connect ( G_OBJECT ( sterm->terminal ), "child-exited", G_CALLBACK ( sterm_terminal_exit ), NULL );
+  if ( ! vte_terminal_fork_command_full ( sterm->terminal, VTE_PTY_DEFAULT, NULL, args, NULL,
+                                          spawn_flags, NULL, NULL, &sterm->child_pid, &error ) )
+    g_error ( "ERROR: Failed to spawn child: %s\n", error->message );
+  else
+    g_signal_connect ( G_OBJECT ( sterm->terminal ), "child-exited", G_CALLBACK ( sterm_terminal_exit ), NULL );
 }
 
 STermTerminal* sterm_terminal_new ( STermConfig *config )
