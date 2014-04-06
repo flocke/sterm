@@ -36,14 +36,21 @@ void command_pipe ( STermTerminal *sterm, gchar *pipe )
 
   if ( pclose ( output ) != 0 )
     g_printf ( "ERROR: Could not close the pipe '%s'\n", pipe );
+}
 
-  return;
+void paste ( STermTerminal *sterm, gchar *selection )
+{
+  if ( g_strcmp0 ( selection, "primary" ) == 0 )
+    vte_terminal_paste_primary ( sterm->terminal );
+  else if ( g_strcmp0 ( selection, "clipboard" ) == 0 )
+    vte_terminal_paste_clipboard ( sterm->terminal );
 }
 
 void initialize_functions ( STermTerminal *sterm )
 {
   sterm->functions = g_hash_table_new ( g_str_hash, g_str_equal );
 
-  g_hash_table_insert ( sterm->functions, "command_pipe", G_CALLBACK ( command_pipe ) );
+  g_hash_table_insert ( sterm->functions, "command_pipe", command_pipe );
+  g_hash_table_insert ( sterm->functions, "paste", paste );
 }
 
