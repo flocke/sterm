@@ -1,3 +1,20 @@
+/*
+  This file is part of STerm.
+
+  STerm is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  STerm is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with STerm.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "configuration.h"
 #include "defaults.h"
 
@@ -80,6 +97,16 @@ STermConfig* parse_config_file ( gchar *config_file )
   for ( iter = 0; iter < DEFAULT_PALETTE_SIZE; iter++ ) {
     temp = g_strdup_printf ( "color%d", iter );
     gdk_color_parse ( g_key_file_get_string ( keyfile, "theme", temp, NULL ), &config->colors[iter] );
+  }
+
+  /* Keys */
+  gchar **keys = g_key_file_get_keys ( keyfile, "keys", &config->key_number, NULL );
+
+  config->keys = g_new0 ( STermKeySym, config->key_number );
+
+  for ( iter = 0; iter < config->key_number; iter++ ) {
+    config->keys[iter].key = keys[iter];
+    config->keys[iter].func = g_key_file_get_string ( keyfile, "keys", keys[iter], NULL );
   }
 
   g_free ( temp );
