@@ -58,7 +58,7 @@ int main ( int argc, char* argv[] )
   if ( config_file == NULL )
     config_file = DEFAULT_CONFIG_FILE;
 
-  config = parse_config_file ( config_file );
+  config = sterm_configuration_parse_file ( config_file );
 
   sterm = sterm_terminal_new ( config );
   sterm_terminal_setup ( sterm );

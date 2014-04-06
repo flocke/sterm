@@ -18,7 +18,7 @@
 #include "configuration.h"
 #include "defaults.h"
 
-STermConfig* new_default_config ()
+STermConfig* sterm_configuration_new_default ()
 {
   STermConfig *config = g_slice_new ( STermConfig );
 
@@ -53,14 +53,14 @@ STermConfig* new_default_config ()
   return config;
 }
 
-STermConfig* parse_config_file ( gchar *config_file )
+STermConfig* sterm_configuration_parse_file ( gchar *config_file )
 {
   GError *error = NULL;
   gchar *temp = NULL;
   int iter = 0;
   
   GKeyFile *keyfile = g_key_file_new ();
-  STermConfig *config = new_default_config ();
+  STermConfig *config = sterm_configuration_new_default ();
 
   if ( ! g_key_file_load_from_file ( keyfile, config_file, G_KEY_FILE_NONE, &error ) ) {
     g_warning ( "ERROR: Failed to parse the config file %s: %s\n", config_file, error->message );

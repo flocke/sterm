@@ -38,7 +38,7 @@ typedef struct {
   gsize key_number;
 } STermConfig;
 
-STermConfig* new_default_config ();
-STermConfig* parse_config_file ( gchar *config_file );
+STermConfig* sterm_configuration_new_default ();
+STermConfig* sterm_configuration_parse_file ( gchar *config_file );
 
 #endif

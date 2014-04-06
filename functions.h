@@ -25,6 +25,6 @@ typedef struct {
   void *callback;
 } STermFunction;
 
-void initialize_functions ( STermTerminal *sterm );
+void sterm_functions_init ( STermTerminal *sterm );
 
 #endif

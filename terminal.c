@@ -97,7 +97,7 @@ STermTerminal* sterm_terminal_new ( STermConfig *config )
 
   sterm->config = config;
 
-  initialize_functions ( sterm );
+  sterm_functions_init ( sterm );
 
   sterm->main_window = gtk_window_new ( GTK_WINDOW_TOPLEVEL );
   gtk_window_set_title ( GTK_WINDOW ( sterm->main_window ), "sterm" );

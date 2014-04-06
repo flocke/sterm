@@ -17,7 +17,7 @@
 
 #include "functions.h"
 
-void command_pipe ( STermTerminal *sterm, gchar *pipe )
+void sterm_functions_command_pipe ( STermTerminal *sterm, gchar *pipe )
 {
   gchar *text = vte_terminal_get_text ( sterm->terminal, NULL, NULL, NULL );
 
@@ -38,7 +38,7 @@ void command_pipe ( STermTerminal *sterm, gchar *pipe )
     g_printf ( "ERROR: Could not close the pipe '%s'\n", pipe );
 }
 
-void paste ( STermTerminal *sterm, gchar *selection )
+void sterm_functions_paste ( STermTerminal *sterm, gchar *selection )
 {
   if ( g_strcmp0 ( selection, "primary" ) == 0 )
     vte_terminal_paste_primary ( sterm->terminal );
@@ -46,11 +46,11 @@ void paste ( STermTerminal *sterm, gchar *selection )
     vte_terminal_paste_clipboard ( sterm->terminal );
 }
 
-void initialize_functions ( STermTerminal *sterm )
+void sterm_functions_init ( STermTerminal *sterm )
 {
   sterm->functions = g_hash_table_new ( g_str_hash, g_str_equal );
 
-  g_hash_table_insert ( sterm->functions, "command_pipe", command_pipe );
-  g_hash_table_insert ( sterm->functions, "paste", paste );
+  g_hash_table_insert ( sterm->functions, "command_pipe", sterm_functions_command_pipe );
+  g_hash_table_insert ( sterm->functions, "paste", sterm_functions_paste );
 }
 
