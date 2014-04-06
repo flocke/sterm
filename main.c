@@ -60,8 +60,8 @@ int main ( int argc, char* argv[] )
 
   config = parse_config_file ( config_file );
 
-  sterm = sterm_terminal_new ();
-  sterm_terminal_setup ( sterm, config );
+  sterm = sterm_terminal_new ( config );
+  sterm_terminal_setup ( sterm );
   sterm_terminal_start_child ( sterm, run_app );
 
   gtk_widget_show_all ( sterm->main_window );

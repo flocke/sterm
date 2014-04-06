@@ -8,7 +8,7 @@ pkg_check_modules ( "VTE" REQUIRED "vte-2.90" )
 
 include_directories ( ${VTE_INCLUDE_DIRS} )
 
-add_executable ( sterm terminal.c configuration.c main.c )
+add_executable ( sterm configuration.c functions.c terminal.c main.c )
 
 target_link_libraries ( sterm ${VTE_LIBRARIES} )
 

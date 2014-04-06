@@ -16,13 +16,41 @@
 */
 
 #include "terminal.h"
+#include "functions.h"
 
-static void sterm_terminal_exit ()
+void sterm_terminal_exit ()
 {
   gtk_main_quit ();
 }
 
-static void sterm_terminal_title_changed_cb ( GtkWidget *terminal, STermTerminal *sterm )
+void sterm_terminal_function_caller ( STermTerminal *sterm, gchar *string )
+{
+  gchar **command = g_strsplit ( string, " ", 2 );
+
+  void (*func)(STermTerminal*, gchar*) = g_hash_table_lookup ( sterm->functions, command[0] );
+
+  func ( sterm, command[1] );
+}
+
+gboolean sterm_terminal_key_press_cb ( GtkWidget *main_win, GdkEventKey *event, STermTerminal *sterm )
+{
+  guint g = event->keyval;
+
+  if ( ( event->state & ( GDK_MOD1_MASK ) ) == ( GDK_MOD1_MASK ) ) {
+    int iter;
+    for ( iter = 0; iter < sterm->config->key_number; iter++ ) {
+      guint keyval = gdk_keyval_from_name ( sterm->config->keys[iter].key );
+      if ( g == keyval ) {
+        sterm_terminal_function_caller ( sterm, sterm->config->keys[iter].func );
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+void sterm_terminal_title_changed_cb ( GtkWidget *terminal, STermTerminal *sterm )
 {
   const gchar *title = vte_terminal_get_window_title ( VTE_TERMINAL ( terminal ) );
 
@@ -32,13 +60,13 @@ static void sterm_terminal_title_changed_cb ( GtkWidget *terminal, STermTerminal
   gtk_window_set_title ( GTK_WINDOW ( sterm->main_window ), title );
 }
 
-void sterm_terminal_setup ( STermTerminal *sterm, STermConfig *config )
+void sterm_terminal_setup ( STermTerminal *sterm )
 {
-  vte_terminal_set_font_from_string ( sterm->terminal, config->font );
-  vte_terminal_set_colors ( sterm->terminal, &config->foreground, &config->background, config->colors, config->palette_size );
-  vte_terminal_set_cursor_blink_mode ( sterm->terminal, config->cursor_blink );
-  vte_terminal_set_cursor_shape ( sterm->terminal, config->cursor_shape );
-  vte_terminal_set_scrollback_lines ( sterm->terminal, config->scrollback_lines );
+  vte_terminal_set_font_from_string ( sterm->terminal, sterm->config->font );
+  vte_terminal_set_colors ( sterm->terminal, &sterm->config->foreground, &sterm->config->background, sterm->config->colors, sterm->config->palette_size );
+  vte_terminal_set_cursor_blink_mode ( sterm->terminal, sterm->config->cursor_blink );
+  vte_terminal_set_cursor_shape ( sterm->terminal, sterm->config->cursor_shape );
+  vte_terminal_set_scrollback_lines ( sterm->terminal, sterm->config->scrollback_lines );
 
   g_signal_connect ( G_OBJECT ( sterm->terminal ), "window-title-changed", G_CALLBACK ( sterm_terminal_title_changed_cb ), sterm );
 }
@@ -56,13 +84,19 @@ void sterm_terminal_start_child ( STermTerminal *sterm, gchar *command )
   g_signal_connect ( G_OBJECT ( sterm->terminal ), "child-exited", G_CALLBACK ( sterm_terminal_exit ), NULL );
 }
 
-STermTerminal* sterm_terminal_new ()
+STermTerminal* sterm_terminal_new ( STermConfig *config )
 {
   STermTerminal *sterm = g_new0 ( STermTerminal, 1 );
+
+  sterm->config = config;
+
+  initialize_functions ( sterm );
 
   sterm->main_window = gtk_window_new ( GTK_WINDOW_TOPLEVEL );
   gtk_window_set_title ( GTK_WINDOW ( sterm->main_window ), "sterm" );
   gtk_container_set_border_width ( GTK_CONTAINER ( sterm->main_window ), 0 );
+  
+  g_signal_connect ( G_OBJECT ( sterm->main_window ), "key-press-event", G_CALLBACK ( sterm_terminal_key_press_cb ), sterm );
   g_signal_connect ( G_OBJECT ( sterm->main_window ), "destroy", G_CALLBACK ( sterm_terminal_exit ), NULL );
 
   sterm->gtk_widget = vte_terminal_new ();
