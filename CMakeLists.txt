@@ -13,4 +13,4 @@ add_executable ( sterm configuration.c functions.c terminal.c main.c )
 target_link_libraries ( sterm ${VTE_LIBRARIES} )
 
 install ( TARGETS sterm DESTINATION bin )
-install ( FILES sterm.ini DESTINATION ${CMAKE_INSTALL_PREFIX}/share/sterm )
+install ( FILES sterm.ini DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/sterm )

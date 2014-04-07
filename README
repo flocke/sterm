@@ -1,0 +1,26 @@
+   STerm - A simple and minimalistic terminal emulator based on VTE-2.90
+===========================================================================
+
+Requirements
+------------
+
+ * VTE-2.90
+ * cmake
+
+Usage
+-----
+
+The example configuration file (sterm.ini) is located in the source
+directory and gets installed to /usr/share/doc/sterm/.
+Copy the file to ~/.config/sterm/sterm.ini and adapt it to your needs.
+
+Run 'sterm --help-all' to see all possible arguments.
+
+Basic arguments:
+ -c FILE    Use a different configuration file.
+ -e COMMAND Run the given command in the new terminal.
+
+
+---------------------------------------------------------------------------
+Copyright (c) 2014 by Jakob Nixdorf <flocke@shadowice.org>
+
