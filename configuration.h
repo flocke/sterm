@@ -41,5 +41,6 @@ typedef struct {
 
 STermConfig* sterm_configuration_new_default ();
 STermConfig* sterm_configuration_parse_file ( gchar *config_file );
+void sterm_configuration_destroy ( STermConfig *config );
 
 #endif

@@ -18,9 +18,16 @@
 #include "configuration.h"
 #include "defaults.h"
 
+void sterm_configuration_destroy ( STermConfig *config )
+{
+  g_free ( config->colors );
+  g_free ( config->keys );
+  g_free ( config );
+}
+
 STermConfig* sterm_configuration_new_default ()
 {
-  STermConfig *config = g_slice_new ( STermConfig );
+  STermConfig *config = g_new0 ( STermConfig, 1 );
 
   config->scrollback_lines = DEFAULT_SCROLLBACK_LINES;
 

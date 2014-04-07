@@ -33,15 +33,21 @@ static GOptionEntry options[] = {
   { NULL }
 };
 
+static void sterm_main_exit ()
+{
+  sterm_configuration_destroy ( config );
+  gtk_main_quit ();
+}
+
 static void sterm_main_terminal_destroyed_cb ( GtkWidget *terminal )
 {
-  gtk_main_quit ();
+  sterm_main_exit ();
 }
 
 static void sterm_main_window_destroyed_cb ( GtkWidget *window )
 {
   sterm_terminal_destroy ( sterm );
-  gtk_main_quit ();
+  sterm_main_exit ();
 }
 
 static gboolean sterm_main_commandline ( int argc, char* argv[] )

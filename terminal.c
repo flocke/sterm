@@ -22,6 +22,7 @@ void sterm_terminal_destroy ( STermTerminal *sterm )
 {
   g_hash_table_destroy ( sterm->functions );
   gtk_widget_destroy ( sterm->widget );
+  g_free ( sterm );
 }
 
 void sterm_terminal_child_exited_cb ( VteTerminal *terminal, STermTerminal *sterm )
