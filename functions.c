@@ -46,11 +46,21 @@ void sterm_functions_paste ( STermTerminal *sterm, gchar *selection )
     vte_terminal_paste_clipboard ( sterm->terminal );
 }
 
+void sterm_functions_zoom ( STermTerminal *sterm, gchar *factor )
+{
+  gint size = g_ascii_strtoll ( factor, NULL, 0 );
+
+  PangoFontDescription *font = (PangoFontDescription*) vte_terminal_get_font ( sterm->terminal );
+  pango_font_description_set_size ( font, pango_font_description_get_size ( font ) + size );
+  vte_terminal_set_font ( sterm->terminal, font );
+}
+
 void sterm_functions_init ( STermTerminal *sterm )
 {
   sterm->functions = g_hash_table_new ( g_str_hash, g_str_equal );
 
   g_hash_table_insert ( sterm->functions, "command_pipe", sterm_functions_command_pipe );
   g_hash_table_insert ( sterm->functions, "paste", sterm_functions_paste );
+  g_hash_table_insert ( sterm->functions, "zoom", sterm_functions_zoom );
 }
 

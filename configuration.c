@@ -105,7 +105,22 @@ STermConfig* sterm_configuration_parse_file ( gchar *config_file )
   config->keys = g_new0 ( STermKeySym, config->key_number );
 
   for ( iter = 0; iter < config->key_number; iter++ ) {
-    config->keys[iter].key = keys[iter];
+    gchar **parts = g_strsplit ( keys[iter], "-", 0 );
+    guint length = g_strv_length ( parts );
+
+    int i;
+    for ( i = 0; i < length - 1; i++ ) {
+      if ( g_strcmp0 ( parts[i], "Mod1" ) == 0 )
+        config->keys[iter].modifier |= GDK_MOD1_MASK;
+      else if ( g_strcmp0 ( parts[i], "Control" ) == 0 )
+        config->keys[iter].modifier |= GDK_CONTROL_MASK;
+      else if ( g_strcmp0 ( parts[i], "Shift" ) == 0 ) {
+        config->keys[iter].modifier |= GDK_SHIFT_MASK;
+      }
+    }
+
+    config->keys[iter].keyval = gdk_keyval_from_name ( parts[length - 1] );
+
     config->keys[iter].func = g_key_file_get_string ( keyfile, "keys", keys[iter], NULL );
   }
 

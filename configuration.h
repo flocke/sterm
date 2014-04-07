@@ -21,7 +21,8 @@
 #include <vte/vte.h>
 
 typedef struct {
-  gchar *key;
+  GdkModifierType modifier;
+  guint keyval;
   gchar *func;
 } STermKeySym;
 

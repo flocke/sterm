@@ -35,12 +35,11 @@ void sterm_terminal_function_caller ( STermTerminal *sterm, gchar *string )
 gboolean sterm_terminal_key_press_cb ( GtkWidget *main_win, GdkEventKey *event, STermTerminal *sterm )
 {
   guint g = event->keyval;
+  gint iter;
 
-  if ( ( event->state & ( GDK_MOD1_MASK ) ) == ( GDK_MOD1_MASK ) ) {
-    int iter;
-    for ( iter = 0; iter < sterm->config->key_number; iter++ ) {
-      guint keyval = gdk_keyval_from_name ( sterm->config->keys[iter].key );
-      if ( g == keyval ) {
+  for ( iter = 0; iter < sterm->config->key_number; iter++ ) {
+    if ( ( event->state & ( sterm->config->keys[iter].modifier ) ) == ( sterm->config->keys[iter].modifier ) ) {
+      if ( g == sterm->config->keys[iter].keyval ) {
         sterm_terminal_function_caller ( sterm, sterm->config->keys[iter].func );
         return TRUE;
       }
