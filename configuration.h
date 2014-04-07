@@ -27,14 +27,24 @@ typedef struct {
 } STermKeySym;
 
 typedef struct {
+  glong scrollback_lines;
+  gboolean allow_bold;
+  gboolean visible_bell;
+  gboolean audible_bell;
+  gboolean scroll_on_keystroke;
+  gboolean scroll_on_output;
+  gboolean rewrap_on_resize;
+  gboolean mouse_autohide;
+
+  VteTerminalCursorBlinkMode cursor_blink;
+  VteTerminalCursorShape cursor_shape;
+
   GdkColor foreground;
   GdkColor background;
   GdkColor *colors;
   gint palette_size;
   gchar *font;
-  VteTerminalCursorBlinkMode cursor_blink;
-  VteTerminalCursorShape cursor_shape;
-  glong scrollback_lines;
+
   STermKeySym *keys;
   gsize key_number;
 } STermConfig;

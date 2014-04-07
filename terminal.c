@@ -68,11 +68,20 @@ void sterm_terminal_title_changed_cb ( GtkWidget *terminal, STermTerminal *sterm
 
 void sterm_terminal_setup ( STermTerminal *sterm )
 {
-  vte_terminal_set_font_from_string ( sterm->terminal, sterm->config->font );
-  vte_terminal_set_colors ( sterm->terminal, &sterm->config->foreground, &sterm->config->background, sterm->config->colors, sterm->config->palette_size );
+  vte_terminal_set_scrollback_lines ( sterm->terminal, sterm->config->scrollback_lines );
+  vte_terminal_set_allow_bold ( sterm->terminal, sterm->config->allow_bold );
+  vte_terminal_set_audible_bell ( sterm->terminal, sterm->config->audible_bell );
+  vte_terminal_set_visible_bell ( sterm->terminal, sterm->config->visible_bell );
+  vte_terminal_set_scroll_on_keystroke ( sterm->terminal, sterm->config->scroll_on_keystroke );
+  vte_terminal_set_scroll_on_output ( sterm->terminal, sterm->config->scroll_on_output );
+  vte_terminal_set_rewrap_on_resize ( sterm->terminal, sterm->config->rewrap_on_resize );
+  vte_terminal_set_mouse_autohide ( sterm->terminal, sterm->config->mouse_autohide );
+
   vte_terminal_set_cursor_blink_mode ( sterm->terminal, sterm->config->cursor_blink );
   vte_terminal_set_cursor_shape ( sterm->terminal, sterm->config->cursor_shape );
-  vte_terminal_set_scrollback_lines ( sterm->terminal, sterm->config->scrollback_lines );
+
+  vte_terminal_set_font_from_string ( sterm->terminal, sterm->config->font );
+  vte_terminal_set_colors ( sterm->terminal, &sterm->config->foreground, &sterm->config->background, sterm->config->colors, sterm->config->palette_size );
 
   g_signal_connect ( G_OBJECT ( sterm->terminal ), "window-title-changed", G_CALLBACK ( sterm_terminal_title_changed_cb ), sterm );
 }

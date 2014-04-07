@@ -30,6 +30,13 @@ STermConfig* sterm_configuration_new_default ()
   STermConfig *config = g_new0 ( STermConfig, 1 );
 
   config->scrollback_lines = DEFAULT_SCROLLBACK_LINES;
+  config->allow_bold = DEFAULT_ALLOW_BOLD;
+  config->audible_bell = DEFAULT_AUDIBLE_BELL;
+  config->visible_bell = DEFAULT_VISIBLE_BELL;
+  config->scroll_on_keystroke = DEFAULT_SCROLL_ON_KEYSTROKE;
+  config->scroll_on_output = DEFAULT_SCROLL_ON_OUTPUT;
+  config->rewrap_on_resize = DEFAULT_REWRAP_ON_RESIZE;
+  config->mouse_autohide = DEFAULT_MOUSE_AUTOHIDE;
 
   config->cursor_shape = DEFAULT_CURSOR_SHAPE;
   config->cursor_blink = DEFAULT_CURSOR_BLINK;
@@ -76,6 +83,13 @@ STermConfig* sterm_configuration_parse_file ( gchar *config_file )
 
   /* General configuration */
   config->scrollback_lines = g_key_file_get_integer ( keyfile, "general", "scrollback", NULL );
+  config->allow_bold = g_key_file_get_boolean ( keyfile, "general", "allow_bold", NULL );
+  config->audible_bell = g_key_file_get_boolean ( keyfile, "general", "audible_bell", NULL );
+  config->visible_bell = g_key_file_get_boolean ( keyfile, "general", "visible_bell", NULL );
+  config->scroll_on_keystroke = g_key_file_get_boolean ( keyfile, "general", "scroll_on_keystroke", NULL );
+  config->scroll_on_output = g_key_file_get_boolean ( keyfile, "general", "scroll_on_output", NULL );
+  config->rewrap_on_resize = g_key_file_get_boolean ( keyfile, "general", "rewrap_on_resize", NULL );
+  config->mouse_autohide = g_key_file_get_boolean ( keyfile, "general", "autohide_mouse", NULL );
 
   /* Cursor configuration */
   temp = g_key_file_get_string ( keyfile, "cursor", "shape", NULL );
