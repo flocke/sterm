@@ -23,6 +23,7 @@
 static gchar *config_file = NULL;
 static gchar *start_program = NULL;
 
+static GtkWidget *main_window;
 static STermTerminal *sterm;
 static STermConfig *config;
 
@@ -32,7 +33,18 @@ static GOptionEntry options[] = {
   { NULL }
 };
 
-static gboolean parse_commandline ( int argc, char* argv[] )
+static void sterm_main_terminal_destroyed_cb ( GtkWidget *terminal )
+{
+  gtk_main_quit ();
+}
+
+static void sterm_main_window_destroyed_cb ( GtkWidget *window )
+{
+  sterm_terminal_destroy ( sterm );
+  gtk_main_quit ();
+}
+
+static gboolean sterm_main_commandline ( int argc, char* argv[] )
 {
   gboolean retval = TRUE;
   GError *error = NULL;
@@ -52,7 +64,7 @@ int main ( int argc, char* argv[] )
 {
   gtk_init ( &argc, &argv );
 
-  if ( ! parse_commandline ( argc, argv ) )
+  if ( ! sterm_main_commandline ( argc, argv ) )
     return 1;
 
   if ( config_file == NULL )
@@ -60,11 +72,20 @@ int main ( int argc, char* argv[] )
 
   config = sterm_configuration_parse_file ( config_file );
 
-  sterm = sterm_terminal_new ( config );
+  main_window = gtk_window_new ( GTK_WINDOW_TOPLEVEL );
+  gtk_window_set_title ( GTK_WINDOW ( main_window ), "STerm" );
+  gtk_container_set_border_width ( GTK_CONTAINER ( main_window ), 0 );
+
+  sterm = sterm_terminal_new ( main_window, config );
   sterm_terminal_setup ( sterm );
   sterm_terminal_start_child ( sterm, start_program );
 
-  gtk_widget_show_all ( sterm->main_window );
+  g_signal_connect ( G_OBJECT ( main_window ), "destroy", G_CALLBACK ( sterm_main_window_destroyed_cb ), NULL );
+  g_signal_connect ( G_OBJECT ( sterm->widget ), "destroy", G_CALLBACK ( sterm_main_terminal_destroyed_cb ), NULL );
+
+  gtk_container_add ( GTK_CONTAINER ( main_window ), sterm->widget );
+
+  gtk_widget_show_all ( main_window );
   gtk_main ();
 
   return 0;

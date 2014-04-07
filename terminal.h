@@ -28,15 +28,16 @@
 
 typedef struct {
   STermConfig *config;
-  GtkWidget *main_window;
-  GtkWidget *gtk_widget;
+  GtkWidget *container;
+  GtkWidget *widget;
   VteTerminal *terminal;
   GPid child_pid;
   GHashTable *functions;
 } STermTerminal;
 
-STermTerminal* sterm_terminal_new ( STermConfig *config );
+STermTerminal* sterm_terminal_new ( GtkWidget *container, STermConfig *config );
 void sterm_terminal_setup ( STermTerminal *sterm );
 void sterm_terminal_start_child ( STermTerminal *sterm, gchar *command );
+void sterm_terminal_destroy ( STermTerminal *sterm );
 
 #endif

@@ -18,9 +18,15 @@
 #include "terminal.h"
 #include "functions.h"
 
-void sterm_terminal_exit ()
+void sterm_terminal_destroy ( STermTerminal *sterm )
 {
-  gtk_main_quit ();
+  g_hash_table_destroy ( sterm->functions );
+  gtk_widget_destroy ( sterm->widget );
+}
+
+void sterm_terminal_child_exited_cb ( VteTerminal *terminal, STermTerminal *sterm )
+{
+  sterm_terminal_destroy ( sterm );
 }
 
 void sterm_terminal_function_caller ( STermTerminal *sterm, gchar *string )
@@ -56,7 +62,7 @@ void sterm_terminal_title_changed_cb ( GtkWidget *terminal, STermTerminal *sterm
   if ( title == NULL )
     title = "sterm";
 
-  gtk_window_set_title ( GTK_WINDOW ( sterm->main_window ), title );
+  gtk_window_set_title ( GTK_WINDOW ( sterm->container ), title );
 }
 
 void sterm_terminal_setup ( STermTerminal *sterm )
@@ -87,28 +93,21 @@ void sterm_terminal_start_child ( STermTerminal *sterm, gchar *command )
                                           spawn_flags, NULL, NULL, &sterm->child_pid, &error ) )
     g_error ( "ERROR: Failed to spawn child: %s\n", error->message );
   else
-    g_signal_connect ( G_OBJECT ( sterm->terminal ), "child-exited", G_CALLBACK ( sterm_terminal_exit ), NULL );
+    g_signal_connect ( G_OBJECT ( sterm->terminal ), "child-exited", G_CALLBACK ( sterm_terminal_child_exited_cb ), sterm );
 }
 
-STermTerminal* sterm_terminal_new ( STermConfig *config )
+STermTerminal* sterm_terminal_new ( GtkWidget *container, STermConfig *config )
 {
   STermTerminal *sterm = g_new0 ( STermTerminal, 1 );
 
   sterm->config = config;
-
+  sterm->container = container;
   sterm_functions_init ( sterm );
 
-  sterm->main_window = gtk_window_new ( GTK_WINDOW_TOPLEVEL );
-  gtk_window_set_title ( GTK_WINDOW ( sterm->main_window ), "sterm" );
-  gtk_container_set_border_width ( GTK_CONTAINER ( sterm->main_window ), 0 );
-  
-  g_signal_connect ( G_OBJECT ( sterm->main_window ), "key-press-event", G_CALLBACK ( sterm_terminal_key_press_cb ), sterm );
-  g_signal_connect ( G_OBJECT ( sterm->main_window ), "destroy", G_CALLBACK ( sterm_terminal_exit ), NULL );
+  sterm->widget = vte_terminal_new ();
+  sterm->terminal = VTE_TERMINAL ( sterm->widget );
 
-  sterm->gtk_widget = vte_terminal_new ();
-  sterm->terminal = VTE_TERMINAL ( sterm->gtk_widget );
-
-  gtk_container_add ( GTK_CONTAINER ( sterm->main_window ), sterm->gtk_widget );
+  g_signal_connect ( G_OBJECT ( sterm->widget ), "key-press-event", G_CALLBACK ( sterm_terminal_key_press_cb ), sterm );
 
   return sterm;
 }
