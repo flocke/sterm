@@ -56,16 +56,6 @@ gboolean sterm_terminal_key_press_cb ( GtkWidget *main_win, GdkEventKey *event, 
   return FALSE;
 }
 
-void sterm_terminal_title_changed_cb ( GtkWidget *terminal, STermTerminal *sterm )
-{
-  const gchar *title = vte_terminal_get_window_title ( VTE_TERMINAL ( terminal ) );
-
-  if ( title == NULL )
-    title = "sterm";
-
-  gtk_window_set_title ( GTK_WINDOW ( sterm->container ), title );
-}
-
 void sterm_terminal_setup ( STermTerminal *sterm )
 {
   vte_terminal_set_scrollback_lines ( sterm->terminal, sterm->config->scrollback_lines );
@@ -82,8 +72,6 @@ void sterm_terminal_setup ( STermTerminal *sterm )
 
   vte_terminal_set_font_from_string ( sterm->terminal, sterm->config->font );
   vte_terminal_set_colors ( sterm->terminal, &sterm->config->foreground, &sterm->config->background, sterm->config->colors, sterm->config->palette_size );
-
-  g_signal_connect ( G_OBJECT ( sterm->terminal ), "window-title-changed", G_CALLBACK ( sterm_terminal_title_changed_cb ), sterm );
 }
 
 void sterm_terminal_start_child ( STermTerminal *sterm, gchar *command )

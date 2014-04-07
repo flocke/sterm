@@ -8,9 +8,12 @@ pkg_check_modules ( "VTE" REQUIRED "vte-2.90" )
 
 include_directories ( ${VTE_INCLUDE_DIRS} )
 
-add_executable ( sterm configuration.c functions.c terminal.c main.c )
+add_library ( STerm SHARED configuration.c functions.c terminal.c )
+add_executable ( sterm main.c )
 
-target_link_libraries ( sterm ${VTE_LIBRARIES} )
+target_link_libraries ( STerm ${VTE_LIBRARIES} )
+target_link_libraries ( sterm STerm )
 
+install ( TARGETS STerm DESTINATION lib${LIB_SUFFIX} )
 install ( TARGETS sterm DESTINATION bin )
 install ( FILES sterm.ini DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/sterm )

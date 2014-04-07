@@ -15,7 +15,7 @@
   along with STerm.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <gtk/gtk.h>
+#include <vte/vte.h>
 
 #include "terminal.h"
 #include "configuration.h"
@@ -48,6 +48,16 @@ static void sterm_main_window_destroyed_cb ( GtkWidget *window )
 {
   sterm_terminal_destroy ( sterm );
   sterm_main_exit ();
+}
+
+static void sterm_main_title_changed_cb ( GtkWidget *terminal )
+{
+  const gchar* title = vte_terminal_get_window_title ( VTE_TERMINAL ( terminal ) );
+  
+  if ( title == NULL )
+    title = "STerm";
+
+  gtk_window_set_title ( GTK_WINDOW ( main_window ), title );
 }
 
 static gboolean sterm_main_commandline ( int argc, char* argv[] )
@@ -88,6 +98,7 @@ int main ( int argc, char* argv[] )
 
   g_signal_connect ( G_OBJECT ( main_window ), "destroy", G_CALLBACK ( sterm_main_window_destroyed_cb ), NULL );
   g_signal_connect ( G_OBJECT ( sterm->widget ), "destroy", G_CALLBACK ( sterm_main_terminal_destroyed_cb ), NULL );
+  g_signal_connect ( G_OBJECT ( sterm->widget ), "window-title-changed", G_CALLBACK ( sterm_main_title_changed_cb ), NULL );
 
   gtk_container_add ( GTK_CONTAINER ( main_window ), sterm->widget );
 
