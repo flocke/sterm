@@ -24,6 +24,7 @@ void sterm_functions_command_pipe ( STermTerminal *sterm, gchar *pipe )
   FILE *output = popen ( pipe, "w" );
   if ( ! output ) {
     g_printf ( "ERROR: Could not open the pipe '%s'\n", pipe );
+    g_free ( text );
     return;
   }
 
@@ -31,11 +32,14 @@ void sterm_functions_command_pipe ( STermTerminal *sterm, gchar *pipe )
 
   if ( ferror ( output ) ) {
     g_printf ( "ERROR: Output to pipe '%s' failed!\n", pipe );
+    g_free ( text );
     return;
   }
 
   if ( pclose ( output ) != 0 )
     g_printf ( "ERROR: Could not close the pipe '%s'\n", pipe );
+
+  g_free ( text );
 }
 
 void sterm_functions_paste ( STermTerminal *sterm, gchar *selection )
@@ -53,6 +57,8 @@ void sterm_functions_zoom ( STermTerminal *sterm, gchar *factor )
   PangoFontDescription *font = (PangoFontDescription*) vte_terminal_get_font ( sterm->terminal );
   pango_font_description_set_size ( font, pango_font_description_get_size ( font ) + size );
   vte_terminal_set_font ( sterm->terminal, font );
+
+  pango_font_description_free ( font );
 }
 
 void sterm_functions_init ( STermTerminal *sterm )

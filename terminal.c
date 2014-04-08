@@ -37,6 +37,8 @@ void sterm_terminal_function_caller ( STermTerminal *sterm, gchar *string )
   void (*func)(STermTerminal*, gchar*) = g_hash_table_lookup ( sterm->functions, command[0] );
 
   func ( sterm, command[1] );
+
+  g_free ( command );
 }
 
 gboolean sterm_terminal_key_press_cb ( GtkWidget *main_win, GdkEventKey *event, STermTerminal *sterm )
@@ -92,6 +94,11 @@ void sterm_terminal_start_child ( STermTerminal *sterm, gchar *command )
     g_error ( "ERROR: Failed to spawn child: %s\n", error->message );
   else
     g_signal_connect ( G_OBJECT ( sterm->terminal ), "child-exited", G_CALLBACK ( sterm_terminal_child_exited_cb ), sterm );
+
+  g_free ( args );
+  g_free ( user_shell );
+  if ( error )
+    g_error_free ( error );
 }
 
 STermTerminal* sterm_terminal_new ( GtkWidget *container, STermConfig *config )

@@ -20,6 +20,7 @@
 
 void sterm_configuration_destroy ( STermConfig *config )
 {
+  g_free ( config->font );
   g_free ( config->colors );
   g_free ( config->keys );
   g_free ( config );
@@ -46,7 +47,7 @@ STermConfig* sterm_configuration_new_default ()
   gdk_color_parse ( DEFAULT_COLOR_BACKGROUND, &config->background );
 
   config->palette_size = DEFAULT_PALETTE_SIZE;
-  config->colors = (GdkColor *) g_malloc ( sizeof ( GdkColor ) * DEFAULT_PALETTE_SIZE );
+  config->colors = g_new0 ( GdkColor, DEFAULT_PALETTE_SIZE );
   gdk_color_parse ( DEFAULT_COLOR_COLOR0, &config->colors[0] );
   gdk_color_parse ( DEFAULT_COLOR_COLOR1, &config->colors[1] );
   gdk_color_parse ( DEFAULT_COLOR_COLOR2, &config->colors[2] );
@@ -143,10 +144,14 @@ STermConfig* sterm_configuration_parse_file ( gchar *config_file )
     config->keys[iter].keyval = gdk_keyval_from_name ( parts[length - 1] );
 
     config->keys[iter].func = g_key_file_get_string ( keyfile, "keys", keys[iter], NULL );
+
+    g_free ( parts );
   }
 
   g_free ( temp );
   g_key_file_free ( keyfile );
+  if ( error )
+    g_error_free ( error );
 
   return config;
 }
