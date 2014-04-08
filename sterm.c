@@ -92,7 +92,7 @@ int main ( int argc, char* argv[] )
   if ( config_file == NULL )
     config_file = DEFAULT_CONFIG_FILE;
 
-  config = sterm_configuration_parse_file ( config_file );
+  config = sterm_configuration_new_from_file ( config_file );
 
   main_window = gtk_window_new ( GTK_WINDOW_TOPLEVEL );
   gtk_window_set_title ( GTK_WINDOW ( main_window ), "STerm" );

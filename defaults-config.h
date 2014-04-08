@@ -57,11 +57,11 @@
 #endif
 
 #ifndef DEFAULT_CURSOR_SHAPE
-#define DEFAULT_CURSOR_SHAPE VTE_CURSOR_SHAPE_BLOCK
+#define DEFAULT_CURSOR_SHAPE "block"
 #endif
 
 #ifndef DEFAULT_CURSOR_BLINK
-#define DEFAULT_CURSOR_BLINK VTE_CURSOR_BLINK_SYSTEM
+#define DEFAULT_CURSOR_BLINK "system"
 #endif
 
 #ifndef DEFAULT_FONT
@@ -76,68 +76,8 @@
 #define DEFAULT_COLOR_FOREGROUND "#c0c0c0"
 #endif
 
-#ifndef DEFAULT_COLOR_COLOR0
-#define DEFAULT_COLOR_COLOR0 "#1b1d1e"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR1
-#define DEFAULT_COLOR_COLOR1 "#f92672"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR2
-#define DEFAULT_COLOR_COLOR2 "#82b414"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR3
-#define DEFAULT_COLOR_COLOR3 "#fd971f"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR4
-#define DEFAULT_COLOR_COLOR4 "#56c2d6"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR5
-#define DEFAULT_COLOR_COLOR5 "#8c54fe"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR6
-#define DEFAULT_COLOR_COLOR6 "#465457"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR7
-#define DEFAULT_COLOR_COLOR7 "#ccccc6"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR8
-#define DEFAULT_COLOR_COLOR8 "#505354"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR9
-#define DEFAULT_COLOR_COLOR9 "#ff5995"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR10
-#define DEFAULT_COLOR_COLOR10 "#b6e354"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR11
-#define DEFAULT_COLOR_COLOR11 "#feed6c"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR12
-#define DEFAULT_COLOR_COLOR12 "#8cedff"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR13
-#define DEFAULT_COLOR_COLOR13 "#9e6ffe"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR14
-#define DEFAULT_COLOR_COLOR14 "#899ca1"
-#endif
-
-#ifndef DEFAULT_COLOR_COLOR15
-#define DEFAULT_COLOR_COLOR15 "#f8f8f2"
+#ifndef DEFAULT_COLOR_PALETTE
+#define DEFAULT_COLOR_PALETTE "#1b1d1e #f92672 #82b414 #fd971f #56c2d6 #8c54fe #465457 #ccccc6 #505354 #ff5995 #b6e354 #feed6c #8cedff #9e6ffe #899ca1 #f8f8f2"
 #endif
 
 #endif
