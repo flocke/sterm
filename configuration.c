@@ -107,6 +107,8 @@ void sterm_configuration_load_keys ( STermConfig *config, GKeyFile *keyfile ) {
 
     g_free ( parts );
   }
+
+  g_free ( keys );
 }
 
 STermConfig* sterm_configuration_new_from_file ( gchar *config_file )
