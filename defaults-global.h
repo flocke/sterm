@@ -15,25 +15,11 @@
   along with STerm.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _STERM_TERMINAL_H
-#define _STERM_TERMINAL_H
+#ifndef _STERM_DEFAULTS_GLOBAL_H
+#define _STERM_DEFAULTS_GLOBAL_H
 
-#include <vte/vte.h>
-
-#include "configuration.h"
-
-typedef struct {
-  STermConfig *config;
-  GtkWidget *container;
-  GtkWidget *widget;
-  VteTerminal *terminal;
-  GPid child_pid;
-  GHashTable *functions;
-} STermTerminal;
-
-STermTerminal* sterm_terminal_new ( GtkWidget *container, STermConfig *config );
-void sterm_terminal_setup ( STermTerminal *sterm );
-void sterm_terminal_start_child ( STermTerminal *sterm, gchar *command );
-void sterm_terminal_destroy ( STermTerminal *sterm );
+#ifndef DEFAULT_CONFIG_FILE
+#define DEFAULT_CONFIG_FILE g_build_path ( "/", g_get_home_dir(), "/.config/sterm/sterm.ini", NULL );
+#endif
 
 #endif

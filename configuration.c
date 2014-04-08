@@ -16,7 +16,7 @@
 */
 
 #include "configuration.h"
-#include "defaults.h"
+#include "defaults-config.h"
 
 void sterm_configuration_destroy ( STermConfig *config )
 {

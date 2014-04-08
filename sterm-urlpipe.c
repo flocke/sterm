@@ -19,9 +19,7 @@
 #include <gio/gio.h>
 #include <gio/gunixinputstream.h>
 
-#ifndef DEFAULT_CONFIG_FILE
-#define DEFAULT_CONFIG_FILE g_build_path ( "/", g_get_home_dir(), "/.config/sterm/urlpipe.ini", NULL );
-#endif
+#include "defaults-global.h"
 
 #ifndef DEFAULT_REGEX
 #define DEFAULT_REGEX "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s]|/)))"
@@ -64,7 +62,7 @@ int main ( int argc, char *argv[] )
   GKeyFile *keyfile = g_key_file_new ();
 
   if ( g_key_file_load_from_file ( keyfile, config_file, G_KEY_FILE_NONE, NULL ) ) {
-    regex = g_key_file_get_string ( keyfile, "general", "regex", NULL );
+    regex = g_key_file_get_string ( keyfile, "urlpipe", "regex", NULL );
     if ( regex == NULL )
       regex = DEFAULT_REGEX;
   }

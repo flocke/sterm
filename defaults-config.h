@@ -15,8 +15,8 @@
   along with STerm.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _STERM_DEFAULTS_H
-#define _STERM_DEFAULTS_H
+#ifndef _STERM_DEFAULTS_CONFIG_H
+#define _STERM_DEFAULTS_CONFIG_H
 
 #define DEFAULT_PALETTE_SIZE 16
 

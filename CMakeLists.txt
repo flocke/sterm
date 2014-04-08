@@ -47,5 +47,4 @@ if ( WITH_URLPIPE )
   target_link_libraries ( sterm-urlpipe ${GIO-UNIX_LIBRARIES} )
 
   install ( TARGETS sterm-urlpipe DESTINATION bin )
-  install ( FILES urlpipe.ini DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/sterm )
 endif ( WITH_URLPIPE )

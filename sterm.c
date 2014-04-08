@@ -17,8 +17,9 @@
 
 #include <vte/vte.h>
 
-#include "terminal.h"
 #include "configuration.h"
+#include "defaults-global.h"
+#include "terminal.h"
 
 static gchar *config_file = NULL;
 static gchar *start_program = NULL;
