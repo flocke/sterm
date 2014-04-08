@@ -7,6 +7,20 @@ Requirements
  * VTE-2.90
  * cmake
 
+Installation
+------------
+
+mkdir build
+cd build
+cmake [OPTIONS] ..
+make
+su -c "make install"
+
+CMake options:
+
+ -DWITH_LIBRARY={ON,OFF}   Don't build the shared library libsterm-core.so.
+                           Default: ON
+
 Usage
 -----
 
