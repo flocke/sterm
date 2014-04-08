@@ -22,7 +22,7 @@
 #include "defaults-global.h"
 
 #ifndef DEFAULT_REGEX
-#define DEFAULT_REGEX "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s]|/)))"
+#define DEFAULT_REGEX "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s\\n]|/)))"
 #endif
 
 void sterm_urlpipe_extract ( gchar *data, gchar *pattern )
