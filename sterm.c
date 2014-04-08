@@ -72,7 +72,7 @@ static gboolean sterm_main_commandline ( int argc, char* argv[] )
   g_option_context_add_main_entries ( context, options, NULL );
   g_option_context_add_group ( context, gtk_get_option_group ( TRUE ) );
   if ( ! g_option_context_parse ( context, &argc, &argv, &error ) ) {
-    g_error ( "ERROR: Failed to parse command-line options: %s\n", error->message );
+    g_warning ( "ERROR: Failed to parse command-line options: %s\n", error->message );
     retval = FALSE;
   }
 

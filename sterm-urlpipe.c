@@ -33,7 +33,7 @@ void sterm_urlpipe_extract ( gchar *data, gchar *pattern )
   GRegex *regex = g_regex_new ( pattern, 0, 0, &error );
 
   if ( error ) {
-    g_error ( "ERROR: Failed to create URL regex: %s\n", error->message );
+    g_warning ( "ERROR: Failed to create URL regex: %s\n", error->message );
     g_clear_error ( &error );
     return;
   }
