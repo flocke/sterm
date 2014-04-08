@@ -19,12 +19,19 @@
 #include <gio/gio.h>
 #include <gio/gunixinputstream.h>
 
-void sterm_urlpipe_extract ( gchar *data )
+#ifndef DEFAULT_CONFIG_FILE
+#define DEFAULT_CONFIG_FILE g_build_path ( "/", g_get_home_dir(), "/.config/sterm/urlpipe.ini", NULL );
+#endif
+
+#ifndef DEFAULT_REGEX
+#define DEFAULT_REGEX "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s]|/)))"
+#endif
+
+void sterm_urlpipe_extract ( gchar *data, gchar *pattern )
 {
   GError *error = NULL;
   GMatchInfo *match = NULL;
 
-  gchar *pattern = "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s]|/)))";
   GRegex *regex = g_regex_new ( pattern, 0, 0, &error );
 
   if ( error ) {
@@ -44,11 +51,23 @@ void sterm_urlpipe_extract ( gchar *data )
 
   g_match_info_free ( match );
   g_regex_unref ( regex );
+  if ( error )
+    g_error_free ( error );
 }
 
 int main ( int argc, char *argv[] )
 {
   GString *data = g_string_new ( "" );
+  gchar *regex = DEFAULT_REGEX;
+
+  gchar *config_file = DEFAULT_CONFIG_FILE;
+  GKeyFile *keyfile = g_key_file_new ();
+
+  if ( g_key_file_load_from_file ( keyfile, config_file, G_KEY_FILE_NONE, NULL ) ) {
+    regex = g_key_file_get_string ( keyfile, "general", "regex", NULL );
+    if ( regex == NULL )
+      regex = DEFAULT_REGEX;
+  }
 
   GInputStream *stream = g_unix_input_stream_new ( STDIN_FILENO, FALSE );
   GDataInputStream *data_stream = g_data_input_stream_new ( stream );
@@ -57,8 +76,13 @@ int main ( int argc, char *argv[] )
   while ( buffer = g_data_input_stream_read_line ( data_stream, NULL, NULL, NULL ) )
     g_string_append_printf ( data, "%s\n", buffer );
 
-  sterm_urlpipe_extract ( data->str );
 
+  sterm_urlpipe_extract ( data->str, regex );
+
+  g_free ( buffer );
+  g_free ( regex );
+  g_free ( config_file );
+  g_key_file_free ( keyfile );
   g_string_free ( data, TRUE );
 
   return 0;
