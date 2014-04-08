@@ -12,14 +12,14 @@ option ( WITH_LIBRARY "Build the shared library" ON )
 
 if ( WITH_LIBRARY )
   add_library ( sterm-core SHARED configuration.c functions.c terminal.c )
-  add_executable ( sterm main.c )
+  add_executable ( sterm sterm.c )
 
   target_link_libraries ( sterm-core ${VTE_LIBRARIES} )
   target_link_libraries ( sterm sterm-core )
 
   install ( TARGETS sterm-core DESTINATION lib${LIB_SUFFIX} )
 else ( WITH_LIBRARY )
-  add_executable ( sterm configuration.c functions.c terminal.c main.c )
+  add_executable ( sterm configuration.c functions.c terminal.c sterm.c )
 
   target_link_libraries ( sterm ${VTE_LIBRARIES} )
 endif ( WITH_LIBRARY )
