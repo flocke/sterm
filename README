@@ -4,8 +4,10 @@
 Requirements
 ------------
 
+ * glib2
+ * GTK+-3.0
  * VTE-2.90
- * cmake
+ * cmake >= 2.8.8
 
 Installation
 ------------
@@ -19,6 +21,8 @@ su -c "make install"
 CMake options:
 
  -DWITH_LIBRARY={ON,OFF}   Build the shared library libsterm-core.so ?
+                           Default: ON
+ -DWITH_URLPIPE={ON,OFF}   Build the sterm-urlpipe binary ?
                            Default: ON
 
 Usage
