@@ -22,22 +22,20 @@ void sterm_functions_command_pipe ( STermTerminal *sterm, gchar *pipe )
   gchar *text = vte_terminal_get_text ( sterm->terminal, NULL, NULL, NULL );
 
   FILE *output = popen ( pipe, "w" );
-  if ( ! output ) {
-    g_printf ( "ERROR: Could not open the pipe '%s'\n", pipe );
-    g_free ( text );
-    return;
-  }
 
-  fprintf ( output, "%s", text );
+  if ( output ) {
+    fprintf ( output, "%s", text );
 
-  if ( ferror ( output ) ) {
-    g_printf ( "ERROR: Output to pipe '%s' failed!\n", pipe );
-    g_free ( text );
-    return;
-  }
+    if ( ! ferror ( output ) ) {
 
-  if ( pclose ( output ) != 0 )
-    g_printf ( "ERROR: Could not close the pipe '%s'\n", pipe );
+      if ( pclose ( output ) != 0 )
+        g_warning ( "ERROR: Failed to close the pipe '%s'.\n", pipe );
+
+    } else
+      g_warning ( "ERROR: Failed to write to the pipe '%s'.\n", pipe );
+
+  } else
+    g_warning ( "ERROR: Failed to open the pipe '%s'.\n", pipe );
 
   g_free ( text );
 }
