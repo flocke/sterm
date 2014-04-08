@@ -18,7 +18,7 @@ su -c "make install"
 
 CMake options:
 
- -DWITH_LIBRARY={ON,OFF}   Don't build the shared library libsterm-core.so.
+ -DWITH_LIBRARY={ON,OFF}   Build the shared library libsterm-core.so ?
                            Default: ON
 
 Usage
