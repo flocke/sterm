@@ -68,6 +68,7 @@ void sterm_terminal_setup ( STermTerminal *sterm )
   vte_terminal_set_scroll_on_output ( sterm->terminal, sterm->config->scroll_on_output );
   vte_terminal_set_rewrap_on_resize ( sterm->terminal, sterm->config->rewrap_on_resize );
   vte_terminal_set_mouse_autohide ( sterm->terminal, sterm->config->mouse_autohide );
+  vte_terminal_set_word_chars ( sterm->terminal, sterm->config->word_chars );
 
   vte_terminal_set_cursor_blink_mode ( sterm->terminal, sterm->config->cursor_blink );
   vte_terminal_set_cursor_shape ( sterm->terminal, sterm->config->cursor_shape );

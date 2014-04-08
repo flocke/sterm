@@ -52,6 +52,10 @@
 #define DEFAULT_MOUSE_AUTOHIDE FALSE
 #endif
 
+#ifndef DEFAULT_WORD_CHARS
+#define DEFAULT_WORD_CHARS "-A-Za-z0-9,./?%&#:_"
+#endif
+
 #ifndef DEFAULT_CURSOR_SHAPE
 #define DEFAULT_CURSOR_SHAPE VTE_CURSOR_SHAPE_BLOCK
 #endif

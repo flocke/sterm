@@ -20,6 +20,7 @@
 
 void sterm_configuration_destroy ( STermConfig *config )
 {
+  g_free ( config->word_chars );
   g_free ( config->font );
   g_free ( config->colors );
   g_free ( config->keys );
@@ -38,6 +39,7 @@ STermConfig* sterm_configuration_new_default ()
   config->scroll_on_output = DEFAULT_SCROLL_ON_OUTPUT;
   config->rewrap_on_resize = DEFAULT_REWRAP_ON_RESIZE;
   config->mouse_autohide = DEFAULT_MOUSE_AUTOHIDE;
+  config->word_chars = DEFAULT_WORD_CHARS;
 
   config->cursor_shape = DEFAULT_CURSOR_SHAPE;
   config->cursor_blink = DEFAULT_CURSOR_BLINK;
@@ -91,6 +93,7 @@ STermConfig* sterm_configuration_parse_file ( gchar *config_file )
   config->scroll_on_output = g_key_file_get_boolean ( keyfile, "general", "scroll_on_output", NULL );
   config->rewrap_on_resize = g_key_file_get_boolean ( keyfile, "general", "rewrap_on_resize", NULL );
   config->mouse_autohide = g_key_file_get_boolean ( keyfile, "general", "autohide_mouse", NULL );
+  config->word_chars = g_key_file_get_string ( keyfile, "general", "word_chars", NULL );
 
   /* Cursor configuration */
   temp = g_key_file_get_string ( keyfile, "cursor", "shape", NULL );

@@ -35,6 +35,7 @@ typedef struct {
   gboolean scroll_on_output;
   gboolean rewrap_on_resize;
   gboolean mouse_autohide;
+  gchar *word_chars;
 
   VteTerminalCursorBlinkMode cursor_blink;
   VteTerminalCursorShape cursor_shape;
