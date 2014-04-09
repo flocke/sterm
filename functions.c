@@ -55,8 +55,6 @@ void sterm_functions_zoom ( STermTerminal *sterm, gchar *factor )
   PangoFontDescription *font = (PangoFontDescription*) vte_terminal_get_font ( sterm->terminal );
   pango_font_description_set_size ( font, pango_font_description_get_size ( font ) + size );
   vte_terminal_set_font ( sterm->terminal, font );
-
-  pango_font_description_free ( font );
 }
 
 void sterm_functions_init ( STermTerminal *sterm )
