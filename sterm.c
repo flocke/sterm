@@ -53,14 +53,12 @@ static void sterm_main_window_destroyed_cb ( GtkWidget *window )
 
 static void sterm_main_title_changed_cb ( GtkWidget *terminal )
 {
-  gchar* title = (gchar*) vte_terminal_get_window_title ( VTE_TERMINAL ( terminal ) );
+  const gchar* title = vte_terminal_get_window_title ( VTE_TERMINAL ( terminal ) );
   
   if ( title == NULL )
     title = "STerm";
 
   gtk_window_set_title ( GTK_WINDOW ( main_window ), title );
-
-  g_free ( title );
 }
 
 static gboolean sterm_main_commandline ( int argc, char* argv[] )
