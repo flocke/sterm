@@ -1,0 +1,53 @@
+.\" Manpage for sterm
+.\" Contact flocke@shadowice.org to correct errors and typos.
+
+.TH man 1 "11 Apr 2014" "0.1" "STerm man page"
+
+.SH NAME
+STerm \- a simple and minimalistic terminal emulator
+
+.SH SYNOPSIS
+sterm [OPTIONS]
+
+.SH DESCRIPTION
+STerm is a simple terminal emulator which aims to be lightweight, fast and configurable
+while still providing all needed features by using libvte-2.90 as its backend.
+It was designed for tiling window managers with just a single window and no context menus.
+
+.SH OPTIONS
+.TP
+.B \-c, --config
+Use an alternate configuration file (default: /home/$USER/.config/sterm/sterm.ini).
+.TP
+.B \-e, --execute
+Launch the given program instead of the users default shell.
+.TP
+.B --help-all
+Show all available options for STerm.
+
+.SH GTK-OPTIONS
+Default options for all GTK+ applications.
+
+.TP
+.B --class=CLASS
+Set the class for the main window of sterm.
+.TP
+.B --name=NAME
+Set the name for the main window of sterm.
+.TP
+.B --display=DISPLAY
+Set the display sterm should be started on.
+.TP
+.B --help-gtk
+Show all available GTK+ options.
+
+.SH FILES
+.TP
+.I /home/$USER/.config/sterm/sterm.ini
+The default configuration file for all instances of STerm.
+
+.SH BUGS
+No known bugs (for now).
+
+.SH AUTHOR
+Jakob Nixdorf <flocke@shadowice.org>

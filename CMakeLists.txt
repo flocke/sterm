@@ -9,6 +9,9 @@ option ( WITH_URLPIPE "Build the application to extract urls from a text" ON )
 
 pkg_check_modules ( "VTE" REQUIRED "vte-2.90" )
 
+set ( MAN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/man/man1 )
+set ( DOC_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/doc/sterm )
+
 ### sterm-core ################################################################
 
 if ( WITH_LIBRARY )
@@ -34,7 +37,8 @@ else ( WITH_LIBRARY )
 endif ( WITH_LIBRARY )
 
 install ( TARGETS sterm DESTINATION bin )
-install ( FILES sterm.ini DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/sterm )
+install ( FILES sterm.ini DESTINATION ${DOC_INSTALL_DIR} )
+install ( FILES sterm.1 DESTINATION ${MAN_INSTALL_DIR} )
 
 ### sterm-urlpipe #############################################################
 
