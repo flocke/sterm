@@ -74,7 +74,6 @@ int main ( int argc, char *argv[] )
   while ( buffer = g_data_input_stream_read_line ( data_stream, NULL, NULL, NULL ) )
     g_string_append_printf ( data, "%s\n", buffer );
 
-
   sterm_urlpipe_extract ( data->str, regex );
 
   g_free ( buffer );
