@@ -20,11 +20,6 @@
 
 #include "terminal.h"
 
-typedef struct {
-  gchar *name;
-  void *callback;
-} STermFunction;
-
 void sterm_functions_init ( STermTerminal *sterm );
 
 #endif
