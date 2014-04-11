@@ -9,8 +9,10 @@ option ( WITH_URLPIPE "Build the application to extract urls from a text" ON )
 
 pkg_check_modules ( "VTE" REQUIRED "vte-2.90" )
 
-set ( MAN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/man/man1 )
+set ( BIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin )
 set ( DOC_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/doc/sterm )
+set ( LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX} )
+set ( MAN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/man/man1 )
 
 ### sterm-core ################################################################
 
@@ -20,7 +22,7 @@ if ( WITH_LIBRARY )
   set_target_properties ( sterm-core PROPERTIES INCLUDE_DIRECTORIES "${VTE_INCLUDE_DIRS}" )
   target_link_libraries ( sterm-core ${VTE_LIBRARIES} )
 
-  install ( TARGETS sterm-core DESTINATION lib${LIB_SUFFIX} )
+  install ( TARGETS sterm-core DESTINATION ${LIB_INSTALL_DIR} )
 endif ( WITH_LIBRARY )
 
 ### sterm #####################################################################
@@ -36,7 +38,7 @@ else ( WITH_LIBRARY )
   target_link_libraries ( sterm ${VTE_LIBRARIES} )
 endif ( WITH_LIBRARY )
 
-install ( TARGETS sterm DESTINATION bin )
+install ( TARGETS sterm DESTINATION ${BIN_INSTALL_DIR} )
 install ( FILES sterm.ini DESTINATION ${DOC_INSTALL_DIR} )
 install ( FILES sterm.1 DESTINATION ${MAN_INSTALL_DIR} )
 
@@ -50,5 +52,5 @@ if ( WITH_URLPIPE )
   set_target_properties ( sterm-urlpipe PROPERTIES INCLUDE_DIRECTORIES "${GIO-UNIX_INCLUDE_DIRS}" )
   target_link_libraries ( sterm-urlpipe ${GIO-UNIX_LIBRARIES} )
 
-  install ( TARGETS sterm-urlpipe DESTINATION bin )
+  install ( TARGETS sterm-urlpipe DESTINATION ${BIN_INSTALL_DIR} )
 endif ( WITH_URLPIPE )
