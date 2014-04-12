@@ -137,6 +137,7 @@ STermConfig* sterm_configuration_new_from_file ( gchar *config_file )
   config->scroll_on_output = sterm_configuration_get_boolean ( keyfile, "general", "scroll_on_output", DEFAULT_SCROLL_ON_OUTPUT );
   config->rewrap_on_resize = sterm_configuration_get_boolean ( keyfile, "general", "rewrap_on_resize", DEFAULT_REWRAP_ON_RESIZE );
   config->word_chars = sterm_configuration_get_string ( keyfile, "general", "word_chars", DEFAULT_WORD_CHARS );
+  config->encoding = sterm_configuration_get_string ( keyfile, "general", "encoding", DEFAULT_ENCODING );
 
   /* Cursor configuration */
   temp = sterm_configuration_get_string ( keyfile, "cursor", "shape", DEFAULT_CURSOR_SHAPE );

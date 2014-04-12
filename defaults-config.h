@@ -56,6 +56,10 @@
 #define DEFAULT_WORD_CHARS "-A-Za-z0-9,./?%&#:_"
 #endif
 
+#ifndef DEFAULT_ENCODING
+#define DEFAULT_ENCODING "UTF-8"
+#endif
+
 #ifndef DEFAULT_CURSOR_SHAPE
 #define DEFAULT_CURSOR_SHAPE "block"
 #endif
