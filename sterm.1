@@ -15,12 +15,15 @@ while still providing all needed features by using libvte-2.90 as its backend.
 It was designed for tiling window managers with just a single window and no context menus.
 
 .SH OPTIONS
+
 .TP
 .B \-c, --config
-Use an alternate configuration file (default: /home/$USER/.config/sterm/sterm.ini).
+Use an alternate configuration file (default: \fB$HOME/.config/sterm/sterm.ini\fP).
+
 .TP
 .B \-e, --execute
 Launch the given program instead of the users default shell.
+
 .TP
 .B --help-all
 Show all available options for STerm.
@@ -31,20 +34,54 @@ Default options for all GTK+ applications.
 .TP
 .B --class=CLASS
 Set the class for the main window of STerm.
+
 .TP
 .B --name=NAME
 Set the name for the main window of STerm.
+
 .TP
 .B --display=DISPLAY
 Set the display STerm should be started on.
+
 .TP
 .B --help-gtk
 Show all available GTK+ options.
 
-.SH FILES
+.SH COMMANDS
+Available commands that can be bound to key combinations using the \fB[keys]\fP section in sterm.ini(1).
+
 .TP
-.I /home/$USER/.config/sterm/sterm.ini
-The default configuration file for all instances of STerm.
+.B command_pipe <pipe command>
+Pipe the currently visible text into a custom command.
+
+.TP
+.B insert <text>
+Insert a custom text into the terminal as if the user entered it.
+
+.TP
+.B paste <primary or clipboard>
+Paste the content of the selected buffer to the terminal.
+
+.TP
+.B set_font <font string>
+Set the current terminal font to a given string in the format \fBFONT SIZE\fP.
+
+.TP
+.B zoom <step>
+Change the font size in the given step.
+
+.SH FILES
+
+.TP
+.BI $HOME/.config/sterm/sterm.ini
+User configuration file.
+
+.TP
+.BI /usr/share/doc/sterm/sterm.ini
+Example configuration file.
+
+.SH SEE ALSO
+sterm.ini(1)
 
 .SH BUGS
 No known bugs (for now).

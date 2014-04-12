@@ -1,0 +1,140 @@
+.\" Manpage for the STerm configuration file
+.\" Contact flocke@shadowice.org to correct errors and typos.
+
+.TH man 1 "11 Apr 2014" "0.1" "sterm.ini man page"
+
+.SH NAME
+sterm.ini \- STerm main configuration file
+
+.SH DESCRIPTION
+\fBsterm.ini\fP is the main configuration file for STerm. If not specified on the command line,
+it will be searched for in \fB$HOME/.config/sterm/sterm.ini\fP or the default options will be used.
+
+Lines beginning with a "#" character are comments. All other non-empty lines have consist of parameters
+and their values in the default ini-style:
+
+parameter=value
+
+See \fB/usr/share/docs/sterm/sterm.ini\fP for an example configuration file.
+
+.SH [general] SECTION
+
+.TP
+.B scrollback=<number of lines>
+This specifies the number of lines to save in the scrollback buffer.
+.br
+\fB> 0\fP: Set a finite number of lines to save.
+.br
+\fB< 0\fP: Set an infinite scrollback.
+.br
+\fB  0\fP: Disable the scrollback completely (\fBdefault\fP).
+
+.TP
+.B allow_bold=<true or false>
+This specifies whether the terminal should draw bold text (default: \fBtrue\fP).
+
+.TP
+.B audible_bell=<true or false>
+Should the audible bell be enabled (default: \fBfalse\fP)?
+
+.TP
+.B visible_bell=<true or false>
+Should the visible bell be enabled (default: \fBtrue\fP)?
+
+.TP
+.B scroll_on_keystroke=<true or false>
+Sets whether the terminal should scroll to the bottom on a key-press (default: \fBtrue\fP).
+
+.TP
+.B scroll_on_output=<true or false>
+Sets whether the terminal should scroll to the bottom on new output (default: \fBfalse\fP).
+
+.TP
+.B rewrap_on_resize=<true or false>
+This specifies whether the content should be rewrapped on resize (default: \fBfalse\fP).
+
+.TP
+.B autohide_mouse=<true or false>
+Should the mouse cursor hide on key-press (default: \fBfalse\fP)?
+
+.TP
+.B word_chars=<chars>
+Specifies a list of chars that are recognized as word characters for the double-click selection (default: \fB-A-Za-z0-9,./?%&#:_\fP).
+
+.TP
+.B enconding=<encoding>
+Sets the encoding to use for the terminal (default: \fBUTF-8\fP).
+
+.SH [cursor] SECTION
+
+.TP
+.B shape=<shape name>
+Sets the shape of the cursor to display.
+.br
+\fBblock\fP:     Show the default block as cursor (\fBdefault\fP).
+.br
+\fBbeam\fP:      Show a vertical beam as cursor.
+.br
+\fBunderline\fP: Show an underline as cursor.
+
+.TP
+.B blink=<blink mode>
+Sets the blinking mode of the cursor.
+.br
+\fBon\fP:     Enable the blinking of the cursor.
+.br
+\fBoff\fP:    Disable the blinking of the cursor.
+.br
+\fBsystem\fP: Use the GTK+ settings (\fBdefault\fP).
+
+.SH [theme] SECTION
+
+.TP
+.B font=<font string>
+Specifies the font to use for the terminal in the format \fBFONT SIZE\fP (default: \fBmonospace 10\fP).
+
+.TP
+.B foreground=<color string>
+Sets the color to use for the foreground as HTML color code (default: \fB#a0a0a0\fP).
+
+.TP
+.B background=<color string>
+Sets the color to use for the background as HTML color code (default: \fB#1b1d1e\fP).
+
+.TP
+.B colorN=<color string>
+Speficies the color number N in the color palette as HTML color code (default: \fBmolokai color theme\fP).
+
+.SH [keys] SECTION
+
+In this section keybindings can be defined in the following format:
+
+.B MODIFIERS-KEY=COMMAND ARGUMENTS
+
+The \fBMODIFIERS\fP string can be any combination of \fBShift\fP, \fBControl\fP and \fBMod1\fP or nothing at all.
+.br
+The \fBKEY\fP has to be a valid entry of \fBgdkkeysyms.h\fP without the prefix GDK_KEY_.
+.br
+See the \fBCOMMANDS\fP section in sterm(1) for a description of all possible commands and their arguments.
+
+\fBExample\fP:
+.RS
+Control-Shift-underscore=zoom -2000
+.RE
+
+\fBWARNING\fP: If you use the \fBShift\fP modifier you have to use the uppercase version of \fBKEY\fP.
+
+.SH FILES
+.TP
+.BI $USER/.config/sterm/sterm.ini
+User configuration file.
+
+.TP
+.BI /usr/share/doc/sterm/sterm.ini
+Example configuration file.
+
+.SH SEE ALSO
+sterm(1)
+
+.SH AUTHOR
+Jakob Nixdorf <flocke@shadowice.org>

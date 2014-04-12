@@ -41,6 +41,7 @@ endif ( WITH_LIBRARY )
 install ( TARGETS sterm DESTINATION ${BIN_INSTALL_DIR} )
 install ( FILES sterm.ini DESTINATION ${DOC_INSTALL_DIR} )
 install ( FILES sterm.1 DESTINATION ${MAN_INSTALL_DIR} )
+install ( FILES sterm.ini.1 DESTINATION ${MAN_INSTALL_DIR} )
 
 ### sterm-urlpipe #############################################################
 
