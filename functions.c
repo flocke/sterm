@@ -62,6 +62,11 @@ void sterm_functions_insert ( STermTerminal *sterm, gchar *text )
   vte_terminal_feed_child ( sterm->terminal, text, -1 );
 }
 
+void sterm_functions_set_font ( STermTerminal *sterm, gchar *font )
+{
+  vte_terminal_set_font_from_string ( sterm->terminal, font );
+}
+
 void sterm_functions_init ( STermTerminal *sterm )
 {
   sterm->functions = g_hash_table_new ( g_str_hash, g_str_equal );
@@ -69,6 +74,7 @@ void sterm_functions_init ( STermTerminal *sterm )
   g_hash_table_insert ( sterm->functions, "command_pipe", sterm_functions_command_pipe );
   g_hash_table_insert ( sterm->functions, "insert", sterm_functions_insert );
   g_hash_table_insert ( sterm->functions, "paste", sterm_functions_paste );
+  g_hash_table_insert ( sterm->functions, "set_font", sterm_functions_set_font );
   g_hash_table_insert ( sterm->functions, "zoom", sterm_functions_zoom );
 }
 
