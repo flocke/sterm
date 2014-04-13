@@ -20,25 +20,24 @@ su -c "make install"
 
 CMake options:
 
- -DWITH_LIBRARY={ON,OFF}   Build the shared library libsterm-core.so ?
+ -DWITH_LIBRARY={ON,OFF}   This controls whether to build the shared library
+                           libsterm-core.so (to be used in further projects).
                            Default: ON
- -DWITH_URLPIPE={ON,OFF}   Build the sterm-urlpipe binary ?
+
+ -DWITH_URLPIPE={ON,OFF}   This controls whether to build the urlpipe tool.
                            Default: ON
 
 Usage
 -----
 
-The example configuration file (sterm.ini) is located in the source
-directory and gets installed to /usr/share/doc/sterm/.
-Copy the file to ~/.config/sterm/sterm.ini and adapt it to your needs.
-
-Run 'sterm --help-all' to see all possible arguments.
-
-Basic arguments:
- -c FILE    Use a different configuration file.
- -e COMMAND Run the given command in the new terminal.
+See 'man sterm' for help on the main application.
+The main configuration file, sterm.ini, should be placed in $HOME/.config/sterm/,
+an example can be found in the doc/ subdirectory and will be installed into
+/usr/share/doc/sterm/. See 'man sterm.ini' for a description of the options.
 
 
----------------------------------------------------------------------------
+Copyright
+---------
+
 Copyright (c) 2014 by Jakob Nixdorf <flocke@shadowice.org>
 

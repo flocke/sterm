@@ -5,4 +5,3 @@ project ( STerm )
 if ( WITH_URLPIPE )
   add_subdirectory ( urlpipe )
 endif ( WITH_URLPIPE )
-
