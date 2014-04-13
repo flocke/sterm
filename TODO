@@ -1,3 +1,1 @@
- * Write manpages for sterm and sterm-urlpipe
- * Expand sterm-urlpipe to read from a file
  * Write a tabbed version of sterm based on the sterm-core library (maybe)

@@ -25,12 +25,20 @@
 #define DEFAULT_REGEX "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s\\n]|/)))"
 #endif
 
-void sterm_urlpipe_extract ( gchar *data, gchar *pattern )
+gchar *pattern = DEFAULT_REGEX;
+
+void sterm_urlpipe_extract ( GDataInputStream *stream )
 {
   GError *error = NULL;
   GMatchInfo *match = NULL;
 
   GRegex *regex = g_regex_new ( pattern, 0, 0, &error );
+  GString *data = g_string_new ( "" );
+
+  gchar *buffer;
+  while ( buffer = g_data_input_stream_read_line ( stream, NULL, NULL, NULL ) )
+    g_string_append_printf ( data, "%s\n", buffer );
+  g_free ( buffer );
 
   if ( error ) {
     g_warning ( "ERROR: Failed to create URL regex: %s\n", error->message );
@@ -38,7 +46,7 @@ void sterm_urlpipe_extract ( gchar *data, gchar *pattern )
     return;
   }
 
-  g_regex_match ( regex, data, 0, &match );
+  g_regex_match ( regex, data->str, 0, &match );
 
   while ( g_match_info_matches ( match ) ) {
     gchar *word = g_match_info_fetch ( match, 0 );
@@ -49,38 +57,48 @@ void sterm_urlpipe_extract ( gchar *data, gchar *pattern )
 
   g_match_info_free ( match );
   g_regex_unref ( regex );
+  g_string_free ( data, TRUE );
   if ( error )
     g_error_free ( error );
 }
 
 int main ( int argc, char *argv[] )
 {
-  GString *data = g_string_new ( "" );
-  gchar *regex = DEFAULT_REGEX;
-
   gchar *config_file = DEFAULT_CONFIG_FILE;
+  GFile *file = NULL;
+  GInputStream *stream = NULL;
   GKeyFile *keyfile = g_key_file_new ();
 
   if ( g_key_file_load_from_file ( keyfile, config_file, G_KEY_FILE_NONE, NULL ) ) {
-    regex = g_key_file_get_string ( keyfile, "urlpipe", "regex", NULL );
-    if ( regex == NULL )
-      regex = DEFAULT_REGEX;
+    pattern = g_key_file_get_string ( keyfile, "urlpipe", "regex", NULL );
+    if ( pattern == NULL )
+      pattern = DEFAULT_REGEX;
   }
 
-  GInputStream *stream = g_unix_input_stream_new ( STDIN_FILENO, FALSE );
-  GDataInputStream *data_stream = g_data_input_stream_new ( stream );
-
-  gchar *buffer;
-  while ( buffer = g_data_input_stream_read_line ( data_stream, NULL, NULL, NULL ) )
-    g_string_append_printf ( data, "%s\n", buffer );
-
-  sterm_urlpipe_extract ( data->str, regex );
-
-  g_free ( buffer );
-  g_free ( regex );
-  g_free ( config_file );
   g_key_file_free ( keyfile );
-  g_string_free ( data, TRUE );
 
+  if ( argc > 1 ) {
+    if ( g_strcmp0 ( argv[1], "-" ) == 0 ) {
+      stream = g_unix_input_stream_new ( STDIN_FILENO, FALSE );
+    } else {
+      file = g_file_new_for_path ( argv[1] );
+      if ( g_file_query_exists ( file, NULL ) )
+        stream = (GInputStream*) g_file_read ( file, NULL, NULL );
+    }
+  } else {
+    stream = g_unix_input_stream_new ( STDIN_FILENO, FALSE );
+  }
+
+  if ( stream ) {
+    GDataInputStream *data_stream = g_data_input_stream_new ( stream );
+
+    sterm_urlpipe_extract ( data_stream );
+
+    g_input_stream_close ( stream, NULL, NULL );
+  }
+
+  g_free ( pattern );
+  g_free ( config_file );
+ 
   return 0;
 }
