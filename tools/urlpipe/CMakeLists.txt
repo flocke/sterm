@@ -6,7 +6,7 @@ pkg_check_modules ( "GIO-UNIX" REQUIRED "gio-unix-2.0" )
 
 include_directories ( ${GIO-UNIX_INCLUDE_DIRS} )
 
-add_executable ( sterm-urlpipe sterm-urlpipe.c )
+add_executable ( sterm-urlpipe urlpipe.c )
 
 target_link_libraries ( sterm-urlpipe ${GIO-UNIX_LIBRARIES} )
 

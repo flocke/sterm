@@ -33,18 +33,19 @@ void sterm_urlpipe_extract ( GDataInputStream *stream )
   GMatchInfo *match = NULL;
 
   GRegex *regex = g_regex_new ( pattern, 0, 0, &error );
-  GString *data = g_string_new ( "" );
-
-  gchar *buffer;
-  while ( buffer = g_data_input_stream_read_line ( stream, NULL, NULL, NULL ) )
-    g_string_append_printf ( data, "%s\n", buffer );
-  g_free ( buffer );
 
   if ( error ) {
     g_warning ( "ERROR: Failed to create URL regex: %s\n", error->message );
     g_clear_error ( &error );
     return;
   }
+
+  GString *data = g_string_new ( "" );
+
+  gchar *buffer;
+  while ( buffer = g_data_input_stream_read_line ( stream, NULL, NULL, NULL ) )
+    g_string_append_printf ( data, "%s\n", buffer );
+  g_free ( buffer );
 
   g_regex_match ( regex, data->str, 0, &match );
 
@@ -58,8 +59,6 @@ void sterm_urlpipe_extract ( GDataInputStream *stream )
   g_match_info_free ( match );
   g_regex_unref ( regex );
   g_string_free ( data, TRUE );
-  if ( error )
-    g_error_free ( error );
 }
 
 int main ( int argc, char *argv[] )
