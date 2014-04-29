@@ -35,13 +35,13 @@ gchar* sterm_configuration_get_string ( GKeyFile *keyfile, const gchar *section,
     gchar *value = g_key_file_get_string ( keyfile, section, key, &error );
 
     if ( error ) {
-      value = default_value;
+      value = g_strdup ( default_value );
       g_error_free ( error );
     }
 
     return value;
   } else
-    return default_value;
+    return g_strdup ( default_value );
 }
 
 gboolean sterm_configuration_get_boolean ( GKeyFile *keyfile, const gchar *section, const gchar* key, gboolean default_value )
