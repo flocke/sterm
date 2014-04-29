@@ -25,7 +25,7 @@
 #define DEFAULT_REGEX "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s\\n]|/)))"
 #endif
 
-gchar *pattern = DEFAULT_REGEX;
+gchar *pattern = NULL;
 
 void sterm_urlpipe_extract ( GDataInputStream *stream )
 {
@@ -70,9 +70,10 @@ int main ( int argc, char *argv[] )
 
   if ( g_key_file_load_from_file ( keyfile, config_file, G_KEY_FILE_NONE, NULL ) ) {
     pattern = g_key_file_get_string ( keyfile, "urlpipe", "regex", NULL );
-    if ( pattern == NULL )
-      pattern = DEFAULT_REGEX;
   }
+
+  if ( pattern == NULL )
+    pattern = g_strdup ( DEFAULT_REGEX );
 
   g_key_file_free ( keyfile );
 
