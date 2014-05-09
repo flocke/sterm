@@ -36,7 +36,8 @@ void sterm_terminal_function_caller ( STermTerminal *sterm, gchar *string )
 
   void (*func)(STermTerminal*, gchar*) = g_hash_table_lookup ( sterm->functions, command[0] );
 
-  func ( sterm, command[1] );
+  if ( func )
+    func ( sterm, command[1] );
 
   g_free ( command );
 }
