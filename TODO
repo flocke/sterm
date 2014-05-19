@@ -1,1 +1,3 @@
- * Write a tabbed version of sterm based on the sterm-core library (maybe)
+* Add a function to reload the config
+* Add a function to kill and restart the child
+* Write a tabbed version of sterm based on the sterm-core library (maybe)
