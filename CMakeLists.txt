@@ -8,6 +8,7 @@ option ( WITH_LIBRARY "Build the shared library" ON )
 option ( WITH_URLPIPE "Build the application to extract urls from a text" ON )
 
 set ( BIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin )
+set ( DESKTOP_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications )
 set ( DOC_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/doc/sterm )
 set ( LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX} )
 set ( MAN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/man/man1 )

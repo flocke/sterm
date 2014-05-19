@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=STerm
+Comment=Simple and minimalistic terminal emulator
+#GenericName=Terminal Emulator
+Exec=sterm
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+Categories=GTK;System;TerminalEmulator;
+StartupNotify=true
