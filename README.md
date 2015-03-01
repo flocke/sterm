@@ -38,5 +38,5 @@ an example can be found in the doc/ subdirectory and will be installed into
 
 ## Copyright
 
-Copyright (c) 2014 by Jakob Nixdorf <flocke@shadowice.org>
+Copyright (c) 2014-2015 by Jakob Nixdorf <flocke@shadowice.org>
 
