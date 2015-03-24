@@ -2,7 +2,7 @@ cmake_minimum_required ( VERSION 2.8.8 )
 
 project ( STerm )
 
-pkg_check_modules ( "VTE" REQUIRED "vte-2.90" )
+pkg_check_modules ( "VTE" REQUIRED "vte-2.91" )
 
 include_directories ( ${VTE_INCLUDE_DIRS} )
 

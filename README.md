@@ -1,10 +1,10 @@
-# STerm - A simple and minimalistic terminal emulator based on VTE-2.90
+# STerm - A simple and minimalistic terminal emulator based on VTE-2.91
 
 ## Requirements
 
 * glib2
 * GTK+-3.0
-* VTE-2.90
+* VTE-2.91
 * cmake >= 2.8.8
 
 ## Installation
