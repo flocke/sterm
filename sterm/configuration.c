@@ -167,18 +167,18 @@ STermConfig* sterm_configuration_new_from_file ( gchar *config_file )
   g_free ( font_name );
 
   temp = sterm_configuration_get_string ( keyfile, "theme", "foreground", DEFAULT_COLOR_FOREGROUND );
-  gdk_color_parse ( temp, &config->foreground );
+  gdk_rgba_parse ( &config->foreground, temp );
 
   temp = sterm_configuration_get_string ( keyfile, "theme", "background", DEFAULT_COLOR_BACKGROUND );
-  gdk_color_parse ( temp, &config->background );
+  gdk_rgba_parse ( &config->background, temp );
 
   config->palette_size = DEFAULT_PALETTE_SIZE;
 
   gchar **default_colors = g_strsplit ( DEFAULT_COLOR_PALETTE, " ", DEFAULT_PALETTE_SIZE );
-  config->colors = g_new0 ( GdkColor, DEFAULT_PALETTE_SIZE );
+  config->colors = g_new0 ( GdkRGBA, DEFAULT_PALETTE_SIZE );
   for ( iter = 0; iter < DEFAULT_PALETTE_SIZE; iter++ ) {
     temp = sterm_configuration_get_string ( keyfile, "theme", g_strdup_printf ( "color%d", iter ), default_colors[iter] );
-    gdk_color_parse ( temp, &config->colors[iter] );
+    gdk_rgba_parse ( &config->colors[iter], temp );
   }
   g_free ( default_colors );
 

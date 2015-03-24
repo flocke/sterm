@@ -45,9 +45,9 @@ typedef struct {
   VteCursorBlinkMode cursor_blink;
   VteCursorShape cursor_shape;
 
-  GdkColor foreground;
-  GdkColor background;
-  GdkColor *colors;
+  GdkRGBA foreground;
+  GdkRGBA background;
+  GdkRGBA *colors;
   gint palette_size;
   PangoFontDescription *font;
 
