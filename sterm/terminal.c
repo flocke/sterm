@@ -99,8 +99,8 @@ void sterm_terminal_start_child ( STermTerminal *sterm, gchar *command )
   else
     g_shell_parse_argv ( command, 0, &args, 0 );
 
-  if ( ! vte_terminal_fork_command_full ( sterm->terminal, VTE_PTY_DEFAULT, NULL, args, NULL,
-                                          spawn_flags, NULL, NULL, &sterm->child_pid, &error ) )
+  if ( ! vte_terminal_spawn_sync ( sterm->terminal, VTE_PTY_DEFAULT, NULL, args, NULL,
+                                          spawn_flags, NULL, NULL, &sterm->child_pid, NULL, &error ) )
     g_warning ( "ERROR: Failed to spawn child: %s\n", error->message );
   else
     g_signal_connect ( G_OBJECT ( sterm->terminal ), "child-exited", G_CALLBACK ( sterm_terminal_child_exited_cb ), sterm );
