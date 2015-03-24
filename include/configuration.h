@@ -49,7 +49,7 @@ typedef struct {
   GdkColor background;
   GdkColor *colors;
   gint palette_size;
-  gchar *font;
+  PangoFontDescription *font;
 
   STermKeySym *keys;
   gsize key_number;

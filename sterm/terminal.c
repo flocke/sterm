@@ -82,7 +82,7 @@ void sterm_terminal_setup ( STermTerminal *sterm )
   vte_terminal_set_cursor_blink_mode ( sterm->terminal, sterm->config->cursor_blink );
   vte_terminal_set_cursor_shape ( sterm->terminal, sterm->config->cursor_shape );
 
-  vte_terminal_set_font_from_string ( sterm->terminal, sterm->config->font );
+  vte_terminal_set_font ( sterm->terminal, sterm->config->font );
   vte_terminal_set_colors ( sterm->terminal, &sterm->config->foreground, &sterm->config->background, sterm->config->colors, sterm->config->palette_size );
 }
 

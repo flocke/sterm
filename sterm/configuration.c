@@ -25,6 +25,7 @@
 
 void sterm_configuration_destroy ( STermConfig *config )
 {
+  pango_font_description_free ( config->font );
   g_free ( config->word_chars );
   g_free ( config->font );
   g_free ( config->colors );
@@ -161,7 +162,9 @@ STermConfig* sterm_configuration_new_from_file ( gchar *config_file )
     config->cursor_blink = VTE_CURSOR_BLINK_SYSTEM;
 
   /* Theme configuration */
-  config->font = sterm_configuration_get_string ( keyfile, "theme", "font", DEFAULT_FONT );
+  gchar* font_name = sterm_configuration_get_string ( keyfile, "theme", "font", DEFAULT_FONT );
+  config->font = pango_font_description_from_string ( font_name );
+  g_free ( font_name );
 
   temp = sterm_configuration_get_string ( keyfile, "theme", "foreground", DEFAULT_COLOR_FOREGROUND );
   gdk_color_parse ( temp, &config->foreground );

@@ -69,7 +69,8 @@ void sterm_functions_insert ( STermTerminal *sterm, gchar *text )
 
 void sterm_functions_set_font ( STermTerminal *sterm, gchar *font )
 {
-  vte_terminal_set_font_from_string ( sterm->terminal, font );
+  PangoFontDescription *font_desc = pango_font_description_from_string ( font );
+  vte_terminal_set_font ( sterm->terminal, font_desc );
 }
 
 void sterm_functions_init ( STermTerminal *sterm )
