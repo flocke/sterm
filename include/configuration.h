@@ -43,8 +43,8 @@ typedef struct {
   gchar *word_chars;
   gchar *encoding;
 
-  VteTerminalCursorBlinkMode cursor_blink;
-  VteTerminalCursorShape cursor_shape;
+  VteCursorBlinkMode cursor_blink;
+  VteCursorShape cursor_shape;
 
   GdkColor foreground;
   GdkColor background;
