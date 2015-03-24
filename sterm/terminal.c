@@ -75,7 +75,7 @@ void sterm_terminal_setup ( STermTerminal *sterm )
   vte_terminal_set_scroll_on_output ( sterm->terminal, sterm->config->scroll_on_output );
   vte_terminal_set_rewrap_on_resize ( sterm->terminal, sterm->config->rewrap_on_resize );
   vte_terminal_set_mouse_autohide ( sterm->terminal, sterm->config->mouse_autohide );
-  vte_terminal_set_word_chars ( sterm->terminal, sterm->config->word_chars );
+  // vte_terminal_set_word_char_exceptions ( sterm->terminal, sterm->config->word_char_exceptions );
   if ( ! vte_terminal_set_encoding ( sterm->terminal, sterm->config->encoding, &error ) )
     g_warning ( "WARNING: Failed to set terminal encoding: %s\n", error->message );
 

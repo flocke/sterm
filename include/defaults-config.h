@@ -57,9 +57,9 @@
 #define DEFAULT_MOUSE_AUTOHIDE FALSE
 #endif
 
-#ifndef DEFAULT_WORD_CHARS
-#define DEFAULT_WORD_CHARS "-A-Za-z0-9,./?%&#:_"
-#endif
+// #ifndef DEFAULT_WORD_CHAR_EXCEPTIONS
+// #define DEFAULT_WORD_CHAR_EXCEPTIONS NULL
+// #endif
 
 #ifndef DEFAULT_ENCODING
 #define DEFAULT_ENCODING "UTF-8"

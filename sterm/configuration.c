@@ -26,7 +26,7 @@
 void sterm_configuration_destroy ( STermConfig *config )
 {
   pango_font_description_free ( config->font );
-  g_free ( config->word_chars );
+  // g_free ( config->word_char_exceptions );
   g_free ( config->font );
   g_free ( config->colors );
   g_free ( config->keys );
@@ -141,7 +141,7 @@ STermConfig* sterm_configuration_new_from_file ( gchar *config_file )
   config->scroll_on_keystroke = sterm_configuration_get_boolean ( keyfile, "general", "scroll_on_keystroke", DEFAULT_SCROLL_ON_KEYSTROKE );
   config->scroll_on_output = sterm_configuration_get_boolean ( keyfile, "general", "scroll_on_output", DEFAULT_SCROLL_ON_OUTPUT );
   config->rewrap_on_resize = sterm_configuration_get_boolean ( keyfile, "general", "rewrap_on_resize", DEFAULT_REWRAP_ON_RESIZE );
-  config->word_chars = sterm_configuration_get_string ( keyfile, "general", "word_chars", DEFAULT_WORD_CHARS );
+  // config->word_char_exceptions = sterm_configuration_get_string ( keyfile, "general", "word_char_exceptions", DEFAULT_WORD_CHAR_EXCEPTIONS );
   config->encoding = sterm_configuration_get_string ( keyfile, "general", "encoding", DEFAULT_ENCODING );
 
   /* Cursor configuration */
