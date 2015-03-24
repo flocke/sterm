@@ -71,7 +71,6 @@ void sterm_terminal_setup ( STermTerminal *sterm )
   vte_terminal_set_scrollback_lines ( sterm->terminal, sterm->config->scrollback_lines );
   vte_terminal_set_allow_bold ( sterm->terminal, sterm->config->allow_bold );
   vte_terminal_set_audible_bell ( sterm->terminal, sterm->config->audible_bell );
-  vte_terminal_set_visible_bell ( sterm->terminal, sterm->config->visible_bell );
   vte_terminal_set_scroll_on_keystroke ( sterm->terminal, sterm->config->scroll_on_keystroke );
   vte_terminal_set_scroll_on_output ( sterm->terminal, sterm->config->scroll_on_output );
   vte_terminal_set_rewrap_on_resize ( sterm->terminal, sterm->config->rewrap_on_resize );

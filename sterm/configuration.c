@@ -137,7 +137,6 @@ STermConfig* sterm_configuration_new_from_file ( gchar *config_file )
   config->scrollback_lines = sterm_configuration_get_integer ( keyfile, "general", "scrollback", DEFAULT_SCROLLBACK_LINES );
   config->allow_bold = sterm_configuration_get_boolean ( keyfile, "general", "allow_bold", DEFAULT_ALLOW_BOLD );
   config->audible_bell = sterm_configuration_get_boolean ( keyfile, "general", "audible_bell", DEFAULT_AUDIBLE_BELL );
-  config->visible_bell = sterm_configuration_get_boolean ( keyfile, "general", "visible_bell", DEFAULT_VISIBLE_BELL );
   config->scroll_on_keystroke = sterm_configuration_get_boolean ( keyfile, "general", "scroll_on_keystroke", DEFAULT_SCROLL_ON_KEYSTROKE );
   config->scroll_on_output = sterm_configuration_get_boolean ( keyfile, "general", "scroll_on_output", DEFAULT_SCROLL_ON_OUTPUT );
   config->rewrap_on_resize = sterm_configuration_get_boolean ( keyfile, "general", "rewrap_on_resize", DEFAULT_REWRAP_ON_RESIZE );

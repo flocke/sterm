@@ -34,7 +34,6 @@ typedef struct {
 typedef struct {
   glong scrollback_lines;
   gboolean allow_bold;
-  gboolean visible_bell;
   gboolean audible_bell;
   gboolean scroll_on_keystroke;
   gboolean scroll_on_output;
