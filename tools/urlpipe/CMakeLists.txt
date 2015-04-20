@@ -10,5 +10,5 @@ add_executable ( sterm-urlpipe urlpipe.c )
 
 target_link_libraries ( sterm-urlpipe ${GIO-UNIX_LIBRARIES} )
 
-install ( TARGETS sterm-urlpipe DESTINATION ${BIN_INSTALL_DIR} )
-install ( FILES sterm-urlpipe.1 DESTINATION ${MAN_INSTALL_DIR} )
+install ( TARGETS sterm-urlpipe DESTINATION ${CMAKE_INSTALL_BINDIR} )
+install ( FILES sterm-urlpipe.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 )

@@ -13,11 +13,11 @@ if ( WITH_LIBRARY )
   target_link_libraries ( sterm-core ${VTE_LIBRARIES} )
   target_link_libraries ( sterm sterm-core )
 
-  install ( TARGETS sterm-core DESTINATION ${LIB_INSTALL_DIR} )
+  install ( TARGETS sterm-core DESTINATION ${CMAKE_INSTALL_LIBDIR} )
 else ( WITH_LIBRARY )
   add_executable ( sterm configuration.c functions.c terminal.c sterm.c )
 
   target_link_libraries ( sterm ${VTE_LIBRARIES} )
 endif ( WITH_LIBRARY )
 
-install ( TARGETS sterm DESTINATION ${BIN_INSTALL_DIR} )
+install ( TARGETS sterm DESTINATION ${CMAKE_INSTALL_BINDIR} )
