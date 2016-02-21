@@ -68,15 +68,6 @@ static void main_exit() {
   exit(EXIT_SUCCESS);
 }
 
-static void update_window_title() {
-  std::string title = terminal->get_window_title();
-
-  if ( title.empty() )
-    title = "sterm";
-
-  gtk_window_set_title(GTK_WINDOW(main_window), title.c_str());
-}
-
 static gboolean parse_commandline(int argc, char* argv[]) {
   gboolean success = true;
   GError *error = NULL;
@@ -120,7 +111,8 @@ int main(int argc, char *argv[]) {
 
   terminal->connect_callback("destroy", G_CALLBACK(main_exit));
   terminal->connect_callback("child-exited", G_CALLBACK(main_exit));
-  terminal->connect_callback("window-title-changed", G_CALLBACK(update_window_title));
+
+  terminal->link_property_to_terminal("window-title", G_OBJECT(main_window), "title");
 
   g_signal_connect(G_OBJECT(main_window), "destroy", G_CALLBACK(main_exit), NULL);
 

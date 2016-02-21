@@ -133,6 +133,11 @@ namespace sterm {
         g_signal_connect(G_OBJECT(m_terminal_widget), i_type.c_str(), i_callback, argument);
   }
 
+  void terminal::link_property_to_terminal(std::string i_terminal_property, GObject *i_target, std::string i_target_property) {
+    if ( m_terminal != NULL && i_target != NULL )
+      g_object_bind_property(G_OBJECT(m_terminal_widget), i_terminal_property.c_str(), i_target, i_target_property.c_str(), G_BINDING_DEFAULT);
+  }
+
   std::string terminal::get_window_title() {
     std::string title;
 
