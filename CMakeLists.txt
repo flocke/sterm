@@ -1,14 +1,15 @@
 # Minimal CMake version required
-cmake_minimum_required( VERSION 2.8.8 )
+cmake_minimum_required(VERSION 2.8.8)
 
-# Use pkg-config to find dependencies
-include( FindPkgConfig )
+# CMake modules
+include(FindPkgConfig)
+include(GNUInstallDirs)
 
 # Use the C++11 standard
 set(CMAKE_CXX_STANDARD 11)
 
 # Main project (use C++)
-project( sterm CXX )
+project(sterm CXX)
 
 # Version 0.1.0
 set(STERM_VERSION_MAJOR 0)
@@ -16,22 +17,27 @@ set(STERM_VERSION_MINOR 1)
 set(STERM_VERSION_PATCH 0)
 set(STERM_VERSION_STRING ${STERM_VERSION_MAJOR}.${STERM_VERSION_MINOR}.${STERM_VERSION_PATCH})
 
-# Build the test applications and enable tests
-option( WITH_TESTS "Build the tests" ON )
+# Build options
+option(WITH_TESTS "Build the (very basic) tests" ON)
+option(WITH_LIBRARY "Build and install the shared library" OFF)
 
 # Project include directory
-include_directories( ${CMAKE_SOURCE_DIR}/include )
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
+# Find the VTE library (version 2.91)
+pkg_check_modules("VTE" REQUIRED "vte-2.91")
+include_directories(${VTE_INCLUDE_DIRS})
 
 # Main source files
-add_subdirectory( src )
+add_subdirectory(src)
 
 # Testing
-if ( WITH_TESTS )
+if (WITH_TESTS)
   # Build the tests
-  add_subdirectory( tests )
+  add_subdirectory(tests)
   
   # Enable CMake testing (ctest)
   enable_testing()
-  add_test( NAME parse_config_file COMMAND ${CMAKE_BINARY_DIR}/tests/test_config ${CMAKE_SOURCE_DIR}/tests/test_config.ini )
-endif ( WITH_TESTS )
+  add_test(NAME parse_config_file COMMAND ${CMAKE_BINARY_DIR}/tests/test_config ${CMAKE_SOURCE_DIR}/tests/test_config.ini)
+endif (WITH_TESTS)
 
