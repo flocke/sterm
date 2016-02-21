@@ -192,6 +192,63 @@ namespace sterm {
     return(false);
   }
 
+  bool config::inifile_parse_keys(GKeyFile *i_keyfile, std::string i_section, std::vector<keysym> *i_target) {
+    if ( i_keyfile != NULL ) {
+      GError *error = NULL;
+
+      gsize length = 0;
+      gchar **keys = g_key_file_get_keys(i_keyfile, i_section.c_str(), &length, &error);
+
+      if ( error == NULL ) {
+        if ( ! i_target->empty() )
+          i_target->clear();
+
+        for ( int iter = 0; iter < length; iter++ ) {
+          keysym key;
+
+          gchar **parts = g_strsplit(keys[iter], "-", 0);
+          guint num = g_strv_length(parts);
+
+          bool add = true;
+
+          for ( int i = 0; i < num - 1; i++ ) {
+            if ( g_strcmp0(parts[i], "Mod1") == 0 ) {
+              key.modifier = (GdkModifierType) ( key.modifier | GDK_MOD1_MASK );
+            } else if ( g_strcmp0(parts[i], "Control") == 0 ) {
+              key.modifier = (GdkModifierType) ( key.modifier | GDK_CONTROL_MASK );
+            } else if ( g_strcmp0(parts[i], "Shift") == 0 ) {
+              key.modifier = (GdkModifierType) ( key.modifier | GDK_SHIFT_MASK );
+            } else {
+              g_warning("invalid key modifier: %s", parts[i]);
+              add = false;
+            }
+          }
+
+          key.keyval = gdk_keyval_from_name(parts[num - 1]);
+
+          if ( key.keyval == GDK_KEY_VoidSymbol ) {
+            g_warning("invalid key: %s", parts[num - 1]);
+            add = false;
+          }
+
+          if ( this->inifile_read_string(i_keyfile, i_section, keys[iter], &key.function) )
+            if ( add )
+              i_target->push_back(key);
+
+          g_free(parts);
+        }
+
+        g_free(keys);
+
+        return(true);
+      } else {
+        g_error_free(error);
+      }
+    }
+
+    return(false);
+  }
+
   void config::load_from_inifile(std::string i_filename) {
     GError *error = NULL;
 
@@ -223,6 +280,8 @@ namespace sterm {
     this->inifile_parse_color_palette(keyfile, "theme", "color", &m_color_palette);
 
     this->inifile_parse_font(keyfile, "theme", "font", &m_font);
+
+    this->inifile_parse_keys(keyfile, "keys", &m_keys);
 
     if ( keyfile != NULL ) {
       g_key_file_free(keyfile);

@@ -20,45 +20,45 @@
   THE SOFTWARE.
 */
 
-#ifndef __STERM_TERMINAL_HPP
-#define __STERM_TERMINAL_HPP
+#ifndef __STERM_FUNCTION_HANDLER_HPP
+#define __STERM_FUNCTION_HANDLER_HPP
 
 #include <string>
-
-#include <vte/vte.h>
+#include <unordered_map>
+#include <vector>
 
 #include "sterm/config.hpp"
+#include "sterm/functions.hpp"
+#include "sterm/terminal.hpp"
 
 namespace sterm {
 
-  class terminal {
+  typedef std::unordered_map<std::string, void(*)(sterm::terminal*, std::string)> function_map;
+
+  class function_handler {
     private:
-      config       *m_configuration = NULL;
-      VteTerminal  *m_terminal = NULL;
-      GtkWidget    *m_terminal_widget = NULL;
-      GtkContainer *m_container = NULL;
-      GPid          m_child_pid;
+      /* Static map to the available functions */
+      function_map          m_functions = {
+        { "command_pipe", functions::command_pipe }
+      };
 
-      bool          setup = false;
+      terminal             *m_terminal = NULL;
+      std::vector<keysym>   m_keys;
 
-      void          create_vte_terminal();
+      static gboolean       keypress_callback(GtkWidget *widget, GdkEventKey *event, function_handler *handler);
 
     public:
-                    terminal();
-                    terminal(config *configuration);
-                    ~terminal();
+                            function_handler();
+                            function_handler(config *configuration);
+                            function_handler(terminal *terminal);
+                            function_handler(config *configuration, terminal *terminal);
 
-      void          set_configuration(config *configuration);
-      void          setup_terminal();
+      void                  load_keys_from_config(config *configuration);
+      void                  attach_to_terminal(terminal *terminal);
 
-      void          attach_to_container(GtkContainer *container);
-      void          connect_callback(std::string type, GCallback callback);
-      void          connect_callback(std::string type, GCallback callback, void *argument);
+      void                  call_function(std::string function);
 
-      void          spawn_child(std::string command);
-
-      std::string   get_window_title();
-      std::string   get_text();
+      gboolean              handle_keypress(GdkEventKey *event);
   };
 
 }

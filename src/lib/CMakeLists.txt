@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.8)
 
 # Build the shared library
 if (WITH_LIBRARY)
-  add_library(sterm_lib SHARED config.cpp terminal.cpp)
+  add_library(sterm_lib SHARED config.cpp function_handler.cpp functions.cpp terminal.cpp)
 
   target_link_libraries(sterm_lib ${VTE_LIBRARIES})
 
@@ -13,7 +13,7 @@ if (WITH_LIBRARY)
 
   install(TARGETS sterm_lib DESTINATION ${CMAKE_INSTALL_LIBDIR})
 else (WITH_LIBRARY)
-  add_library(sterm_lib STATIC config.cpp terminal.cpp)
+  add_library(sterm_lib STATIC config.cpp function_handler.cpp functions.cpp terminal.cpp)
 
   target_link_libraries(sterm_lib ${VTE_LIBRARIES})
 endif(WITH_LIBRARY)

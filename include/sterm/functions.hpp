@@ -20,47 +20,19 @@
   THE SOFTWARE.
 */
 
-#ifndef __STERM_TERMINAL_HPP
-#define __STERM_TERMINAL_HPP
+#ifndef __STERM_FUNCTIONS_HPP
+#define __STERM_FUNCTIONS_HPP
 
 #include <string>
 
-#include <vte/vte.h>
-
-#include "sterm/config.hpp"
+#include "sterm/terminal.hpp"
 
 namespace sterm {
+  namespace functions {
 
-  class terminal {
-    private:
-      config       *m_configuration = NULL;
-      VteTerminal  *m_terminal = NULL;
-      GtkWidget    *m_terminal_widget = NULL;
-      GtkContainer *m_container = NULL;
-      GPid          m_child_pid;
+    void      command_pipe(sterm::terminal *i_terminal, std::string command);
 
-      bool          setup = false;
-
-      void          create_vte_terminal();
-
-    public:
-                    terminal();
-                    terminal(config *configuration);
-                    ~terminal();
-
-      void          set_configuration(config *configuration);
-      void          setup_terminal();
-
-      void          attach_to_container(GtkContainer *container);
-      void          connect_callback(std::string type, GCallback callback);
-      void          connect_callback(std::string type, GCallback callback, void *argument);
-
-      void          spawn_child(std::string command);
-
-      std::string   get_window_title();
-      std::string   get_text();
-  };
-
+  }
 }
 
 #endif

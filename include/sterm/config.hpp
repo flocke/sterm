@@ -35,8 +35,15 @@ namespace sterm {
   struct color {
     GdkRGBA               value;
     bool                  set;
-
     color() { set = false; }
+  };
+
+  struct keysym {
+    GdkModifierType modifier;
+    guint keyval;
+    std::string function;
+
+    keysym() { modifier = (GdkModifierType) 0; }
   };
 
   class config {
@@ -60,6 +67,8 @@ namespace sterm {
 
       PangoFontDescription   *m_font = NULL;
 
+      std::vector<keysym>     m_keys;
+
       bool                    inifile_read_string(GKeyFile *keyfile, std::string section, std::string key, std::string *target);
       bool                    inifile_read_gboolean(GKeyFile *keyfile, std::string section, std::string key, gboolean *target);
       bool                    inifile_read_gint(GKeyFile *keyfile, std::string section, std::string key, gint *target);
@@ -71,6 +80,8 @@ namespace sterm {
       bool                    inifile_parse_color_palette(GKeyFile *keyfile, std::string section, std::string prefix, std::vector<GdkRGBA> *target);
 
       bool                    inifile_parse_font(GKeyFile *keyfile, std::string section, std::string key, PangoFontDescription **target);
+
+      bool                    inifile_parse_keys(GKeyFile *keyfile, std::string section, std::vector<keysym> *target);
 
     public:
       config();
@@ -97,6 +108,8 @@ namespace sterm {
       std::vector<GdkRGBA>    get_color_palette() const { return(m_color_palette); }
 
       bool                    copy_font_description(PangoFontDescription **target);
+
+      std::vector<keysym>     get_keys() const { return(m_keys); }
 
   };
 

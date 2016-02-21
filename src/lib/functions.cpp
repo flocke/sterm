@@ -20,47 +20,34 @@
   THE SOFTWARE.
 */
 
-#ifndef __STERM_TERMINAL_HPP
-#define __STERM_TERMINAL_HPP
+#include <iostream>
 
-#include <string>
-
-#include <vte/vte.h>
-
-#include "sterm/config.hpp"
+#include "sterm/functions.hpp"
 
 namespace sterm {
+  namespace functions {
 
-  class terminal {
-    private:
-      config       *m_configuration = NULL;
-      VteTerminal  *m_terminal = NULL;
-      GtkWidget    *m_terminal_widget = NULL;
-      GtkContainer *m_container = NULL;
-      GPid          m_child_pid;
+    void command_pipe(sterm::terminal *i_terminal, std::string command) {
+      if ( i_terminal != NULL ) {
+        std::string text = i_terminal->get_text();
 
-      bool          setup = false;
+        FILE *output = popen(command.c_str(), "w");
 
-      void          create_vte_terminal();
+        if ( output ) {
+          fprintf(output, "%s", text.c_str());
 
-    public:
-                    terminal();
-                    terminal(config *configuration);
-                    ~terminal();
+          if ( ! ferror(output) ) {
+            if ( pclose(output) != 0 )
+              g_warning("failed to close the pipe: %s", command);
+          } else {
+            g_warning("failed to write to the pipe: %s", command);
+          }
+        } else {
+          g_warning("failed to open the pipe: %s", command);
+        }
+      }
+    }
 
-      void          set_configuration(config *configuration);
-      void          setup_terminal();
-
-      void          attach_to_container(GtkContainer *container);
-      void          connect_callback(std::string type, GCallback callback);
-      void          connect_callback(std::string type, GCallback callback, void *argument);
-
-      void          spawn_child(std::string command);
-
-      std::string   get_window_title();
-      std::string   get_text();
-  };
-
+  }
 }
 
-#endif

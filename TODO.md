@@ -3,11 +3,13 @@
 ## Feature compatibility with the pre-rewrite version
 
 * Example configuration
-* Function support
+* Add some more functions
 * man-pages
 * urlpipe tool
 
 ## Additional features
 
+* Use `g_object_bind_property` to link the titles
 * More test cases
+* Add a new function/plugin system based on Perl (or Lua)
 

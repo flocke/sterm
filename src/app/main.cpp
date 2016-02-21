@@ -24,12 +24,14 @@
 #include <gtk/gtk.h>
 
 #include "sterm/config.hpp"
+#include "sterm/function_handler.hpp"
 #include "sterm/terminal.hpp"
 
 std::string config_file = g_build_path ( "/", g_get_home_dir(), "/.config/sterm/sterm.ini", NULL );
 
 GtkWidget *main_window = NULL;
 sterm::config *configuration = NULL;
+sterm::function_handler *functions = NULL;
 sterm::terminal *terminal = NULL;
 
 gboolean running = false;
@@ -44,9 +46,16 @@ static GOptionEntry options[] {
 };
 
 static void main_exit() {
+  gtk_main_quit();
+
   if ( terminal != NULL ) {
     delete(terminal);
     terminal = NULL;
+  }
+
+  if ( functions != NULL ) {
+    delete(functions);
+    functions = NULL;
   }
 
   if ( configuration != NULL ) {
@@ -54,8 +63,9 @@ static void main_exit() {
     configuration = NULL;
   }
 
-  gtk_main_quit();
   running = false;
+
+  exit(EXIT_SUCCESS);
 }
 
 static void update_window_title() {
@@ -114,13 +124,12 @@ int main(int argc, char *argv[]) {
 
   g_signal_connect(G_OBJECT(main_window), "destroy", G_CALLBACK(main_exit), NULL);
 
+  functions = new sterm::function_handler(configuration, terminal);
+
   gtk_widget_show_all(main_window);
   running = true;
   gtk_main();
 
-  if ( running )
-    main_exit();
-
-  return(EXIT_SUCCESS);
+  return(EXIT_FAILURE);
 }
 
