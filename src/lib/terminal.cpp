@@ -156,5 +156,35 @@ namespace sterm {
     return(text);
   }
 
+  bool terminal::copy_font_description(PangoFontDescription **i_target) {
+    if ( m_terminal != NULL ) {
+      *i_target = pango_font_description_copy((PangoFontDescription*) vte_terminal_get_font(m_terminal));
+      return(true);
+    }
+
+    return(false);
+  }
+
+  void terminal::set_font_description(PangoFontDescription **i_font) {
+    if ( m_terminal != NULL && *i_font != NULL ) {
+      vte_terminal_set_font(m_terminal, *i_font);
+    }
+  }
+
+  void terminal::insert_text(std::string i_text) {
+    if ( m_terminal != NULL ) {
+      vte_terminal_feed_child(m_terminal, i_text.c_str(), -1);
+    }
+  }
+
+  void terminal::paste(paste_buffer i_buffer) {
+    if ( m_terminal != NULL ) {
+      if ( i_buffer == PRIMARY )
+        vte_terminal_paste_primary(m_terminal);
+      else if ( i_buffer == CLIPBOARD )
+        vte_terminal_paste_clipboard(m_terminal);
+    }
+  }
+
 }
 

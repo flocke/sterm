@@ -31,6 +31,11 @@
 
 namespace sterm {
 
+  enum paste_buffer {
+    PRIMARY,
+    CLIPBOARD
+  };
+
   class terminal {
     private:
       config       *m_configuration = NULL;
@@ -62,6 +67,11 @@ namespace sterm {
 
       std::string   get_window_title();
       std::string   get_text();
+      bool          copy_font_description(PangoFontDescription **target);
+
+      void          set_font_description(PangoFontDescription **font);
+      void          insert_text(std::string text);
+      void          paste(paste_buffer buffer);
   };
 
 }

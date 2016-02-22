@@ -39,7 +39,11 @@ namespace sterm {
     private:
       /* Static map to the available functions */
       function_map          m_functions = {
-        { "command_pipe", functions::command_pipe }
+        { "command_pipe", functions::command_pipe },
+        { "insert", functions::insert },
+        { "paste", functions::paste },
+        { "set_font", functions::set_font },
+        { "zoom", functions::zoom }
       };
 
       terminal             *m_terminal = NULL;

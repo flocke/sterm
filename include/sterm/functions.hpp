@@ -28,11 +28,17 @@
 #include "sterm/terminal.hpp"
 
 namespace sterm {
+
   namespace functions {
 
-    void      command_pipe(sterm::terminal *i_terminal, std::string command);
+    void      command_pipe(sterm::terminal *terminal, std::string command);
+    void      insert(sterm::terminal *terminal, std::string text);
+    void      paste(sterm::terminal *terminal, std::string selection);
+    void      set_font(sterm::terminal *terminal, std::string font);
+    void      zoom(sterm::terminal *terminal, std::string factor);
 
   }
+
 }
 
 #endif

@@ -23,31 +23,82 @@
 #include <iostream>
 
 #include "sterm/functions.hpp"
+#include "sterm/terminal.hpp"
 
 namespace sterm {
   namespace functions {
 
-    void command_pipe(sterm::terminal *i_terminal, std::string command) {
+    void command_pipe(sterm::terminal *i_terminal, std::string i_command) {
       if ( i_terminal != NULL ) {
         std::string text = i_terminal->get_text();
 
-        FILE *output = popen(command.c_str(), "w");
+        FILE *output = popen(i_command.c_str(), "w");
 
         if ( output ) {
           fprintf(output, "%s", text.c_str());
 
           if ( ! ferror(output) ) {
             if ( pclose(output) != 0 )
-              g_warning("failed to close the pipe: %s", command);
+              g_warning("failed to close the pipe: %s", i_command);
           } else {
-            g_warning("failed to write to the pipe: %s", command);
+            g_warning("failed to write to the pipe: %s", i_command);
           }
         } else {
-          g_warning("failed to open the pipe: %s", command);
+          g_warning("failed to open the pipe: %s", i_command);
+        }
+      }
+    }
+
+    void insert(sterm::terminal *i_terminal, std::string i_text) {
+      if ( i_terminal != NULL ) {
+        i_terminal->insert_text(i_text);
+      }
+    }
+
+    void paste(sterm::terminal *i_terminal, std::string i_buffer) {
+      if ( i_terminal != NULL ) {
+        if ( i_buffer.compare("primary") == 0 )
+          i_terminal->paste(PRIMARY);
+        else if ( i_buffer.compare("clipboard") == 0 )
+          i_terminal->paste(CLIPBOARD);
+      }
+    }
+
+    void set_font(sterm::terminal *i_terminal, std::string i_font) {
+      if ( i_terminal != NULL ) {
+        PangoFontDescription *font = pango_font_description_from_string(i_font.c_str());
+        if ( font != NULL ) {
+          i_terminal->set_font_description(&font);
+          pango_font_description_free(font);
+        }
+      }
+    }
+
+    void zoom(sterm::terminal *i_terminal, std::string i_increase) {
+      if ( i_terminal != NULL ) {
+        int increase = 1;
+        
+        try {
+          increase = std::stoi(i_increase);
+        } catch (const std::exception& except) {
+          g_warning("unable to convert string to int: %s", i_increase);
+          return;
+        }
+
+        PangoFontDescription *desc = NULL;
+        if ( i_terminal->copy_font_description(&desc) ) {
+          gint size = pango_font_description_get_size(desc);
+          size += increase * PANGO_SCALE;
+
+          pango_font_description_set_size(desc, size);
+
+          i_terminal->set_font_description(&desc);
+          pango_font_description_free(desc);
         }
       }
     }
 
   }
+
 }
 
