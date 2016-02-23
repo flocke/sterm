@@ -121,12 +121,6 @@ namespace sterm {
     }
   }
 
-  void terminal::connect_callback(std::string i_type, GCallback i_callback) {
-    if ( m_terminal_widget != NULL )
-      if ( i_callback != NULL && ! i_type.empty() )
-        g_signal_connect(G_OBJECT(m_terminal_widget), i_type.c_str(), i_callback, NULL);
-  }
-
   void terminal::connect_callback(std::string i_type, GCallback i_callback, void *argument) {
     if ( m_terminal_widget != NULL )
       if ( i_callback != NULL && ! i_type.empty() )

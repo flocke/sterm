@@ -58,7 +58,6 @@ namespace sterm {
 
       void          attach_to_container(GtkContainer *container);
 
-      void          connect_callback(std::string type, GCallback callback);
       void          connect_callback(std::string type, GCallback callback, void *argument);
 
       void          link_property_to_terminal(std::string terminal_property, GObject *target, std::string target_property);

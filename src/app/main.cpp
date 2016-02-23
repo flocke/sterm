@@ -108,9 +108,9 @@ int main(int argc, char *argv[]) {
   terminal->attach_to_container(GTK_CONTAINER(main_window));
 
   terminal->spawn_child(child_command);
-  terminal->connect_callback("child-exited", G_CALLBACK(main_exit));
+  terminal->connect_callback("child-exited", G_CALLBACK(main_exit), NULL);
 
-  terminal->connect_callback("destroy", G_CALLBACK(main_exit));
+  terminal->connect_callback("destroy", G_CALLBACK(main_exit), NULL);
   terminal->link_property_to_terminal("window-title", G_OBJECT(main_window), "title");
   g_signal_connect(G_OBJECT(main_window), "destroy", G_CALLBACK(main_exit), NULL);
 
