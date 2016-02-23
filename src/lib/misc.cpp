@@ -20,23 +20,25 @@
   THE SOFTWARE.
 */
 
-#ifndef __STERM_FUNCTIONS_HPP
-#define __STERM_FUNCTIONS_HPP
+#include <cstdlib>
+#include <iostream>
 
-#include <string>
+#include <glib.h>
 
-#include "sterm/terminal.hpp"
+#include "sterm/misc.hpp"
 
 namespace sterm {
-  namespace functions {
+  namespace misc {
 
-    void      command_pipe(sterm::terminal *terminal, std::string command);
-    void      insert(sterm::terminal *terminal, std::string text);
-    void      paste(sterm::terminal *terminal, std::string selection);
-    void      set_font(sterm::terminal *terminal, std::string font);
-    void      zoom(sterm::terminal *terminal, std::string factor);
+    std::string xdg_config_file_path(std::string i_app_name, std::string i_file_name) {
+      const char *xdg = std::getenv("XDG_CONFIG_HOME");
+
+      if ( xdg != NULL && xdg[0] != '\0' ) {
+        return(g_build_path("/", xdg, i_app_name.c_str(), i_file_name.c_str(), NULL));
+      } else
+        return(g_build_path("/", g_get_home_dir(), ".config", i_app_name.c_str(), i_file_name.c_str(), NULL));
+    }
 
   }
 }
 
-#endif

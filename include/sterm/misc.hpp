@@ -20,21 +20,15 @@
   THE SOFTWARE.
 */
 
-#ifndef __STERM_FUNCTIONS_HPP
-#define __STERM_FUNCTIONS_HPP
+#ifndef __STERM_MISC_HPP
+#define __STERM_MISC_HPP
 
 #include <string>
 
-#include "sterm/terminal.hpp"
-
 namespace sterm {
-  namespace functions {
+  namespace misc {
 
-    void      command_pipe(sterm::terminal *terminal, std::string command);
-    void      insert(sterm::terminal *terminal, std::string text);
-    void      paste(sterm::terminal *terminal, std::string selection);
-    void      set_font(sterm::terminal *terminal, std::string font);
-    void      zoom(sterm::terminal *terminal, std::string factor);
+    std::string       xdg_config_file_path(std::string app_name, std::string file_name);
 
   }
 }

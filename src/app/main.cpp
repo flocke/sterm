@@ -25,9 +25,10 @@
 
 #include "sterm/config.hpp"
 #include "sterm/function_handler.hpp"
+#include "sterm/misc.hpp"
 #include "sterm/terminal.hpp"
 
-std::string config_file = g_build_path ( "/", g_get_home_dir(), "/.config/sterm/sterm.ini", NULL );
+std::string config_file = sterm::misc::xdg_config_file_path("sterm", "sterm.ini");
 
 GtkWidget *main_window = NULL;
 sterm::config *configuration = NULL;
