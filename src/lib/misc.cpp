@@ -51,6 +51,24 @@ namespace sterm {
       return(output);
     }
 
+    std::vector<std::string> split(std::string i_input, const char i_delim, int i_length) {
+      std::vector<std::string> output;
+
+      std::stringstream stream(i_input);
+
+      std::string item;
+      for ( int i = 0; i < i_length - 1; i++ )
+        if ( ! stream.eof() ) {
+          std::getline(stream, item, i_delim);
+          output.push_back(item);
+        }
+
+      if ( ! stream.eof() )
+        output.push_back(std::string(std::istreambuf_iterator<char>(stream), {}));
+
+      return(output);
+    }
+
   }
 }
 

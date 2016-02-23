@@ -22,6 +22,7 @@
 
 #include <iostream>
 
+#include "sterm/misc.hpp"
 #include "sterm/function_handler.hpp"
 
 namespace sterm {
@@ -63,7 +64,7 @@ namespace sterm {
 
   void function_handler::call_function(std::string i_command) {
     if ( ! i_command.empty() ) {
-      gchar **command = g_strsplit(i_command.c_str(), " ", 2);
+      std::vector<std::string> command = sterm::misc::split(i_command, ' ', 2);
 
       void (*func)(terminal*, std::string) = NULL;
 
@@ -75,8 +76,6 @@ namespace sterm {
 
       if ( func != NULL )
         func(m_terminal, command[1]);
-
-      g_free(command);
     }
   }
 
