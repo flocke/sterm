@@ -21,6 +21,7 @@
 */
 
 #include "sterm/config.hpp"
+#include "sterm/misc.hpp"
 
 namespace sterm {
 
@@ -206,17 +207,16 @@ namespace sterm {
         for ( int iter = 0; iter < length; iter++ ) {
           keysym key;
 
-          gchar **parts = g_strsplit(keys[iter], "-", 0);
-          guint num = g_strv_length(parts);
+          std::vector<std::string> parts = sterm::misc::split(std::string(keys[iter]), '-');
 
           bool add = true;
 
-          for ( int i = 0; i < num - 1; i++ ) {
-            if ( g_strcmp0(parts[i], "Mod1") == 0 ) {
+          for ( int i = 0; i < parts.size() - 1; i++ ) {
+            if ( parts[i].compare("Mod1") == 0 ) {
               key.modifier = (GdkModifierType) ( key.modifier | GDK_MOD1_MASK );
-            } else if ( g_strcmp0(parts[i], "Control") == 0 ) {
+            } else if ( parts[i].compare("Control") == 0 ) {
               key.modifier = (GdkModifierType) ( key.modifier | GDK_CONTROL_MASK );
-            } else if ( g_strcmp0(parts[i], "Shift") == 0 ) {
+            } else if ( parts[i].compare("Shift") == 0 ) {
               key.modifier = (GdkModifierType) ( key.modifier | GDK_SHIFT_MASK );
             } else {
               g_warning("invalid key modifier: %s", parts[i]);
@@ -224,18 +224,16 @@ namespace sterm {
             }
           }
 
-          key.keyval = gdk_keyval_from_name(parts[num - 1]);
+          key.keyval = gdk_keyval_from_name(parts.back().c_str());
 
           if ( key.keyval == GDK_KEY_VoidSymbol ) {
-            g_warning("invalid key: %s", parts[num - 1]);
+            g_warning("invalid key: %s", parts.back());
             add = false;
           }
 
           if ( this->inifile_read_string(i_keyfile, i_section, keys[iter], &key.function) )
             if ( add )
               i_target->push_back(key);
-
-          g_free(parts);
         }
 
         g_free(keys);

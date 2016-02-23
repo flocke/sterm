@@ -24,11 +24,14 @@
 #define __STERM_MISC_HPP
 
 #include <string>
+#include <vector>
 
 namespace sterm {
   namespace misc {
 
-    std::string       xdg_config_file_path(std::string app_name, std::string file_name);
+    std::string               xdg_config_file_path(std::string app_name, std::string file_name);
+
+    std::vector<std::string>  split(std::string input, char delim);
 
   }
 }

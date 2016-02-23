@@ -21,7 +21,7 @@
 */
 
 #include <cstdlib>
-#include <iostream>
+#include <sstream>
 
 #include <glib.h>
 
@@ -37,6 +37,18 @@ namespace sterm {
         return(g_build_path("/", xdg, i_app_name.c_str(), i_file_name.c_str(), NULL));
       } else
         return(g_build_path("/", g_get_home_dir(), ".config", i_app_name.c_str(), i_file_name.c_str(), NULL));
+    }
+
+    std::vector<std::string> split(std::string i_input, const char i_delim) {
+      std::vector<std::string> output;
+
+      std::stringstream stream(i_input);
+
+      std::string item;
+      while ( std::getline(stream, item, i_delim) )
+        output.push_back(item);
+
+      return(output);
     }
 
   }
