@@ -4,7 +4,6 @@
 
 * Example configuration
 * man-pages
-* urlpipe tool
 
 ## Additional features
 
