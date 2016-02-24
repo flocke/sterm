@@ -24,10 +24,6 @@ option(WITH_LIBRARY "Build and install the shared library" OFF)
 # Project include directory
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-# Find the VTE library (version 2.91)
-pkg_check_modules("VTE" REQUIRED "vte-2.91")
-include_directories(${VTE_INCLUDE_DIRS})
-
 # Main source files
 add_subdirectory(src)
 
