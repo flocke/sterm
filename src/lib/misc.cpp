@@ -33,10 +33,16 @@ namespace sterm {
     std::string xdg_config_file_path(std::string i_app_name, std::string i_file_name) {
       const char *xdg = std::getenv("XDG_CONFIG_HOME");
 
-      if ( xdg != NULL && xdg[0] != '\0' ) {
-        return(g_build_path("/", xdg, i_app_name.c_str(), i_file_name.c_str(), NULL));
-      } else
-        return(g_build_path("/", g_get_home_dir(), ".config", i_app_name.c_str(), i_file_name.c_str(), NULL));
+      gchar *temp = NULL;
+      if ( xdg != NULL && xdg[0] != '\0' )
+        temp = g_build_path("/", xdg, i_app_name.c_str(), i_file_name.c_str(), NULL);
+      else
+        temp = g_build_path("/", g_get_home_dir(), ".config", i_app_name.c_str(), i_file_name.c_str(), NULL);
+
+      std::string output = temp;
+      g_free(temp);
+
+      return(output);
     }
 
     std::vector<std::string> split(std::string i_input, const char i_delim) {
