@@ -2,7 +2,6 @@
 
 ## Feature compatibility with the pre-rewrite version
 
-* Example configuration
 * man-pages
 
 ## Additional features
