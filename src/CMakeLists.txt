@@ -1,8 +1,10 @@
 # Minimal CMake version required
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 3.0.0)
 
 # Subdirectories
-add_subdirectory(lib)
 add_subdirectory(app)
-add_subdirectory(tools)
+add_subdirectory(lib)
 
+if(WITH_TOOLS)
+  add_subdirectory(tools)
+endif(WITH_TOOLS)

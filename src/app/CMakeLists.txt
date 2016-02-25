@@ -1,5 +1,5 @@
 # Minimal CMake version required
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 3.0.0)
 
 # Find vte-2.91
 pkg_check_modules("VTE" REQUIRED "vte-2.91")

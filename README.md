@@ -5,7 +5,7 @@
 * glib2
 * GTK+ 3.0
 * VTE 2.91
-* cmake >= 2.8.8
+* cmake >= 3.0.0
 
 ## Installation
 

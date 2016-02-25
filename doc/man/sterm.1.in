@@ -1,7 +1,7 @@
 .\" Manpage for sterm
 .\" Contact flocke@shadowice.org to correct errors and typos.
 
-.TH man 1 "25 Feb 2016" "0.1.0" "sterm man page"
+.TH man 1 "25 Feb 2016" "@sterm_VERSION@" "sterm man page"
 
 .SH NAME
 \fBsterm\fP \- a simple terminal emulator based on the VTE library
@@ -78,7 +78,7 @@ Change the font size in the given step.
 User configuration file (with \fB${XDG_CONFIG_HOME}\fP usually beeing \fB${HOME}/.config\fP).
 
 .TP
-.BI /usr/share/doc/sterm/sterm.ini
+.BI @CMAKE_INSTALL_FULL_DOCDIR@/sterm.ini
 Example configuration file.
 
 .SH SEE ALSO
