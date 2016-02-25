@@ -1,0 +1,91 @@
+.\" Manpage for sterm
+.\" Contact flocke@shadowice.org to correct errors and typos.
+
+.TH man 1 "25 Feb 2016" "0.1.0" "sterm man page"
+
+.SH NAME
+\fBsterm\fP \- a simple terminal emulator based on the VTE library
+
+.SH SYNOPSIS
+sterm [OPTIONS]
+
+.SH DESCRIPTION
+\fBsterm\fP is a simple terminal emulator which aims to be lightweight, fast and configurable while
+still providing all needed features by using the VTE library as backend. It was designed with
+tiling window managers in mind, so it only consists of a single window with no context menu.
+
+.SH OPTIONS
+
+.TP
+.B \-c, --config
+Use an alternative configuration file. (default: \fB${XDG_CONFIG_HOME}/sterm/sterm.ini\fP)
+
+.TP
+.B \-e, --execute
+Launch the given command instead of the users default shell.
+
+.TP
+.B --help-all
+Show all available options for sterm.
+
+.SH GTK-OPTIONS
+Default options for all GTK+ applications.
+
+.TP
+.B --class=CLASS
+Set the class for the main window of sterm.
+
+.TP
+.B --name=NAME
+Set the name for the main window of sterm.
+
+.TP
+.B --display=DISPLAY
+Set the display sterm should be started on.
+
+.TP
+.B --help-gtk
+Show all available GTK+ options.
+
+.SH COMMANDS
+Available commands that can be bound to key combinations using the \fB[keys]\fP
+section in sterm.ini(1).
+
+.TP
+.B command_pipe <pipe command>
+Pipe the currently visible text into a custom command.
+
+.TP
+.B insert <text>
+Insert a custom text into the terminal as if the user entered it.
+
+.TP
+.B paste <primary or clipboard>
+Paste the content of the selected buffer to the terminal.
+
+.TP
+.B set_font <font string>
+Set the current terminal font to a given string in the format \fBFONT SIZE\fP.
+
+.TP
+.B zoom <step>
+Change the font size in the given step.
+
+.SH FILES
+
+.TP
+.BI ${XDG_CONFIG_HOME}/sterm/sterm.ini
+User configuration file (with \fB${XDG_CONFIG_HOME}\fP usually beeing \fB${HOME}/.config\fP).
+
+.TP
+.BI /usr/share/doc/sterm/sterm.ini
+Example configuration file.
+
+.SH SEE ALSO
+sterm.ini(1)
+
+.SH BUGS
+No known bugs (for now).
+
+.SH AUTHOR
+Jakob Nixdorf <flocke@shadowice.org>

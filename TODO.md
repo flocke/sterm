@@ -2,7 +2,7 @@
 
 ## Feature compatibility with the pre-rewrite version
 
-* man-pages
+* Final release preparations
 
 ## Additional features
 
