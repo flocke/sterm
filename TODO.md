@@ -2,6 +2,7 @@
 
 ## Feature compatibility with the pre-rewrite version
 
+* man-page for sterm-urlpipe
 * Final release preparations
 
 ## Additional features
