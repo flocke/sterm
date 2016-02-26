@@ -1,7 +1,8 @@
 [Desktop Entry]
 Version=1.0
-Name=sterm
-Comment=Simple terminal emulator
+Name=STerm
+Comment=Simple Terminal Emulator
+Comment[de]=Einfaches Terminal-Programm
 Exec=sterm
 Icon=utilities-terminal
 Terminal=false

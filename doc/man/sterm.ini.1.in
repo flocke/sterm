@@ -1,13 +1,13 @@
 .\" Manpage for the sterm configuration file
 .\" Contact flocke@shadowice.org to correct errors and typos.
 
-.TH man 1 "25 Feb 2016" "@sterm_VERSION@" "sterm.ini man page"
+.TH man 1 "25 Feb 2016" "@STerm_VERSION@" "sterm.ini man page"
 
 .SH NAME
-\fBsterm.ini\fP \- main configuration file for sterm(1)
+\fBsterm.ini\fP \- main configuration file for STerm
 
 .SH DESCRIPTION
-\fBsterm.ini\fP is the main configuration file for \fBsterm\fP. If not given on the command line,
+\fBsterm.ini\fP is the main configuration file for \fBSTerm\fP. If not given on the command line,
 it will be searched for under \fB${XDG_CONFIG_HOME}/sterm/sterm.ini\fP or the default settings will
 be used.
 

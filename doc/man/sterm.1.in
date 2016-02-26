@@ -1,16 +1,16 @@
 .\" Manpage for sterm
 .\" Contact flocke@shadowice.org to correct errors and typos.
 
-.TH man 1 "25 Feb 2016" "@sterm_VERSION@" "sterm man page"
+.TH man 1 "25 Feb 2016" "@STerm_VERSION@" "sterm man page"
 
 .SH NAME
-\fBsterm\fP \- a simple terminal emulator based on the VTE library
+\fBSTerm\fP \- a simple terminal emulator based on the VTE library
 
 .SH SYNOPSIS
 sterm [OPTIONS]
 
 .SH DESCRIPTION
-\fBsterm\fP is a simple terminal emulator which aims to be lightweight, fast and configurable while
+\fBSTerm\fP is a simple terminal emulator which aims to be lightweight, fast and configurable while
 still providing all needed features by using the VTE library as backend. It was designed with
 tiling window managers in mind, so it only consists of a single window with no context menu.
 
@@ -26,22 +26,22 @@ Launch the given command instead of the users default shell.
 
 .TP
 .B --help-all
-Show all available options for sterm.
+Show all available options for STerm.
 
 .SH GTK-OPTIONS
 Default options for all GTK+ applications.
 
 .TP
 .B --class=CLASS
-Set the class for the main window of sterm.
+Set the class for the main window of STerm.
 
 .TP
 .B --name=NAME
-Set the name for the main window of sterm.
+Set the name for the main window of STerm.
 
 .TP
 .B --display=DISPLAY
-Set the display sterm should be started on.
+Set the display STerm should be started on.
 
 .TP
 .B --help-gtk

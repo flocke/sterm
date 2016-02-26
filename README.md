@@ -1,4 +1,4 @@
-# sterm - a minimalistic terminal emulator based on the VTE library
+# STerm - a minimalistic terminal emulator based on the VTE library
 
 ## Requirements
 
@@ -36,7 +36,7 @@ the basic options. The main configuration file should be placed at
 
 ## Rewrite
 
-This is the rewrite of my first version of sterm, which can still be found in the `old-and-broken`
+This is the rewrite of my first version of STerm, which can still be found in the `old-and-broken`
 branch on GitHub. It has the same dependencies and should be mostly feature compatible with the old
 version (including the config file syntax and options). That's why a update to this new version
 should be possible without any problems.

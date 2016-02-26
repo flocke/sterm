@@ -83,7 +83,8 @@ static gboolean parse_commandline(int argc, char* argv[]) {
   gboolean success = true;
   GError *error = NULL;
 
-  GOptionContext *context = g_option_context_new(" - a simple terminal emulator based on VTE");
+  GOptionContext *context = g_option_context_new(NULL);
+  g_option_context_set_summary(context, "STerm - a simple terminal emulator based on the VTE library");
   g_option_context_add_main_entries(context, options, NULL);
   g_option_context_add_group(context, gtk_get_option_group(true));
   if ( ! g_option_context_parse(context, &argc, &argv, &error) ) {
@@ -107,7 +108,7 @@ int main(int argc, char *argv[]) {
   configuration = new sterm::config(config_file);
 
   main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(main_window), "sterm");
+  gtk_window_set_title(GTK_WINDOW(main_window), "STerm");
   gtk_container_set_border_width(GTK_CONTAINER(main_window), 0);
 
   terminal = new sterm::terminal(configuration);
