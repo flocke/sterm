@@ -107,6 +107,8 @@ int main(int argc, char *argv[]) {
 
   configuration = new sterm::config(config_file);
 
+  gtk_window_set_default_icon_name("utilities-terminal");
+
   main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(main_window), "STerm");
   gtk_container_set_border_width(GTK_CONTAINER(main_window), 0);
