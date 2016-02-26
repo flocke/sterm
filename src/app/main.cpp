@@ -46,7 +46,7 @@ static GOptionEntry options[] {
   { NULL }
 };
 
-static void main_exit() {
+static void main_cleanup() {
   gtk_main_quit();
 
   if ( terminal != NULL ) {
@@ -65,8 +65,18 @@ static void main_exit() {
   }
 
   running = false;
+}
+
+static void main_exit_cb(GtkWidget *i_widget) {
+  main_cleanup();
 
   exit(EXIT_SUCCESS);
+}
+
+static void main_exit_with_status_cb(GtkWidget* i_widget, int status) {
+  main_cleanup();
+
+  exit(WIFEXITED(status) ? WEXITSTATUS(status) : EXIT_FAILURE);
 }
 
 static gboolean parse_commandline(int argc, char* argv[]) {
@@ -109,11 +119,11 @@ int main(int argc, char *argv[]) {
   terminal->attach_to_container(GTK_CONTAINER(main_window));
 
   terminal->spawn_child(child_command);
-  terminal->connect_callback("child-exited", G_CALLBACK(main_exit), NULL);
+  terminal->connect_callback("child-exited", G_CALLBACK(main_exit_with_status_cb), NULL);
 
-  terminal->connect_callback("destroy", G_CALLBACK(main_exit), NULL);
+  terminal->connect_callback("destroy", G_CALLBACK(main_exit_cb), NULL);
   terminal->link_property_to_terminal("window-title", G_OBJECT(main_window), "title");
-  g_signal_connect(G_OBJECT(main_window), "destroy", G_CALLBACK(main_exit), NULL);
+  g_signal_connect(G_OBJECT(main_window), "destroy", G_CALLBACK(main_exit_cb), NULL);
 
   functions = new sterm::function_handler(configuration, terminal);
 
@@ -121,6 +131,7 @@ int main(int argc, char *argv[]) {
   running = true;
   gtk_main();
 
+  main_cleanup();
   return(EXIT_FAILURE);
 }
 
