@@ -84,14 +84,18 @@ static gboolean parse_commandline(int argc, char* argv[]) {
   GError *error = NULL;
 
   GOptionContext *context = g_option_context_new(NULL);
+
   g_option_context_set_summary(context, "STerm - a simple terminal emulator based on the VTE library");
   g_option_context_add_main_entries(context, options, NULL);
   g_option_context_add_group(context, gtk_get_option_group(true));
+
   if ( ! g_option_context_parse(context, &argc, &argv, &error) ) {
     g_warning("failed to parse the commandline options: %s", error->message);
     g_error_free(error);
     success = false;
   }
+
+  g_option_context_free(context);
 
   return(success);
 }
