@@ -236,7 +236,7 @@ namespace sterm {
               i_target->push_back(key);
         }
 
-        g_free(keys);
+        g_strfreev(keys);
 
         return(true);
       } else {

@@ -92,25 +92,29 @@ namespace sterm {
   void terminal::spawn_child(std::string i_command) {
     if ( m_terminal != NULL ) {
       GError *error = NULL;
-      gchar **args = 0;
+      gchar **args = NULL;
       GSpawnFlags spawn_flags = G_SPAWN_SEARCH_PATH;
 
       if ( i_command.empty() ) {
         gchar *user_shell = vte_get_user_shell();
+
         g_shell_parse_argv(user_shell, 0, &args, 0);
+
         g_free(user_shell);
       } else {
         g_shell_parse_argv(i_command.c_str(), 0, &args, 0);
       }
 
-      if ( vte_terminal_spawn_sync(m_terminal, VTE_PTY_DEFAULT, NULL, args, NULL, spawn_flags, NULL, NULL, &m_child_pid, NULL, &error) ) {
+      vte_terminal_spawn_sync(m_terminal, VTE_PTY_DEFAULT, NULL, args, NULL, spawn_flags, NULL, NULL, &m_child_pid, NULL, &error);
+
+      if ( error == NULL ) {
         vte_terminal_watch_child(m_terminal, m_child_pid);
       } else {
         g_warning("failed to spawn child process: %s", error->message);
         g_error_free(error);
       }
       
-      g_free(args);
+      g_strfreev(args);
     }
   }
 
