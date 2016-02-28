@@ -48,6 +48,7 @@ int main(int argc, char **argv) {
   gint scrollback_lines = conf.get_scrollback_lines();
   gboolean allow_bold = conf.get_allow_bold();
   gboolean audible_bell = conf.get_audible_bell();
+  gboolean urgent_on_bell = conf.get_urgent_on_bell();
   gboolean scroll_on_keystroke = conf.get_scroll_on_keystroke();
   gboolean scroll_on_output = conf.get_scroll_on_output();
   gboolean rewrap_on_resize = conf.get_rewrap_on_resize();
@@ -74,6 +75,11 @@ int main(int argc, char **argv) {
 
   if ( audible_bell != true ) {
     std::cout << "Fail: audible_bell is not true" << std::endl;
+    success = false;
+  }
+
+  if ( urgent_on_bell != false ) {
+    std::cout << "Fail: urgent_on_bell is not false" << std::endl;
     success = false;
   }
 

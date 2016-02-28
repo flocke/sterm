@@ -263,6 +263,7 @@ namespace sterm {
     this->inifile_read_gint(keyfile, "general", "scrollback", &m_scrollback_lines);
     this->inifile_read_gboolean(keyfile, "general", "allow_bold", &m_allow_bold);
     this->inifile_read_gboolean(keyfile, "general", "audible_bell", &m_audible_bell);
+    this->inifile_read_gboolean(keyfile, "general", "urgent_on_bell", &m_urgent_on_bell);
     this->inifile_read_gboolean(keyfile, "general", "scroll_on_keystroke", &m_scroll_on_keystroke);
     this->inifile_read_gboolean(keyfile, "general", "scroll_on_output", &m_scroll_on_output);
     this->inifile_read_gboolean(keyfile, "general", "rewrap_on_resize", &m_rewrap_on_resize);

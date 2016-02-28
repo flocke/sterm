@@ -39,6 +39,10 @@ This specifies whether the terminal should draw bold text. (default: \fBtrue\fP)
 Should the audible bell be enabled? (default: \fBfalse\fP)
 
 .TP
+.B urgent_on_bell=<true or false>
+Set an urgency hint for the window upon receiving a bell signal? (default: \fBtrue\fP)
+
+.TP
 .B scroll_on_keystroke=<true or false>
 Sets whether the terminal should scroll to the bottom on a key-press. (default: \fBtrue\fP)
 

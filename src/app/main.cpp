@@ -73,10 +73,22 @@ static void main_exit_cb(GtkWidget *i_widget) {
   exit(EXIT_SUCCESS);
 }
 
-static void main_exit_with_status_cb(GtkWidget* i_widget, int status) {
+static void main_exit_with_status_cb(GtkWidget *i_widget, int status) {
   main_cleanup();
 
   exit(WIFEXITED(status) ? WEXITSTATUS(status) : EXIT_FAILURE);
+}
+
+static void main_bell_cb(GtkWidget *i_widget) {
+  if ( main_window != NULL ) {
+    // Any old hint has to be removed for the window manager to
+    // recognize the new one.
+    gtk_window_set_urgency_hint(GTK_WINDOW(main_window), FALSE);
+
+    if ( configuration != NULL )
+      if ( configuration->get_urgent_on_bell() )
+        gtk_window_set_urgency_hint(GTK_WINDOW(main_window), TRUE);
+  }
 }
 
 static gboolean parse_commandline(int argc, char* argv[]) {
@@ -126,10 +138,13 @@ int main(int argc, char *argv[]) {
   terminal->attach_to_container(GTK_CONTAINER(main_window));
 
   terminal->spawn_child(child_command);
-  terminal->connect_callback("child-exited", G_CALLBACK(main_exit_with_status_cb), NULL);
 
+  terminal->connect_callback("child-exited", G_CALLBACK(main_exit_with_status_cb), NULL);
+  terminal->connect_callback("bell", G_CALLBACK(main_bell_cb), NULL);
   terminal->connect_callback("destroy", G_CALLBACK(main_exit_cb), NULL);
+
   terminal->link_property_to_terminal("window-title", G_OBJECT(main_window), "title");
+
   g_signal_connect(G_OBJECT(main_window), "destroy", G_CALLBACK(main_exit_cb), NULL);
 
   functions = new sterm::function_handler(configuration, terminal);

@@ -51,6 +51,7 @@ namespace sterm {
       gint                    m_scrollback_lines = 0;
       gboolean                m_allow_bold = true;
       gboolean                m_audible_bell = false;
+      gboolean                m_urgent_on_bell = true;
       gboolean                m_scroll_on_keystroke = true;
       gboolean                m_scroll_on_output = false;
       gboolean                m_rewrap_on_resize = false;
@@ -93,6 +94,7 @@ namespace sterm {
       gint                    get_scrollback_lines() const { return(m_scrollback_lines); }
       gboolean                get_allow_bold() const { return(m_allow_bold); }
       gboolean                get_audible_bell() const { return(m_audible_bell); }
+      gboolean                get_urgent_on_bell() const { return(m_urgent_on_bell); }
       gboolean                get_scroll_on_keystroke() const { return(m_scroll_on_keystroke); }
       gboolean                get_scroll_on_output() const { return(m_scroll_on_output); }
       gboolean                get_rewrap_on_resize() const { return(m_rewrap_on_resize); }
