@@ -1,7 +1,7 @@
 .\" Manpage for the sterm configuration file
 .\" Contact flocke@shadowice.org to correct errors and typos.
 
-.TH man 1 "25 Feb 2016" "@STerm_VERSION@" "sterm.ini man page"
+.TH man 1 "25 Feb 2016" "@sterm_VERSION@" "sterm.ini man page"
 
 .SH NAME
 \fBsterm.ini\fP \- main configuration file for STerm
@@ -89,20 +89,23 @@ Sets the blinking mode of the cursor.
 .TP
 .B font=<font string>
 Specifies the font to use for the terminal in the format \fBFONT SIZE\fP. (default:
-\fBmonospace 10\fP)
+\fBMonospace 10\fP)
 
 .TP
 .B foreground=<color string>
-Sets the color to use for the foreground as HTML color code. (default: \fB#a0a0a0\fP)
+Sets the color to use for the foreground (see below for the supported color formats).
 
 .TP
 .B background=<color string>
-Sets the color to use for the background as HTML color code. (default: \fB#1b1d1e\fP)
+Sets the color to use for the background (see below for the supported color formats).
 
 .TP
 .B colorN=<color string>
-Speficies the color number N (0-15) in the color palette as HTML color code. (default:
-\fBmolokai color theme\fP)
+Speficies the color number N (0-15) in the color palette (see below for the supported color
+formats).
+.br
+\fBWarning\fP: Only if all 16 colors are set the palette is valid, if this is not the case
+STerm will fall back on the default VTE colors.
 
 .SH [keys]
 
@@ -123,8 +126,23 @@ arguments.
 Control-Shift-underscore=zoom -2
 .RE
 
-\fBWARNING\fP: If you use the \fBShift\fP modifier you have to use the uppercase version of
+\fBWarning\fP: If you use the \fBShift\fP modifier you have to use the uppercase version of
 \fBKEY\fP.
+
+.SH COLORS
+
+STerm supports all color formats which the Gdk library is able to parse:
+
+\fB1)\fP standard names taken from the X11 rgb.txt file
+.br
+\fB2)\fP hexadecimal values in the form \fB#rgb\fP, \fB#rrggbb\fP, \fB#rrrgggbbb\fP or
+\fB#rrrrggggbbbb\fP
+.br
+\fB3)\fP RGB colors in the form \fBrgb(r,g,b)\fP, with \fBr\fP, \fBg\fP and \fBb\fP beeing integers
+between 0 and 255
+.br
+\fB4)\fP RGBA colors in the form \fBrgba(r,g,b,a)\fP, with \fBr\fP, \fBg\fP and \fBb\fP beeing
+integers between 0 and 255 and \fBa\fP beeing a float between 0 and 1
 
 .SH FILES
 .TP

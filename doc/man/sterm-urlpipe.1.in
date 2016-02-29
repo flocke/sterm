@@ -1,7 +1,7 @@
 .\" Manpage for sterm-urlpipe
 .\" Contact flocke@shadowice.org to correct errors and typos.
 
-.TH man 1 "25 Feb 2016" "@STerm_VERSION@" "sterm-urlpipe man page"
+.TH man 1 "25 Feb 2016" "@sterm_VERSION@" "sterm-urlpipe man page"
 
 .SH NAME
 \fBsterm-urlpipe\fP \- extract URLs from text data

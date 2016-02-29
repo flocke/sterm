@@ -10,8 +10,8 @@ add_library(libsterm SHARED config.cpp function_handler.cpp functions.cpp misc.c
 target_link_libraries(libsterm ${VTE_LIBRARIES})
 
 set_target_properties(libsterm PROPERTIES OUTPUT_NAME sterm)
-set_target_properties(libsterm PROPERTIES VERSION ${STerm_VERSION})
-set_target_properties(libsterm PROPERTIES SOVERSION ${STerm_VERSION_MAJOR})
+set_target_properties(libsterm PROPERTIES VERSION ${sterm_VERSION})
+set_target_properties(libsterm PROPERTIES SOVERSION ${sterm_VERSION_MAJOR})
 
 # Install the sterm library
 install(TARGETS libsterm DESTINATION ${CMAKE_INSTALL_LIBDIR})

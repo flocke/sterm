@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.0.0)
 set(CMAKE_CXX_STANDARD 11)
 
 # Project name
-project(STerm VERSION 0.1.0 LANGUAGES CXX)
+project(sterm VERSION 0.1.1 LANGUAGES CXX)
 
 # CMake modules
 include(FindPkgConfig)
