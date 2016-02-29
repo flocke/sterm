@@ -30,7 +30,7 @@ namespace sterm {
   function_handler::function_handler() {}
 
   function_handler::function_handler(config *i_configuration) {
-    this->load_keys_from_config(i_configuration);
+    this->attach_config(i_configuration);
   }
 
   function_handler::function_handler(terminal *i_terminal) {
@@ -38,7 +38,7 @@ namespace sterm {
   }
 
   function_handler::function_handler(config *i_configuration, terminal *i_terminal) {
-    this->load_keys_from_config(i_configuration);
+    this->attach_config(i_configuration);
     this->attach_to_terminal(i_terminal);
   }
 
@@ -49,9 +49,9 @@ namespace sterm {
     return(false);
   }
 
-  void function_handler::load_keys_from_config(config *i_configuration) {
+  void function_handler::attach_config(config *i_configuration) {
     if ( i_configuration != NULL )
-      m_keys = i_configuration->get_keys();
+      m_configuration = i_configuration;
   }
 
   void function_handler::attach_to_terminal(terminal *i_terminal) {
@@ -75,20 +75,20 @@ namespace sterm {
       }
 
       if ( func != NULL )
-        func(m_terminal, command[1]);
+        if ( command.size() > 1 )
+          func(m_terminal, command[1]);
+        else
+          func(m_terminal, std::string());
     }
   }
 
   gboolean function_handler::handle_keypress(GdkEventKey *i_event) {
-    guint keyval = i_event->keyval;
-    guint modifier = i_event->state;
+    if ( m_configuration != NULL ) {
+      std::string function;
 
-    for ( int iter = 0; iter < m_keys.size(); iter++ ) {
-      if ( ( modifier & ( m_keys[iter].modifier ) ) == ( m_keys[iter].modifier ) ) {
-        if ( keyval == m_keys[iter].keyval ) {
-          this->call_function(m_keys[iter].function);
-          return(true);
-        }
+      if ( m_configuration->get_key_function(i_event->keyval, i_event->state, &function) ) {
+        this->call_function(function);
+        return(true);
       }
     }
 

@@ -42,12 +42,13 @@ namespace sterm {
         { "command_pipe", functions::command_pipe },
         { "insert", functions::insert },
         { "paste", functions::paste },
+        { "reload_config", functions::reload_config },
         { "set_font", functions::set_font },
         { "zoom", functions::zoom }
       };
 
+      config               *m_configuration = NULL;
       terminal             *m_terminal = NULL;
-      std::vector<keysym>   m_keys;
 
       static gboolean       keypress_callback(GtkWidget *widget, GdkEventKey *event, function_handler *handler);
 
@@ -57,7 +58,7 @@ namespace sterm {
                             function_handler(terminal *terminal);
                             function_handler(config *configuration, terminal *terminal);
 
-      void                  load_keys_from_config(config *configuration);
+      void                  attach_config(config *configuration);
       void                  attach_to_terminal(terminal *terminal);
 
       void                  call_function(std::string function);

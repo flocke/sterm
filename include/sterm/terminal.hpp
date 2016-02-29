@@ -64,6 +64,8 @@ namespace sterm {
 
       void          spawn_child(std::string command);
 
+      void          reload_configuration();
+
       std::string   get_window_title();
       std::string   get_text();
       bool          copy_font_description(PangoFontDescription **target);

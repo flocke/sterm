@@ -74,6 +74,8 @@ namespace sterm {
       if ( m_configuration->copy_font_description(&font) ) {
         vte_terminal_set_font(m_terminal, font);
         pango_font_description_free(font);
+      } else {
+        vte_terminal_set_font(m_terminal, NULL);
       }
 
       std::vector<GdkRGBA> color_palette = m_configuration->get_color_palette();
@@ -82,6 +84,9 @@ namespace sterm {
 
       if ( color_palette.size() == PALETTE_SIZE )
         vte_terminal_set_colors(m_terminal, NULL, NULL, color_palette.data(), PALETTE_SIZE);
+      else
+        vte_terminal_set_default_colors(m_terminal);
+
       if ( foreground.set )
         vte_terminal_set_color_foreground(m_terminal, &(foreground.value));
       if ( background.set )
@@ -134,6 +139,13 @@ namespace sterm {
   void terminal::link_property_to_terminal(std::string i_terminal_property, GObject *i_target, std::string i_target_property) {
     if ( m_terminal != NULL && i_target != NULL )
       g_object_bind_property(G_OBJECT(m_terminal_widget), i_terminal_property.c_str(), i_target, i_target_property.c_str(), G_BINDING_DEFAULT);
+  }
+
+  void terminal::reload_configuration() {
+    if ( m_configuration != NULL ) {
+      m_configuration->reload_inifile();
+      this->setup_terminal();
+    }
   }
 
   std::string terminal::get_window_title() {

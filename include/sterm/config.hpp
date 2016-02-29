@@ -23,6 +23,7 @@
 #ifndef __STERM_CONFIG_HPP
 #define __STERM_CONFIG_HPP
 
+#define DEFAULT_FONT "Monospace 10"
 #define PALETTE_SIZE 16
 
 #include <string>
@@ -48,6 +49,8 @@ namespace sterm {
 
   class config {
     private:
+      std::string             m_current_file;
+
       gint                    m_scrollback_lines = 0;
       gboolean                m_allow_bold = true;
       gboolean                m_audible_bell = false;
@@ -90,6 +93,7 @@ namespace sterm {
       ~config();
 
       void                    load_from_inifile(std::string filename);
+      void                    reload_inifile();
 
       gint                    get_scrollback_lines() const { return(m_scrollback_lines); }
       gboolean                get_allow_bold() const { return(m_allow_bold); }
@@ -110,6 +114,7 @@ namespace sterm {
       std::vector<GdkRGBA>    get_color_palette() const { return(m_color_palette); }
 
       bool                    copy_font_description(PangoFontDescription **target);
+      bool                    get_key_function(guint keyval, guint modifiers, std::string *function);
 
       std::vector<keysym>     get_keys() const { return(m_keys); }
 

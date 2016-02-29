@@ -35,6 +35,9 @@ namespace sterm {
     if ( ! m_color_palette.empty() )
       m_color_palette.clear();
 
+    if ( ! m_keys.empty() )
+      m_keys.clear();
+
     if ( m_font != NULL )
       pango_font_description_free(m_font);
   }
@@ -141,6 +144,8 @@ namespace sterm {
     if ( i_keyfile != NULL ) {
       std::string temp;
 
+      i_target->set = false;
+
       if ( this->inifile_read_string(i_keyfile, i_section, i_key, &temp) )
         if ( gdk_rgba_parse(&(i_target->value), temp.c_str()) ) {
           i_target->set = true;
@@ -182,12 +187,16 @@ namespace sterm {
     if ( i_keyfile != NULL ) {
       std::string temp;
 
-      if ( this->inifile_read_string(i_keyfile, i_section, i_key, &temp) ) {
-        *i_target = pango_font_description_from_string(temp.c_str());
+      if ( *i_target != NULL )
+        pango_font_description_free(*i_target);
 
-        if ( *i_target != NULL )
-          return(true);
-      }
+      if ( this->inifile_read_string(i_keyfile, i_section, i_key, &temp) )
+        *i_target = pango_font_description_from_string(temp.c_str());
+      else
+        *i_target = pango_font_description_from_string(DEFAULT_FONT);
+
+      if ( *i_target != NULL )
+        return(true);
     }
 
     return(false);
@@ -260,6 +269,8 @@ namespace sterm {
       return;
     }
 
+    m_current_file = i_filename;
+
     this->inifile_read_gint(keyfile, "general", "scrollback", &m_scrollback_lines);
     this->inifile_read_gboolean(keyfile, "general", "allow_bold", &m_allow_bold);
     this->inifile_read_gboolean(keyfile, "general", "audible_bell", &m_audible_bell);
@@ -287,11 +298,28 @@ namespace sterm {
     }
   }
 
+  void config::reload_inifile() {
+    if ( ! m_current_file.empty() )
+      this->load_from_inifile(m_current_file);
+  }
+
   bool config::copy_font_description(PangoFontDescription **i_target) {
     if ( m_font != NULL ) {
       *i_target = pango_font_description_copy(m_font);
       return(true);
     }
+
+    return(false);
+  }
+
+  bool config::get_key_function(guint i_keyval, guint i_modifiers, std::string *i_target) {
+    if ( ! m_keys.empty() )
+      for ( int iter = 0; iter < m_keys.size(); iter++ )
+        if ( ( i_modifiers & ( m_keys[iter].modifier ) ) == ( m_keys[iter].modifier ) )
+          if ( i_keyval == m_keys[iter].keyval ) {
+            *i_target = m_keys[iter].function;
+            return(true);
+          }
 
     return(false);
   }

@@ -33,6 +33,7 @@ namespace sterm {
     void      command_pipe(sterm::terminal *terminal, std::string command);
     void      insert(sterm::terminal *terminal, std::string text);
     void      paste(sterm::terminal *terminal, std::string selection);
+    void      reload_config(sterm::terminal *terminal, std::string none);
     void      set_font(sterm::terminal *terminal, std::string font);
     void      zoom(sterm::terminal *terminal, std::string factor);
 

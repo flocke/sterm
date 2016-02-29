@@ -64,6 +64,10 @@ Insert a custom text into the terminal as if the user entered it.
 Paste the content of the selected buffer to the terminal.
 
 .TP
+.B reload_config
+Reload the current configuration file and reset all terminal options.
+
+.TP
 .B set_font <font string>
 Set the current terminal font to a given string in the format \fBFONT SIZE\fP.
 
