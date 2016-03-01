@@ -148,6 +148,11 @@ namespace sterm {
     }
   }
 
+  void terminal::reset_terminal(gboolean i_full) {
+    if ( m_terminal != NULL )
+      vte_terminal_reset(m_terminal, i_full, i_full);
+  }
+
   std::string terminal::get_window_title() {
     std::string title;
 

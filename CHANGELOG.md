@@ -1,6 +1,7 @@
 # 0.1.1
 
 * New function: `reload_config`
+* New function: `reset`
 * New option: `urgent_on_bell`
 * Fix some memory leaks
 

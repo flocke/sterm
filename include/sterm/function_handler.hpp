@@ -43,6 +43,7 @@ namespace sterm {
         { "insert", functions::insert },
         { "paste", functions::paste },
         { "reload_config", functions::reload_config },
+        { "reset", functions::reset },
         { "set_font", functions::set_font },
         { "zoom", functions::zoom }
       };

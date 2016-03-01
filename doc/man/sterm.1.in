@@ -65,7 +65,12 @@ Paste the content of the selected buffer to the terminal.
 
 .TP
 .B reload_config
-Reload the current configuration file and reset all terminal options.
+Reload the current configuration file and reset the terminal options as much as possible.
+
+.TP
+.B reset <full (optional)>
+Reset the terminal's internal state as much as possible. If the argument \fBfull\fP is given this
+will also reset the tabstops and clear the scrollback buffer.
 
 .TP
 .B set_font <font string>

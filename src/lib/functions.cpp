@@ -69,6 +69,15 @@ namespace sterm {
         i_terminal->reload_configuration();
     }
 
+    void reset(sterm::terminal *i_terminal, std::string full) {
+      if ( i_terminal != NULL ) {
+        if ( full.compare("full") == 0 )
+          i_terminal->reset_terminal(true);
+        else
+          i_terminal->reset_terminal(false);
+      }
+    }
+
     void set_font(sterm::terminal *i_terminal, std::string i_font) {
       if ( i_terminal != NULL ) {
         PangoFontDescription *font = pango_font_description_from_string(i_font.c_str());
