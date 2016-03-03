@@ -1,5 +1,6 @@
 # 0.1.1
 
+* Remove the shared library
 * New function: `reload_config`
 * New function: `reset`
 * New option: `urgent_on_bell`
