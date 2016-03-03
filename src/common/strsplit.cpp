@@ -20,30 +20,12 @@
   THE SOFTWARE.
 */
 
-#include <cstdlib>
 #include <sstream>
 
-#include <glib.h>
-
-#include "sterm/misc.hpp"
+#include "common.hpp"
 
 namespace sterm {
-  namespace misc {
-
-    std::string xdg_config_file_path(std::string i_app_name, std::string i_file_name) {
-      const char *xdg = std::getenv("XDG_CONFIG_HOME");
-
-      gchar *temp = NULL;
-      if ( xdg != NULL && xdg[0] != '\0' )
-        temp = g_build_path("/", xdg, i_app_name.c_str(), i_file_name.c_str(), NULL);
-      else
-        temp = g_build_path("/", g_get_home_dir(), ".config", i_app_name.c_str(), i_file_name.c_str(), NULL);
-
-      std::string output = temp;
-      g_free(temp);
-
-      return(output);
-    }
+  namespace common {
 
     std::vector<std::string> split(std::string i_input, const char i_delim) {
       std::vector<std::string> output;

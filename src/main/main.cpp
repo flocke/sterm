@@ -23,12 +23,12 @@
 #include <cstdlib>
 #include <gtk/gtk.h>
 
-#include "sterm/config.hpp"
-#include "sterm/function_handler.hpp"
-#include "sterm/misc.hpp"
-#include "sterm/terminal.hpp"
+#include "common.hpp"
+#include "config.hpp"
+#include "function_handler.hpp"
+#include "terminal.hpp"
 
-std::string config_file = sterm::misc::xdg_config_file_path("sterm", "sterm.ini");
+std::string config_file = sterm::common::xdg_config_file_path("sterm", "sterm.ini");
 
 GtkWidget *main_window = NULL;
 sterm::config *configuration = NULL;

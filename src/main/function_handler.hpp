@@ -27,9 +27,9 @@
 #include <unordered_map>
 #include <vector>
 
-#include "sterm/config.hpp"
-#include "sterm/functions.hpp"
-#include "sterm/terminal.hpp"
+#include "config.hpp"
+#include "functions.hpp"
+#include "terminal.hpp"
 
 namespace sterm {
 

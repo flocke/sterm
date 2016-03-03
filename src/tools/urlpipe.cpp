@@ -30,7 +30,7 @@
 
 #include <glib.h>
 
-#include "sterm/misc.hpp"
+#include "common.hpp"
 
 #ifndef DEFAULT_URL_REGEX
 #define DEFAULT_URL_REGEX "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s\\n]|/)))"
@@ -85,7 +85,7 @@ void parse_text(std::string i_text, std::string i_pattern) {
 }
 
 int main(int argc, char *argv[]) {
-  std::string config_file = sterm::misc::xdg_config_file_path("sterm", "sterm.ini");
+  std::string config_file = sterm::common::xdg_config_file_path("sterm", "sterm.ini");
 
   std::string pattern;
 

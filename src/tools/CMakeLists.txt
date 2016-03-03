@@ -7,7 +7,7 @@ include_directories(${GLIB_INCLUDE_DIRS})
 
 # Build the urlpipe tool executable
 add_executable(sterm-urlpipe urlpipe.cpp)
-target_link_libraries(sterm-urlpipe libsterm ${GLIB_LIBRARIES})
+target_link_libraries(sterm-urlpipe sterm-common-xdg ${GLIB_LIBRARIES})
 
 # Install the sterm binary
 install(TARGETS sterm-urlpipe DESTINATION ${CMAKE_INSTALL_BINDIR})

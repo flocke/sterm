@@ -22,8 +22,8 @@
 
 #include <iostream>
 
-#include "sterm/functions.hpp"
-#include "sterm/terminal.hpp"
+#include "functions.hpp"
+#include "terminal.hpp"
 
 namespace sterm {
   namespace functions {

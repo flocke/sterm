@@ -20,7 +20,7 @@
   THE SOFTWARE.
 */
 
-#include "sterm/terminal.hpp"
+#include "terminal.hpp"
 
 namespace sterm {
 

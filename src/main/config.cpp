@@ -20,8 +20,8 @@
   THE SOFTWARE.
 */
 
-#include "sterm/config.hpp"
-#include "sterm/misc.hpp"
+#include "common.hpp"
+#include "config.hpp"
 
 namespace sterm {
 
@@ -216,7 +216,7 @@ namespace sterm {
         for ( int iter = 0; iter < length; iter++ ) {
           keysym key;
 
-          std::vector<std::string> parts = sterm::misc::split(std::string(keys[iter]), '-');
+          std::vector<std::string> parts = sterm::common::split(std::string(keys[iter]), '-');
 
           bool add = true;
 

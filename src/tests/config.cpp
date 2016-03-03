@@ -27,7 +27,7 @@
 
 #include <vte/vte.h>
 
-#include "sterm/config.hpp"
+#include "config.hpp"
 
 int main(int argc, char **argv) {
   bool success = true;

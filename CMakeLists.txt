@@ -15,23 +15,16 @@ include(GNUInstallDirs)
 option(WITH_TESTS "Build the (very basic) tests" OFF)
 option(WITH_TOOLS "Build some helper tools, mainly usefull for keybindings" ON)
 
-# Project include directory
-include_directories(${CMAKE_SOURCE_DIR}/include)
-
 # Main source files
 add_subdirectory(doc)
-add_subdirectory(include)
 add_subdirectory(src)
 
-# Testing
+#Testing
 if(WITH_TESTS)
-  # Build the test binaries
-  add_subdirectory(tests)
-  
   # Enable CMake testing (ctest)
   enable_testing()
 
   # Add the different tests to run
-  add_test(NAME parse_config_file COMMAND ${CMAKE_BINARY_DIR}/tests/test_config ${CMAKE_SOURCE_DIR}/tests/test_config.ini)
+  add_test(NAME parse_config_file COMMAND ${CMAKE_BINARY_DIR}/src/tests/sterm-test-config ${CMAKE_SOURCE_DIR}/tests/parse_config_file.ini)
 endif(WITH_TESTS)
 
