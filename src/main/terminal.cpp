@@ -112,9 +112,7 @@ namespace sterm {
 
       vte_terminal_spawn_sync(m_terminal, VTE_PTY_DEFAULT, NULL, args, NULL, spawn_flags, NULL, NULL, &m_child_pid, NULL, &error);
 
-      if ( error == NULL ) {
-        vte_terminal_watch_child(m_terminal, m_child_pid);
-      } else {
+      if ( error != NULL ) {
         g_warning("failed to spawn child process: %s", error->message);
         g_error_free(error);
       }
