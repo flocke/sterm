@@ -64,6 +64,11 @@ static void main_cleanup() {
     configuration = NULL;
   }
 
+  if ( main_window != NULL ) {
+    gtk_widget_destroy(main_window);
+    main_window = NULL;
+  }
+
   running = false;
 }
 

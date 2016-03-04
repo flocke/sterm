@@ -33,7 +33,10 @@ namespace sterm {
     this->set_configuration(i_configuration);
   }
 
-  terminal::~terminal() {}
+  terminal::~terminal() {
+    if ( m_terminal_widget != NULL )
+      gtk_widget_destroy(m_terminal_widget);
+  }
 
   void terminal::create_vte_terminal() {
     if ( m_terminal_widget == NULL ) {
