@@ -1,3 +1,7 @@
+# 0.1.2 (WIP)
+
+* Nothing for now
+
 # 0.1.1
 
 * Remove the shared library
