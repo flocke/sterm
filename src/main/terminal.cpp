@@ -42,6 +42,8 @@ namespace sterm {
     if ( m_terminal_widget == NULL ) {
       m_terminal_widget = vte_terminal_new();
       m_terminal = VTE_TERMINAL( m_terminal_widget );
+
+      g_signal_connect(G_OBJECT(m_terminal_widget), "destroy", G_CALLBACK(gtk_widget_destroyed), &m_terminal_widget);
     }
 
     if ( m_configuration != NULL )

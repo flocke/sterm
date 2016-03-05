@@ -1,6 +1,6 @@
 # 0.1.2 (WIP)
 
-* Nothing for now
+* Improved cleanup
 
 # 0.1.1
 

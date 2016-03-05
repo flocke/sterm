@@ -30,12 +30,13 @@
 
 std::string config_file = sterm::common::xdg_config_file_path("sterm", "sterm.ini");
 
+int ret = EXIT_SUCCESS;
+bool first = true;
+
 GtkWidget *main_window = NULL;
 sterm::config *configuration = NULL;
 sterm::function_handler *functions = NULL;
 sterm::terminal *terminal = NULL;
-
-gboolean running = false;
 
 static gchar *opt_config_file = NULL;
 static gchar *opt_command = NULL;
@@ -46,42 +47,22 @@ static GOptionEntry options[] {
   { NULL }
 };
 
-static void main_cleanup() {
-  gtk_main_quit();
+static void main_exit_cb(GtkWidget *i_widget, GtkWidget** i_destroy) {
+  if ( first ) {
+    if ( i_destroy != NULL )
+      gtk_widget_destroyed(i_widget, i_destroy);
 
-  if ( terminal != NULL ) {
-    delete(terminal);
-    terminal = NULL;
+    gtk_main_quit();
+    first = false;
   }
-
-  if ( functions != NULL ) {
-    delete(functions);
-    functions = NULL;
-  }
-
-  if ( configuration != NULL ) {
-    delete(configuration);
-    configuration = NULL;
-  }
-
-  if ( main_window != NULL ) {
-    gtk_widget_destroy(main_window);
-    main_window = NULL;
-  }
-
-  running = false;
-}
-
-static void main_exit_cb(GtkWidget *i_widget) {
-  main_cleanup();
-
-  exit(EXIT_SUCCESS);
 }
 
 static void main_exit_with_status_cb(GtkWidget *i_widget, int status) {
-  main_cleanup();
-
-  exit(WIFEXITED(status) ? WEXITSTATUS(status) : EXIT_FAILURE);
+  if ( first ) {
+    gtk_main_quit();
+    ret = WIFEXITED(status) ? WEXITSTATUS(status) : EXIT_FAILURE;
+    first = false;
+  }
 }
 
 static void main_bell_cb(GtkWidget *i_widget) {
@@ -146,19 +127,36 @@ int main(int argc, char *argv[]) {
 
   terminal->connect_callback("child-exited", G_CALLBACK(main_exit_with_status_cb), NULL);
   terminal->connect_callback("bell", G_CALLBACK(main_bell_cb), NULL);
-  terminal->connect_callback("destroy", G_CALLBACK(main_exit_cb), NULL);
 
   terminal->link_property_to_terminal("window-title", G_OBJECT(main_window), "title");
 
-  g_signal_connect(G_OBJECT(main_window), "destroy", G_CALLBACK(main_exit_cb), NULL);
+  g_signal_connect(G_OBJECT(main_window), "destroy", G_CALLBACK(main_exit_cb), &main_window);
 
   functions = new sterm::function_handler(configuration, terminal);
 
   gtk_widget_show_all(main_window);
-  running = true;
   gtk_main();
 
-  main_cleanup();
-  return(EXIT_FAILURE);
+  if ( terminal != NULL ) {
+    delete(terminal);
+    terminal = NULL;
+  }
+
+  if ( functions != NULL ) {
+    delete(functions);
+    functions = NULL;
+  }
+
+  if ( configuration != NULL ) {
+    delete(configuration);
+    configuration = NULL;
+  }
+
+  if ( main_window != NULL ) {
+    gtk_widget_destroy(main_window);
+    main_window = NULL;
+  }
+
+  return ret;
 }
 

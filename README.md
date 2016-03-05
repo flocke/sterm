@@ -39,6 +39,10 @@ the basic options. The main configuration file should be placed at
 Please report any bugs and feature requests on [GitHub](https://github.com/flocke/sterm/issues).
 Pull requests with fixes and improvements are always welcome.
 
+## Contributors
+
+* [Johannes Nixdorf](https://github.com/mixi)
+
 ## Rewrite
 
 This is the rewrite of my first version of STerm, which can still be found in the
