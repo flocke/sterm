@@ -66,6 +66,10 @@ namespace sterm {
 
       color                   m_foreground_color;
       color                   m_background_color;
+      color                   m_bold_color;
+      color                   m_cursor_color;
+      color                   m_highlight_bg_color;
+      color                   m_highlight_fg_color;
 
       std::vector<GdkRGBA>    m_color_palette;
 
@@ -110,6 +114,10 @@ namespace sterm {
 
       color                   get_foreground_color() const { return(m_foreground_color); }
       color                   get_background_color() const { return(m_background_color); }
+      color                   get_bold_color() const { return(m_bold_color); }
+      color                   get_cursor_color() const { return(m_cursor_color); }
+      color                   get_highlight_bg_color() const { return(m_highlight_bg_color); }
+      color                   get_highlight_fg_color() const { return(m_highlight_fg_color); }
 
       std::vector<GdkRGBA>    get_color_palette() const { return(m_color_palette); }
 

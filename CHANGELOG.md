@@ -1,5 +1,6 @@
 # 0.1.2 (WIP)
 
+* New color options: `bold`, `cursor`, `highlight_bg` and `highlight_fg`
 * New function: `set_font_scale`
 * Under the hood changes:
   * Rewrite function: `zoom`

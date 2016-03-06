@@ -86,6 +86,10 @@ namespace sterm {
       std::vector<GdkRGBA> color_palette = m_configuration->get_color_palette();
       color foreground = m_configuration->get_foreground_color();
       color background = m_configuration->get_background_color();
+      color bold_color = m_configuration->get_bold_color();
+      color cursor_color = m_configuration->get_cursor_color();
+      color highlight_bg = m_configuration->get_highlight_bg_color();
+      color highlight_fg = m_configuration->get_highlight_fg_color();
 
       if ( color_palette.size() == PALETTE_SIZE )
         vte_terminal_set_colors(m_terminal, NULL, NULL, color_palette.data(), PALETTE_SIZE);
@@ -94,8 +98,29 @@ namespace sterm {
 
       if ( foreground.set )
         vte_terminal_set_color_foreground(m_terminal, &(foreground.value));
+
       if ( background.set )
         vte_terminal_set_color_background(m_terminal, &(background.value));
+
+      if ( bold_color.set )
+        vte_terminal_set_color_bold(m_terminal, &(bold_color.value));
+      else
+        vte_terminal_set_color_bold(m_terminal, NULL);
+
+      if ( cursor_color.set )
+        vte_terminal_set_color_cursor(m_terminal, &(cursor_color.value));
+      else
+        vte_terminal_set_color_cursor(m_terminal, NULL);
+
+      if ( highlight_bg.set )
+        vte_terminal_set_color_highlight(m_terminal, &(highlight_bg.value));
+      else
+        vte_terminal_set_color_highlight(m_terminal, NULL);
+
+      if ( highlight_fg.set )
+        vte_terminal_set_color_highlight_foreground(m_terminal, &(highlight_fg.value));
+      else
+        vte_terminal_set_color_highlight_foreground(m_terminal, NULL);
     }
   }
 

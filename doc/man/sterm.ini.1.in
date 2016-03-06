@@ -100,6 +100,24 @@ Sets the color to use for the foreground (see below for the supported color form
 Sets the color to use for the background (see below for the supported color formats).
 
 .TP
+.B bold=<color string>
+Sets the color to use for bold text (see below for the supported color formats).
+
+.TP
+.B cursor=<color string>
+Sets the color to use for the cursor (see below for the supported color formats).
+
+.TP
+.B highlight_bg=<color string>
+Sets the color to use as background for highlighted text (see below for the supported color
+formats).
+
+.TP
+.B highlight_fg=<color string>
+Sets the color to use as foreground for highlighted text (see below for the supported color
+formats).
+
+.TP
 .B colorN=<color string>
 Speficies the color number N (0-15) in the color palette (see below for the supported color
 formats).

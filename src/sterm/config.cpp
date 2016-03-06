@@ -286,6 +286,10 @@ namespace sterm {
 
     this->inifile_parse_color(keyfile, "theme", "foreground", &m_foreground_color);
     this->inifile_parse_color(keyfile, "theme", "background", &m_background_color);
+    this->inifile_parse_color(keyfile, "theme", "bold", &m_bold_color);
+    this->inifile_parse_color(keyfile, "theme", "cursor", &m_cursor_color);
+    this->inifile_parse_color(keyfile, "theme", "highlight_bg", &m_highlight_bg_color);
+    this->inifile_parse_color(keyfile, "theme", "highlight_fg", &m_highlight_fg_color);
 
     this->inifile_parse_color_palette(keyfile, "theme", "color", &m_color_palette);
 
