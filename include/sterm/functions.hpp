@@ -20,29 +20,25 @@
   THE SOFTWARE.
 */
 
-#include <cstdlib>
-#include <glib.h>
+#ifndef __STERM_FUNCTIONS_HPP
+#define __STERM_FUNCTIONS_HPP
 
-#include "common/xdg.hpp"
+#include <string>
+
+#include "sterm/terminal.hpp"
 
 namespace sterm {
-  namespace common {
+  namespace functions {
 
-    std::string xdg_config_file_path(std::string i_app_name, std::string i_file_name) {
-      const char *xdg = std::getenv("XDG_CONFIG_HOME");
-
-      gchar *temp = NULL;
-      if ( xdg != NULL && xdg[0] != '\0' )
-        temp = g_build_path("/", xdg, i_app_name.c_str(), i_file_name.c_str(), NULL);
-      else
-        temp = g_build_path("/", g_get_home_dir(), ".config", i_app_name.c_str(), i_file_name.c_str(), NULL);
-
-      std::string output = temp;
-      g_free(temp);
-
-      return(output);
-    }
+    void      command_pipe(sterm::terminal *terminal, std::string command);
+    void      insert(sterm::terminal *terminal, std::string text);
+    void      paste(sterm::terminal *terminal, std::string selection);
+    void      reload_config(sterm::terminal *terminal, std::string none);
+    void      reset(sterm::terminal *terminal, std::string full);
+    void      set_font(sterm::terminal *terminal, std::string font);
+    void      zoom(sterm::terminal *terminal, std::string factor);
 
   }
 }
 
+#endif

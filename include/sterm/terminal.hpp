@@ -27,7 +27,7 @@
 
 #include <vte/vte.h>
 
-#include "config.hpp"
+#include "sterm/config.hpp"
 
 namespace sterm {
 

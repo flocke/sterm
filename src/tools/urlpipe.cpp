@@ -30,7 +30,7 @@
 
 #include <glib.h>
 
-#include "common.hpp"
+#include "common/xdg.hpp"
 
 #ifndef DEFAULT_URL_REGEX
 #define DEFAULT_URL_REGEX "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s\\n]|/)))"

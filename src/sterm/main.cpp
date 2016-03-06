@@ -23,10 +23,10 @@
 #include <cstdlib>
 #include <gtk/gtk.h>
 
-#include "common.hpp"
-#include "config.hpp"
-#include "function_handler.hpp"
-#include "terminal.hpp"
+#include "common/xdg.hpp"
+#include "sterm/config.hpp"
+#include "sterm/function_handler.hpp"
+#include "sterm/terminal.hpp"
 
 std::string config_file = sterm::common::xdg_config_file_path("sterm", "sterm.ini");
 

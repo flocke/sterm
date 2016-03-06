@@ -22,12 +22,12 @@
 
 #include <sstream>
 
-#include "common.hpp"
+#include "common/strsplit.hpp"
 
 namespace sterm {
   namespace common {
 
-    std::vector<std::string> split(std::string i_input, const char i_delim) {
+    std::vector<std::string> strsplit(std::string i_input, const char i_delim) {
       std::vector<std::string> output;
 
       std::stringstream stream(i_input);
@@ -39,7 +39,7 @@ namespace sterm {
       return(output);
     }
 
-    std::vector<std::string> split(std::string i_input, const char i_delim, int i_length) {
+    std::vector<std::string> strsplit(std::string i_input, const char i_delim, int i_length) {
       std::vector<std::string> output;
 
       std::stringstream stream(i_input);

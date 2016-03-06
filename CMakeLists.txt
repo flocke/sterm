@@ -14,6 +14,9 @@ include(GNUInstallDirs)
 # Build options
 option(WITH_TOOLS "Build some helper tools, mainly usefull for keybindings" ON)
 
+# Include directories
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 # Main source files
 add_subdirectory(doc)
 add_subdirectory(src)
