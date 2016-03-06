@@ -13,7 +13,3 @@ if(WITH_TOOLS)
   add_subdirectory(tools)
 endif(WITH_TOOLS)
 
-if(WITH_TESTS)
-  add_subdirectory(tests)
-endif(WITH_TESTS)
-

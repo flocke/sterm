@@ -23,11 +23,6 @@ make install (as root)
 
   Build some helper tools (mostly to be used in keybindings).
 
-* **-DWITH_TESTS={ON,OFF}** (default: OFF)
-
-  Build the included (very basic) tests. To execute them run the `ctest` command after the build.
-  This is still off by default since the included tests are very limited at the moment.
-
 ### Usage
 
 Just run `sterm` after the build to start the terminal. `sterm --help` will give you an overview of

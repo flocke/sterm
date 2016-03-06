@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.0.0)
 pkg_check_modules("VTE" REQUIRED "vte-2.91")
 include_directories(${VTE_INCLUDE_DIRS})
 
-# Build all functions into one static library (so we can easily reuse them for the tests)
+# Build all functions into one static library
 add_library(sterm-static-lib STATIC config.cpp function_handler.cpp functions.cpp terminal.cpp)
 target_link_libraries(sterm-static-lib sterm-common-strsplit)
 
