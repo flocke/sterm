@@ -77,8 +77,12 @@ will also reset the tabstops and clear the scrollback buffer.
 Set the current terminal font to a given string in the format \fBFONT SIZE\fP.
 
 .TP
+.B set_font_scale <scale>
+Set the scale of the terminal font (1.0 = initial font scale).
+
+.TP
 .B zoom <step>
-Change the font size in the given step.
+De- or increase the font scale by a given step (e.g. +1.0 = +100% of the initial font scale).
 
 .SH FILES
 

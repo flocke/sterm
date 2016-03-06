@@ -123,7 +123,7 @@ arguments.
 
 \fBExample\fP:
 .RS
-Control-Shift-underscore=zoom -2
+Control-Shift-underscore=zoom -0.2
 .RE
 
 \fBWarning\fP: If you use the \fBShift\fP modifier you have to use the uppercase version of

@@ -1,6 +1,9 @@
 # 0.1.2 (WIP)
 
-* Improved cleanup
+* New function: `set_font_scale`
+* Under the hood changes:
+  * Rewrite function: `zoom`
+  * Improved cleanup
 
 # 0.1.1
 

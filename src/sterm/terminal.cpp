@@ -174,13 +174,14 @@ namespace sterm {
     return(text);
   }
 
-  bool terminal::copy_font_description(PangoFontDescription **i_target) {
-    if ( m_terminal != NULL ) {
-      *i_target = pango_font_description_copy((PangoFontDescription*) vte_terminal_get_font(m_terminal));
-      return(true);
-    }
+  gdouble terminal::get_font_scale() {
+    if ( m_terminal != NULL )
+      return(vte_terminal_get_font_scale(m_terminal));
+  }
 
-    return(false);
+  void terminal::set_font_scale(double i_font_scale) {
+    if ( m_terminal != NULL && i_font_scale > 0 )
+      vte_terminal_set_font_scale(m_terminal, i_font_scale);
   }
 
   void terminal::set_font_description(PangoFontDescription **i_font) {

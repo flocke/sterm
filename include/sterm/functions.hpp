@@ -36,6 +36,7 @@ namespace sterm {
     void      reload_config(sterm::terminal *terminal, std::string none);
     void      reset(sterm::terminal *terminal, std::string full);
     void      set_font(sterm::terminal *terminal, std::string font);
+    void      set_font_scale(sterm::terminal *terminal, std::string scale);
     void      zoom(sterm::terminal *terminal, std::string factor);
 
   }

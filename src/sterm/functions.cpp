@@ -88,31 +88,39 @@ namespace sterm {
       }
     }
 
-    void zoom(sterm::terminal *i_terminal, std::string i_increase) {
+    void set_font_scale(sterm::terminal *i_terminal, std::string i_scale) {
       if ( i_terminal != NULL ) {
-        int increase = 1;
-        
+        double sc = 1;
+
         try {
-          increase = std::stoi(i_increase);
-        } catch (const std::exception& except) {
-          g_warning("unable to convert string to int: %s", i_increase);
+          sc = std::stod(i_scale);
+        } catch(const std::exception& except) {
+          g_warning("unable to convert string to double: %s", i_scale.c_str());
           return;
         }
 
-        PangoFontDescription *desc = NULL;
-        if ( i_terminal->copy_font_description(&desc) ) {
-          gint size = pango_font_description_get_size(desc);
-          size += increase * PANGO_SCALE;
+        i_terminal->set_font_scale(sc);
+      }
+    }
 
-          pango_font_description_set_size(desc, size);
+    void zoom(sterm::terminal *i_terminal, std::string i_factor) {
+      if ( i_terminal != NULL ) {
+        double inc = 0;
 
-          i_terminal->set_font_description(&desc);
-          pango_font_description_free(desc);
+        try {
+          inc = std::stod(i_factor);
+        } catch(const std::exception& except) {
+          g_warning("unable to convert string to double: %s", i_factor.c_str());
+          return;
         }
+
+        double cur = i_terminal->get_font_scale();
+        cur = cur + inc;
+
+        i_terminal->set_font_scale(cur);
       }
     }
 
   }
-
 }
 

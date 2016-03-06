@@ -45,6 +45,7 @@ namespace sterm {
         { "reload_config", functions::reload_config },
         { "reset", functions::reset },
         { "set_font", functions::set_font },
+        { "set_font_scale", functions::set_font_scale },
         { "zoom", functions::zoom }
       };
 
