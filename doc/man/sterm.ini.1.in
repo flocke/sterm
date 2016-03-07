@@ -16,6 +16,7 @@ parameters and their values in the default ini-style:
 
 \fBparameter=value\fP
 
+Any of the options can be missing, in which case the default values will be used.
 See \fB/usr/share/docs/sterm/sterm.ini\fP for an example configuration file.
 
 .SH [general]
@@ -61,6 +62,11 @@ Should the mouse cursor hide on key-press? (default: \fBfalse\fP)
 .TP
 .B enconding=<encoding>
 Sets the encoding to use for the terminal. (default: \fBUTF-8\fP)
+
+.TP
+.B word_chars=<characters>
+Additional characters to be recognized as part of one word when doing word-wise selection.
+(default: built-in defaults of VTE, usually sufficient for normal use)
 
 .SH [cursor]
 

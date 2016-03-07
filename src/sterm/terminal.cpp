@@ -72,6 +72,12 @@ namespace sterm {
       if ( ! vte_terminal_set_encoding(m_terminal, m_configuration->get_encoding().c_str(), &error) )
         g_warning("Failed to set the terminal encoding: %s", error->message);
 
+      std::string word_chars = m_configuration->get_word_chars();
+      if ( ! word_chars.empty() )
+        vte_terminal_set_word_char_exceptions(m_terminal, word_chars.c_str());
+      else
+        vte_terminal_set_word_char_exceptions(m_terminal, NULL);
+
       vte_terminal_set_cursor_blink_mode(m_terminal, m_configuration->get_cursor_blink_mode());
       vte_terminal_set_cursor_shape(m_terminal, m_configuration->get_cursor_shape());
 

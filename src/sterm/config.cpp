@@ -52,9 +52,31 @@ namespace sterm {
         *target = value;
         g_free(value);
         return(true);
+      } else {
+        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
+          g_warning("unable to parse config entry %s in section [%s]: %s", i_key.c_str(), i_section.c_str(), error->message);
+        g_error_free(error);
       }
-      
-      g_error_free(error);
+    }
+
+    return(false);
+  }
+
+  bool config::inifile_read_raw_string(GKeyFile *i_keyfile, std::string i_section, std::string i_key, std::string *target) {
+    if ( i_keyfile != NULL ) {
+      GError *error = NULL;
+
+      gchar *value = g_key_file_get_value(i_keyfile, i_section.c_str(), i_key.c_str(), &error);
+
+      if ( error == NULL ) {
+        *target = value;
+        g_free(value);
+        return(true);
+      } else {
+        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
+          g_warning("unable to parse config entry %s in section [%s]: %s", i_key.c_str(), i_section.c_str(), error->message);
+        g_error_free(error);
+      }
     }
 
     return(false);
@@ -280,6 +302,7 @@ namespace sterm {
     this->inifile_read_gboolean(keyfile, "general", "rewrap_on_resize", &m_rewrap_on_resize);
     this->inifile_read_gboolean(keyfile, "general", "autohide_mouse", &m_autohide_mouse);
     this->inifile_read_string(keyfile, "general", "encoding", &m_encoding);
+    this->inifile_read_raw_string(keyfile, "general", "word_chars", &m_word_chars);
 
     this->inifile_read_cursor_shape(keyfile, "cursor", "shape", &m_cursor_shape);
     this->inifile_read_cursor_blink_mode(keyfile, "cursor", "blink", &m_cursor_blink_mode);

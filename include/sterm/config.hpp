@@ -60,6 +60,7 @@ namespace sterm {
       gboolean                m_rewrap_on_resize = false;
       gboolean                m_autohide_mouse = false;
       std::string             m_encoding = "UTF-8";
+      std::string             m_word_chars;
 
       VteCursorBlinkMode      m_cursor_blink_mode = VTE_CURSOR_BLINK_SYSTEM;
       VteCursorShape          m_cursor_shape = VTE_CURSOR_SHAPE_BLOCK;
@@ -78,6 +79,7 @@ namespace sterm {
       std::vector<keysym>     m_keys;
 
       bool                    inifile_read_string(GKeyFile *keyfile, std::string section, std::string key, std::string *target);
+      bool                    inifile_read_raw_string(GKeyFile *keyfile, std::string section, std::string key, std::string *target);
       bool                    inifile_read_gboolean(GKeyFile *keyfile, std::string section, std::string key, gboolean *target);
       bool                    inifile_read_gint(GKeyFile *keyfile, std::string section, std::string key, gint *target);
 
@@ -108,6 +110,7 @@ namespace sterm {
       gboolean                get_rewrap_on_resize() const { return(m_rewrap_on_resize); }
       gboolean                get_autohide_mouse() const { return(m_autohide_mouse); }
       std::string             get_encoding() const { return(m_encoding); }
+      std::string             get_word_chars() const { return(m_word_chars); }
 
       VteCursorBlinkMode      get_cursor_blink_mode() const { return(m_cursor_blink_mode); }
       VteCursorShape          get_cursor_shape() const { return(m_cursor_shape); }
@@ -123,9 +126,6 @@ namespace sterm {
 
       bool                    copy_font_description(PangoFontDescription **target);
       bool                    get_key_function(guint keyval, guint modifiers, std::string *function);
-
-      std::vector<keysym>     get_keys() const { return(m_keys); }
-
   };
 
 }
