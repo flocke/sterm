@@ -54,7 +54,8 @@ namespace sterm {
         return(true);
       } else {
         if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
-          g_warning("unable to parse config entry %s in section [%s]: %s", i_key.c_str(), i_section.c_str(), error->message);
+          g_warning("unable to parse config entry %s in [%s] as string: %s", i_key.c_str(), i_section.c_str(), error->message);
+
         g_error_free(error);
       }
     }
@@ -74,7 +75,8 @@ namespace sterm {
         return(true);
       } else {
         if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
-          g_warning("unable to parse config entry %s in section [%s]: %s", i_key.c_str(), i_section.c_str(), error->message);
+          g_warning("unable to parse config entry %s in [%s] as raw string: %s", i_key.c_str(), i_section.c_str(), error->message);
+
         g_error_free(error);
       }
     }
@@ -91,9 +93,12 @@ namespace sterm {
       if( error == NULL ) {
         *target = value;
         return(true);
-      }
+      } else {
+        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
+          g_warning("unable to parse config entry %s in [%s] as bool: %s", i_key.c_str(), i_section.c_str(), error->message);
 
-      g_error_free(error);
+        g_error_free(error);
+      }
     }
 
     return(false);
@@ -108,9 +113,12 @@ namespace sterm {
       if ( error == NULL ) {
         *target = value;
         return(true);
+      } else {
+        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
+          g_warning("unable to parse config entry %s in [%s] as int: %s", i_key.c_str(), i_section.c_str(), error->message);
+
+        g_error_free(error);
       }
-      
-      g_error_free(error);
     }
 
     return(false);
@@ -212,13 +220,15 @@ namespace sterm {
       if ( *i_target != NULL )
         pango_font_description_free(*i_target);
 
-      if ( this->inifile_read_string(i_keyfile, i_section, i_key, &temp) )
-        *i_target = pango_font_description_from_string(temp.c_str());
-      else
-        *i_target = pango_font_description_from_string(DEFAULT_FONT);
+      if ( ! this->inifile_read_string(i_keyfile, i_section, i_key, &temp) )
+        temp = DEFAULT_FONT;
+
+      *i_target = pango_font_description_from_string(temp.c_str());
 
       if ( *i_target != NULL )
         return(true);
+      else
+        g_warning("unable to create font description from string: %s", temp.c_str());
     }
 
     return(false);
@@ -250,7 +260,7 @@ namespace sterm {
             } else if ( parts[i].compare("Shift") == 0 ) {
               key.modifier = (GdkModifierType) ( key.modifier | GDK_SHIFT_MASK );
             } else {
-              g_warning("invalid key modifier: %s", parts[i]);
+              g_warning("invalid modifier in %s: %s", keys[iter], parts[i]);
               add = false;
             }
           }
@@ -258,7 +268,7 @@ namespace sterm {
           key.keyval = gdk_keyval_from_name(parts.back().c_str());
 
           if ( key.keyval == GDK_KEY_VoidSymbol ) {
-            g_warning("invalid key: %s", parts.back());
+            g_warning("invalid key in %s: %s", keys[iter], parts.back());
             add = false;
           }
 
