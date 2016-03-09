@@ -7,6 +7,7 @@ include_directories(${VTE_INCLUDE_DIRS})
 
 # Build all functions into one static library
 add_library(sterm-static-lib STATIC config.cpp function_handler.cpp functions.cpp terminal.cpp)
+target_link_libraries(sterm-static-lib sterm-common-messages)
 target_link_libraries(sterm-static-lib sterm-common-strsplit)
 
 # Build the main binary

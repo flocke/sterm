@@ -20,6 +20,7 @@
   THE SOFTWARE.
 */
 
+#include "common/messages.hpp"
 #include "common/strsplit.hpp"
 #include "sterm/config.hpp"
 
@@ -53,8 +54,10 @@ namespace sterm {
         g_free(value);
         return(true);
       } else {
-        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
-          g_warning("unable to parse config entry %s in [%s] as string: %s", i_key.c_str(), i_section.c_str(), error->message);
+        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND ) {
+          sterm::common::warning("sterm::config", "unable to interpret value as string (key '%s', section [%s])", i_key.c_str(), i_section.c_str());
+          sterm::common::debug("sterm::config", "GKeyFile error message: %s", error->message);
+        }
 
         g_error_free(error);
       }
@@ -74,8 +77,10 @@ namespace sterm {
         g_free(value);
         return(true);
       } else {
-        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
-          g_warning("unable to parse config entry %s in [%s] as raw string: %s", i_key.c_str(), i_section.c_str(), error->message);
+        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND ) {
+          sterm::common::warning("sterm::config", "unable to interpret value as raw string (key '%s', section [%s])", i_key.c_str(), i_section.c_str());
+          sterm::common::debug("sterm::config", "GKeyFile error message: %s", error->message);
+        }
 
         g_error_free(error);
       }
@@ -94,8 +99,10 @@ namespace sterm {
         *target = value;
         return(true);
       } else {
-        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
-          g_warning("unable to parse config entry %s in [%s] as bool: %s", i_key.c_str(), i_section.c_str(), error->message);
+        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND ) {
+          sterm::common::warning("sterm::config", "unable to interpret value as boolean (key '%s', section [%s])", i_key.c_str(), i_section.c_str());
+          sterm::common::debug("sterm::config", "GKeyFile error message: %s", error->message);
+        }
 
         g_error_free(error);
       }
@@ -114,8 +121,10 @@ namespace sterm {
         *target = value;
         return(true);
       } else {
-        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND )
-          g_warning("unable to parse config entry %s in [%s] as int: %s", i_key.c_str(), i_section.c_str(), error->message);
+        if ( error->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND && error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND ) {
+          sterm::common::warning("sterm::config", "unable to interpret value as integer (key '%s', section [%s])", i_key.c_str(), i_section.c_str());
+          sterm::common::debug("sterm::config", "GKeyFile error message: %s", error->message);
+        }
 
         g_error_free(error);
       }
@@ -137,6 +146,8 @@ namespace sterm {
         } else if ( temp.compare("underline") == 0 ) {
           *i_target = VTE_CURSOR_SHAPE_UNDERLINE;
         } else {
+          sterm::common::warning("sterm::config", "unknown cursor shape '%s' (key '%s', section [%s])", temp.c_str(), i_key.c_str(), i_section.c_str());
+
           return(false);
         }
 
@@ -160,6 +171,8 @@ namespace sterm {
         } else if ( temp.compare("system") == 0 ) {
           *i_target = VTE_CURSOR_BLINK_SYSTEM;
         } else {
+          sterm::common::warning("sterm::config", "unknown cursor blink mode '%s' (key '%s', section [%s])", temp.c_str(), i_key.c_str(), i_section.c_str());
+
           return(false);
         }
 
@@ -181,6 +194,8 @@ namespace sterm {
           i_target->set = true;
 
           return(true);
+        } else {
+          sterm::common::warning("sterm::config", "unable to create GdkRGBA color from string '%s' (key '%s', section [%s])", temp.c_str(), i_key.c_str(), i_section.c_str());
         }
     }
 
@@ -202,7 +217,8 @@ namespace sterm {
 
       if ( i_target->size() != PALETTE_SIZE ) {
         i_target->clear();
-        g_warning("color palette not complete, falling back on the default colors");
+
+        sterm::common::warning("sterm::config", "color palette not complete, falling back on the default colors");
 
         return(false);
       }
@@ -228,7 +244,7 @@ namespace sterm {
       if ( *i_target != NULL )
         return(true);
       else
-        g_warning("unable to create font description from string: %s", temp.c_str());
+        sterm::common::warning("sterm::config", "unable to create PangoFontDescription from string '%s' (key '%s', section [%s])", temp.c_str(), i_key.c_str(), i_section.c_str());
     }
 
     return(false);
@@ -260,7 +276,8 @@ namespace sterm {
             } else if ( parts[i].compare("Shift") == 0 ) {
               key.modifier = (GdkModifierType) ( key.modifier | GDK_SHIFT_MASK );
             } else {
-              g_warning("invalid modifier in %s: %s", keys[iter], parts[i]);
+              sterm::common::warning("sterm::config", "invalid modifier '%s' in keybinding '%s' (section [%s])", parts[i].c_str(), keys[iter], i_section.c_str());
+
               add = false;
             }
           }
@@ -268,12 +285,13 @@ namespace sterm {
           key.keyval = gdk_keyval_from_name(parts.back().c_str());
 
           if ( key.keyval == GDK_KEY_VoidSymbol ) {
-            g_warning("invalid key in %s: %s", keys[iter], parts.back());
+            sterm::common::warning("sterm::config", "invalid key '%s' in keybinding '%s' (section [%s])", parts.back().c_str(), keys[iter], i_section.c_str());
+
             add = false;
           }
 
-          if ( this->inifile_read_string(i_keyfile, i_section, keys[iter], &key.function) )
-            if ( add )
+          if ( add )
+            if ( this->inifile_read_string(i_keyfile, i_section, keys[iter], &key.function) )
               i_target->push_back(key);
         }
 
@@ -281,6 +299,11 @@ namespace sterm {
 
         return(true);
       } else {
+        if ( error->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND ) {
+          sterm::common::warning("sterm::config", "unable to get entries of section [%s]", i_section.c_str());
+          sterm::common::debug("sterm::config", "GKeyFile error message: %s", error->message);
+        }
+
         g_error_free(error);
       }
     }
@@ -296,6 +319,12 @@ namespace sterm {
 
     if ( error != NULL ) {
       keyfile = NULL;
+
+      if ( error->code != G_KEY_FILE_ERROR_NOT_FOUND && error->code != G_FILE_ERROR_NOENT )  {
+        sterm::common::warning("sterm::config", "unable to load config file '%s'", i_filename.c_str());
+        sterm::common::debug("sterm::config", "GKeyFile error message: %s", error->message);
+      }
+
       g_error_free(error);
 
       return;
