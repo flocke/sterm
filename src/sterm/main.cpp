@@ -23,6 +23,7 @@
 #include <cstdlib>
 #include <gtk/gtk.h>
 
+#include "common/messages.hpp"
 #include "common/xdg.hpp"
 #include "sterm/config.hpp"
 #include "sterm/function_handler.hpp"
@@ -38,11 +39,13 @@ sterm::config *configuration = NULL;
 sterm::function_handler *functions = NULL;
 sterm::terminal *terminal = NULL;
 
+static gboolean opt_debug = false;
 static gchar *opt_config_file = NULL;
 static gchar *opt_command = NULL;
 
 static GOptionEntry options[] {
   { "config", 'c', 0, G_OPTION_ARG_FILENAME, &opt_config_file, "Path to an alternative configuration file", NULL },
+  { "debug", 'd', 0, G_OPTION_ARG_NONE, &opt_debug, "Enable additional debug messages", NULL },
   { "execute", 'e', 0, G_OPTION_ARG_STRING, &opt_command, "Execute a command", NULL },
   { NULL }
 };
@@ -103,6 +106,8 @@ int main(int argc, char *argv[]) {
 
   if ( ! parse_commandline(argc, argv) )
     return(EXIT_FAILURE);
+
+  sterm::common::set_debugging(opt_debug);
 
   if ( opt_config_file != NULL )
     config_file = opt_config_file;

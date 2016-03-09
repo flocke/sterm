@@ -12,6 +12,7 @@ target_link_libraries(sterm-static-lib sterm-common-strsplit)
 # Build the main binary
 add_executable(sterm main.cpp)
 target_link_libraries(sterm sterm-static-lib)
+target_link_libraries(sterm sterm-common-messages)
 target_link_libraries(sterm sterm-common-xdg)
 target_link_libraries(sterm ${VTE_LIBRARIES})
 
