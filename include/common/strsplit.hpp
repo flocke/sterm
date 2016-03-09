@@ -20,8 +20,8 @@
   THE SOFTWARE.
 */
 
-#ifndef __STERM_COMMON_HPP
-#define __STERM_COMMON_HPP
+#ifndef __STERM_COMMON_STRSPLIT_HPP
+#define __STERM_COMMON_STRSPLIT_HPP
 
 #include <string>
 #include <vector>
