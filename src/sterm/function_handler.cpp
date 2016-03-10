@@ -22,6 +22,7 @@
 
 #include <iostream>
 
+#include "common/messages.hpp"
 #include "common/strsplit.hpp"
 #include "sterm/function_handler.hpp"
 
@@ -71,7 +72,7 @@ namespace sterm {
       try {
         func = m_functions.at(command[0]);
       } catch (const std::out_of_range& except) {
-        g_warning("unknown function called: %s", command[0].c_str());
+        sterm::common::warning("sterm::function_handler", "unknow function called: %s", command[0].c_str());
       }
 
       if ( func != NULL )

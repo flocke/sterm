@@ -20,6 +20,7 @@
   THE SOFTWARE.
 */
 
+#include "common/messages.hpp"
 #include "sterm/terminal.hpp"
 
 namespace sterm {
@@ -69,8 +70,10 @@ namespace sterm {
       vte_terminal_set_scroll_on_output(m_terminal, m_configuration->get_scroll_on_output());
       vte_terminal_set_rewrap_on_resize(m_terminal, m_configuration->get_rewrap_on_resize());
       vte_terminal_set_mouse_autohide(m_terminal, m_configuration->get_autohide_mouse());
-      if ( ! vte_terminal_set_encoding(m_terminal, m_configuration->get_encoding().c_str(), &error) )
-        g_warning("Failed to set the terminal encoding: %s", error->message);
+      if ( ! vte_terminal_set_encoding(m_terminal, m_configuration->get_encoding().c_str(), &error) ) {
+        sterm::common::warning("sterm::terminal", "failed to set terminal encoding to '%s'", m_configuration->get_encoding().c_str());
+        sterm::common::debug("sterm::terminal", "VteTerminal error message: %s", error->message);
+      }
 
       std::string word_chars = m_configuration->get_word_chars();
       if ( ! word_chars.empty() )
@@ -149,7 +152,9 @@ namespace sterm {
       vte_terminal_spawn_sync(m_terminal, VTE_PTY_DEFAULT, NULL, args, NULL, spawn_flags, NULL, NULL, &m_child_pid, NULL, &error);
 
       if ( error != NULL ) {
-        g_warning("failed to spawn child process: %s", error->message);
+        sterm::common::warning("sterm::terminal", "failed to spawn child process");
+        sterm::common::debug("sterm::terminal", "VteTerminal error message: %s", error->message);
+
         g_error_free(error);
       }
       

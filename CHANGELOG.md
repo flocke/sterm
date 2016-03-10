@@ -4,6 +4,7 @@
 * New color options: `bold`, `cursor`, `highlight_bg` and `highlight_fg`
 * New function: `set_font_scale`
 * Under the hood changes:
+  * Improve all (error/warning) messages
   * Rewrite function: `zoom`
   * Improved cleanup
 

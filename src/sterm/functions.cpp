@@ -22,6 +22,7 @@
 
 #include <iostream>
 
+#include "common/messages.hpp"
 #include "sterm/functions.hpp"
 #include "sterm/terminal.hpp"
 
@@ -39,12 +40,12 @@ namespace sterm {
 
           if ( ! ferror(output) ) {
             if ( pclose(output) != 0 )
-              g_warning("failed to close the pipe: %s", i_command);
+              sterm::common::warning("sterm::functions::command_pipe", "failed to close command pipe: %s", i_command.c_str());
           } else {
-            g_warning("failed to write to the pipe: %s", i_command);
+            sterm::common::warning("sterm::functions::command_pipe", "failed to write data to command pipe: %s", i_command.c_str());
           }
         } else {
-          g_warning("failed to open the pipe: %s", i_command);
+          sterm::common::warning("sterm::functions::command_pipe", "failed to open command pipe: %s", i_command.c_str());
         }
       }
     }
@@ -61,6 +62,8 @@ namespace sterm {
           i_terminal->paste(PRIMARY);
         else if ( i_buffer.compare("clipboard") == 0 )
           i_terminal->paste(CLIPBOARD);
+        else
+          sterm::common::warning("sterm::functions::paste", "unknown paste buffer '%s'", i_buffer.c_str());
       }
     }
 
@@ -95,7 +98,8 @@ namespace sterm {
         try {
           sc = std::stod(i_scale);
         } catch(const std::exception& except) {
-          g_warning("unable to convert string to double: %s", i_scale.c_str());
+          sterm::common::warning("sterm::functions::set_font_scale", "unable to convert string to double: %s", i_scale.c_str());
+
           return;
         }
 
@@ -110,7 +114,8 @@ namespace sterm {
         try {
           inc = std::stod(i_factor);
         } catch(const std::exception& except) {
-          g_warning("unable to convert string to double: %s", i_factor.c_str());
+          sterm::common::warning("sterm::functions::zoom", "unable to convert string to double: %s", i_factor.c_str());
+
           return;
         }
 

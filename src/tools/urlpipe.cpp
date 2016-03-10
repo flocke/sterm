@@ -30,6 +30,7 @@
 
 #include <glib.h>
 
+#include "common/messages.hpp"
 #include "common/xdg.hpp"
 
 #ifndef DEFAULT_URL_REGEX
@@ -80,7 +81,7 @@ void parse_text(std::string i_text, std::string i_pattern) {
       next++;
     }
   } catch(std::regex_error& error) {
-    g_warning("failed to use %s as regular expression", i_pattern);
+    sterm::common::warning("sterm::tools::urlpipe", "failed to create regular expression: %s", i_pattern.c_str());
   }
 }
 

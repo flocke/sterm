@@ -91,8 +91,11 @@ static gboolean parse_commandline(int argc, char* argv[]) {
   g_option_context_add_group(context, gtk_get_option_group(true));
 
   if ( ! g_option_context_parse(context, &argc, &argv, &error) ) {
-    g_warning("failed to parse the commandline options: %s", error->message);
+    sterm::common::warning("sterm::main", "failed to parse the commandline options");
+    sterm::common::debug("sterm::main", "GOptionContext error message: %s", error->message);
+
     g_error_free(error);
+
     success = false;
   }
 
