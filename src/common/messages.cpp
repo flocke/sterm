@@ -46,15 +46,27 @@ namespace sterm {
       va_end(variable_args);
     }
 
+    void error(std::string i_source, std::string i_format, ...) {
+      va_list variable_args;
+
+      va_start(variable_args, i_format);
+
+      std::cerr << "[" << i_source << "] [error] ";
+      vfprintf(stderr, i_format.c_str(), variable_args);
+      std::cerr << std::endl;
+
+      va_end(variable_args);
+    }
+
     void debug(std::string i_source, std::string i_format, ...) {
       if ( debugging ) {
         va_list variable_args;
 
         va_start(variable_args, i_format);
 
-        std::cout << "[" << i_source << "] [debug] ";
-        vfprintf(stdout, i_format.c_str(), variable_args);
-        std::cout << std::endl;
+        std::cerr << "[" << i_source << "] [debug] ";
+        vfprintf(stderr, i_format.c_str(), variable_args);
+        std::cerr << std::endl;
 
         va_end(variable_args);
       }

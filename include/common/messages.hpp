@@ -31,6 +31,7 @@ namespace sterm {
     void  set_debugging(bool val);
 
     void  debug(std::string source, std::string format, ...);
+    void  error(std::string source, std::string format, ...);
     void  warning(std::string source, std::string format, ...);
 
   }
