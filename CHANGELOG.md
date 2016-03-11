@@ -1,5 +1,6 @@
 # 0.1.2 (WIP)
 
+* Replace the `urlpipe` tool with a more versatile `matchmaker` tool
 * New option: `word_chars`
 * New color options: `bold`, `cursor`, `highlight_bg` and `highlight_fg`
 * New function: `set_font_scale`
