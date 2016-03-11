@@ -11,7 +11,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sterm.ini.1 DESTINATION ${CMAKE_INSTAL
 
 # Install man-pages for the tools
 if(WITH_TOOLS)
-  configure_file(sterm-urlpipe.1.in sterm-urlpipe.1 @ONLY)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sterm-urlpipe.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
+  configure_file(sterm-matchmaker.1.in sterm-matchmaker.1 @ONLY)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sterm-matchmaker.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
 endif(WITH_TOOLS)
 

@@ -1,0 +1,84 @@
+.\" Manpage for sterm-matchmaker
+.\" Contact flocke@shadowice.org to correct errors and typos.
+
+.TH man 1 "11 Mar 2016" "@sterm_VERSION@" "sterm-matchmaker man page"
+
+.SH NAME
+\fBsterm-matchmaker\fP \- extract strings from a text using configurable regular expressions
+
+.SH SYNOPSIS
+sterm-matchmaker [OPTIONS]
+
+.SH DESCRIPTION
+\fBsterm-matchmaker\fP is a small application that reads a text from either a file or STDIN and
+extracts strings from it using a list of configurable regular expressions. It prints all matched
+strings to STDOUT in separate lines ready to be parsed by another program.
+.br
+If the \fB-f\fP option is not given (see below) \fBsterm-matchmaker\fP will try to read the text from
+STDIN.
+
+.SH OPTIONS
+
+.TP
+.B -c, --config
+Use an alternative configuration file. (default: \fB${XDG_CONFIG_HOME}/sterm/matchmaker.ini\fP)
+
+.TP
+.B -d, --debug
+Print additional debug messages.
+
+.TP
+.B -f, --file
+Parse text from a given file (if not specified the text will be read from STDIN).
+
+.TP
+.B -r, --regex
+Specify the name of the regex to use (this has to match an entry of the \fB[regex]\fP section in
+the config file, see below).
+
+.SH CONFIGURATION
+
+To configure \fBsterm-matchmaker\fP a file \fB${XDG_CONFIG_HOME}/.sterm/matchmaker.ini\fP
+containing the following two sections can be used.
+
+.TP
+.B [general]
+This section only has one valid entry:
+
+.B \fBdefault\fP=<regex name>
+
+If this is set the matching regex from the \fB[regex]\fP section (see below) will be used in case
+the \fB-r\fP option is not specified.
+
+.TP
+.B [regex]
+This section can contain key-value-pairs in the following format:
+
+.B <regex name>=<regex>
+
+Each of the defined regular expressions can be set as default using the \fB[general]\fP section
+described above or used directly by specifying its name using the \fB-r\fP option.
+
+.TP
+.B FALLBACK
+In case neither the \fBdefault\fP entry is set nor a regex is specified with the \fB-r\fP option
+the following built-in fallback regex is used to match URLs in the text:
+
+\fB\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s\\n]|/)))\fP
+
+.SH FILES
+
+.TP
+.BI ${XDG_CONFIG_HOME}/sterm/matchmaker.ini
+User configuration file for sterm-matchmaker (with \fB${XDG_CONFIG_HOME}\fP usually beeing
+\fB${HOME}/.config\fP).
+
+.TP
+.BI @CMAKE_INSTALL_FULL_DOCDIR@/matchmaker.ini
+Example configuration file for sterm-matchmaker.
+
+.SH SEE ALSO
+sterm(1), sterm.ini(1)
+
+.SH AUTHOR
+Jakob Nixdorf <flocke@shadowice.org>

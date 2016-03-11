@@ -5,12 +5,12 @@ cmake_minimum_required(VERSION 3.0.0)
 pkg_check_modules("GLIB" REQUIRED "glib-2.0")
 include_directories(${GLIB_INCLUDE_DIRS})
 
-# Build the urlpipe tool executable
-add_executable(sterm-urlpipe urlpipe.cpp)
-target_link_libraries(sterm-urlpipe sterm-common-messages)
-target_link_libraries(sterm-urlpipe sterm-common-xdg)
-target_link_libraries(sterm-urlpipe ${GLIB_LIBRARIES})
+# Build the matchmaker tool
+add_executable(sterm-matchmaker matchmaker.cpp)
+target_link_libraries(sterm-matchmaker sterm-common-messages)
+target_link_libraries(sterm-matchmaker sterm-common-xdg)
+target_link_libraries(sterm-matchmaker ${GLIB_LIBRARIES})
 
-# Install the sterm binary
-install(TARGETS sterm-urlpipe DESTINATION ${CMAKE_INSTALL_BINDIR})
+# Install the matchmaker binary
+install(TARGETS sterm-matchmaker DESTINATION ${CMAKE_INSTALL_BINDIR})
 
