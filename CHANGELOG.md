@@ -1,4 +1,4 @@
-# 0.1.2 (WIP)
+# 0.1.2
 
 * Replace the `urlpipe` tool with a more versatile `matchmaker` tool
 * New option: `word_chars`
