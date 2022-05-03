@@ -1,6 +1,3 @@
-# Minimal CMake version required
-cmake_minimum_required(VERSION 3.0.0)
-
 # Subdirectories
 add_subdirectory(common)
 add_subdirectory(sterm)
