@@ -23,8 +23,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-#include <istream>
-#include <istream>
+#include <iterator>
 #include <regex>
 #include <string>
 
