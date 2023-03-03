@@ -213,6 +213,8 @@ namespace sterm {
   gdouble terminal::get_font_scale() {
     if ( m_terminal != NULL )
       return(vte_terminal_get_font_scale(m_terminal));
+    
+    return 0;
   }
 
   void terminal::set_font_scale(double i_font_scale) {
