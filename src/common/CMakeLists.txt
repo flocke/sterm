@@ -1,6 +1,3 @@
-# Find glib-2.0
-pkg_check_modules("GLIB" REQUIRED "glib-2.0")
-
 set(COMPONENT_NAME "${PROJECT_NAME}-common")
 
 add_library(${COMPONENT_NAME} STATIC)
@@ -18,12 +15,10 @@ target_include_directories(
     ${COMPONENT_NAME}
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/inc
-    PRIVATE
-        ${GLIB_INCLUDE_DIRS}
 )
 
 target_link_libraries(
     ${COMPONENT_NAME}
     PRIVATE
-        ${GLIB_LIBRARIES}
+        PkgConfig::glib2
 )

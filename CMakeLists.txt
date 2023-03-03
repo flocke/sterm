@@ -21,6 +21,10 @@ include(GNUInstallDirs)
 # Build options
 option(WITH_TOOLS "Build some helper tools, mainly usefull for keybindings" ON)
 
+# Find external dependencies
+pkg_check_modules("glib2" REQUIRED IMPORTED_TARGET "glib-2.0")
+pkg_check_modules("vte" REQUIRED IMPORTED_TARGET "vte-2.91")
+
 # Main source files
 add_subdirectory(doc)
 add_subdirectory(src)
