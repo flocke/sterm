@@ -61,19 +61,11 @@ namespace sterm {
 
   void terminal::setup_terminal() {
     if ( m_terminal && m_configuration ) {
-      GError *error = NULL;
-
       vte_terminal_set_scrollback_lines(m_terminal, m_configuration->get_scrollback_lines());
-      vte_terminal_set_allow_bold(m_terminal, m_configuration->get_allow_bold());
       vte_terminal_set_audible_bell(m_terminal, m_configuration->get_audible_bell());
       vte_terminal_set_scroll_on_keystroke(m_terminal, m_configuration->get_scroll_on_keystroke());
       vte_terminal_set_scroll_on_output(m_terminal, m_configuration->get_scroll_on_output());
-      vte_terminal_set_rewrap_on_resize(m_terminal, m_configuration->get_rewrap_on_resize());
       vte_terminal_set_mouse_autohide(m_terminal, m_configuration->get_autohide_mouse());
-      if ( ! vte_terminal_set_encoding(m_terminal, m_configuration->get_encoding().c_str(), &error) ) {
-        sterm::common::warning("sterm::terminal", "failed to set terminal encoding to '%s'", m_configuration->get_encoding().c_str());
-        sterm::common::debug("sterm::terminal", "VteTerminal error message: %s", error->message);
-      }
 
       std::string word_chars = m_configuration->get_word_chars();
       if ( ! word_chars.empty() )

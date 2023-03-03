@@ -333,14 +333,11 @@ namespace sterm {
     m_current_file = i_filename;
 
     this->inifile_read_gint(keyfile, "general", "scrollback", &m_scrollback_lines);
-    this->inifile_read_gboolean(keyfile, "general", "allow_bold", &m_allow_bold);
     this->inifile_read_gboolean(keyfile, "general", "audible_bell", &m_audible_bell);
     this->inifile_read_gboolean(keyfile, "general", "urgent_on_bell", &m_urgent_on_bell);
     this->inifile_read_gboolean(keyfile, "general", "scroll_on_keystroke", &m_scroll_on_keystroke);
     this->inifile_read_gboolean(keyfile, "general", "scroll_on_output", &m_scroll_on_output);
-    this->inifile_read_gboolean(keyfile, "general", "rewrap_on_resize", &m_rewrap_on_resize);
     this->inifile_read_gboolean(keyfile, "general", "autohide_mouse", &m_autohide_mouse);
-    this->inifile_read_string(keyfile, "general", "encoding", &m_encoding);
     this->inifile_read_raw_string(keyfile, "general", "word_chars", &m_word_chars);
 
     this->inifile_read_cursor_shape(keyfile, "cursor", "shape", &m_cursor_shape);

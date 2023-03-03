@@ -52,14 +52,11 @@ namespace sterm {
       std::string             m_current_file;
 
       gint                    m_scrollback_lines = 0;
-      gboolean                m_allow_bold = true;
       gboolean                m_audible_bell = false;
       gboolean                m_urgent_on_bell = true;
       gboolean                m_scroll_on_keystroke = true;
       gboolean                m_scroll_on_output = false;
-      gboolean                m_rewrap_on_resize = false;
       gboolean                m_autohide_mouse = false;
-      std::string             m_encoding = "UTF-8";
       std::string             m_word_chars;
 
       VteCursorBlinkMode      m_cursor_blink_mode = VTE_CURSOR_BLINK_SYSTEM;
@@ -102,14 +99,11 @@ namespace sterm {
       void                    reload_inifile();
 
       gint                    get_scrollback_lines() const { return(m_scrollback_lines); }
-      gboolean                get_allow_bold() const { return(m_allow_bold); }
       gboolean                get_audible_bell() const { return(m_audible_bell); }
       gboolean                get_urgent_on_bell() const { return(m_urgent_on_bell); }
       gboolean                get_scroll_on_keystroke() const { return(m_scroll_on_keystroke); }
       gboolean                get_scroll_on_output() const { return(m_scroll_on_output); }
-      gboolean                get_rewrap_on_resize() const { return(m_rewrap_on_resize); }
       gboolean                get_autohide_mouse() const { return(m_autohide_mouse); }
-      std::string             get_encoding() const { return(m_encoding); }
       std::string             get_word_chars() const { return(m_word_chars); }
 
       VteCursorBlinkMode      get_cursor_blink_mode() const { return(m_cursor_blink_mode); }

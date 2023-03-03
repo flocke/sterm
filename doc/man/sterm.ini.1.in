@@ -32,10 +32,6 @@ This specifies the number of lines to save in the scrollback buffer.
 \fB  0\fP: Disable the scrollback completely. (\fBdefault\fP)
 
 .TP
-.B allow_bold=<true or false>
-This specifies whether the terminal should draw bold text. (default: \fBtrue\fP)
-
-.TP
 .B audible_bell=<true or false>
 Should the audible bell be enabled? (default: \fBfalse\fP)
 
@@ -52,16 +48,8 @@ Sets whether the terminal should scroll to the bottom on a key-press. (default: 
 Sets whether the terminal should scroll to the bottom on new output. (default: \fBfalse\fP)
 
 .TP
-.B rewrap_on_resize=<true or false>
-This specifies whether the content should be rewrapped on resize. (default: \fBfalse\fP)
-
-.TP
 .B autohide_mouse=<true or false>
 Should the mouse cursor hide on key-press? (default: \fBfalse\fP)
-
-.TP
-.B enconding=<encoding>
-Sets the encoding to use for the terminal. (default: \fBUTF-8\fP)
 
 .TP
 .B word_chars=<characters>
