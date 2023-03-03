@@ -1,15 +1,35 @@
 # Find vte-2.91
 pkg_check_modules("VTE" REQUIRED "vte-2.91")
 
-# Build the main binary
-add_executable(sterm main.cpp config.cpp function_handler.cpp functions.cpp terminal.cpp)
-target_include_directories(sterm PRIVATE ${VTE_INCLUDE_DIRS})
-target_link_libraries(sterm PRIVATE sterm-common-messages
-                            PRIVATE sterm-common-strsplit
-                            PRIVATE sterm-common-xdg
-                            PRIVATE ${VTE_LIBRARIES})
+set(COMPONENT_NAME ${PROJECT_NAME})
 
-# Install the sterm binary
-install(TARGETS sterm
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_executable(${COMPONENT_NAME})
 
+target_sources(
+    ${COMPONENT_NAME}
+     PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/config.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/function_handler.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/functions.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/terminal.cpp
+)
+
+target_include_directories(
+    ${COMPONENT_NAME}
+    PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/inc
+        ${VTE_INCLUDE_DIRS}
+)
+
+target_link_libraries(
+    ${COMPONENT_NAME}
+    PRIVATE
+        sterm::common
+        ${VTE_LIBRARIES}
+)
+
+install(
+    TARGETS ${COMPONENT_NAME}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

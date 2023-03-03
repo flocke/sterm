@@ -1,14 +1,30 @@
 # Find glib-2.0
 pkg_check_modules("GLIB" REQUIRED "glib-2.0")
 
-# Build the matchmaker tool
-add_executable(sterm-matchmaker matchmaker.cpp)
-target_include_directories(sterm-matchmaker PRIVATE ${GLIB_INCLUDE_DIRS})
-target_link_libraries(sterm-matchmaker PRIVATE sterm-common-messages
-                                       PRIVATE sterm-common-xdg
-                                       PRIVATE ${GLIB_LIBRARIES})
+set(COMPONENT_NAME "${PROJECT_NAME}-matchmaker")
 
-# Install the matchmaker binary
-install(TARGETS sterm-matchmaker
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_executable(${COMPONENT_NAME})
 
+target_sources(
+    ${COMPONENT_NAME}
+     PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/src/matchmaker.cpp
+)
+
+target_include_directories(
+    ${COMPONENT_NAME}
+    PRIVATE
+        ${GLIB_INCLUDE_DIRS}
+)
+
+target_link_libraries(
+    ${COMPONENT_NAME}
+    PRIVATE
+        sterm::common
+        ${GLIB_LIBRARIES}
+)
+
+install(
+    TARGETS ${COMPONENT_NAME}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

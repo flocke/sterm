@@ -1,15 +1,29 @@
 # Find glib-2.0
 pkg_check_modules("GLIB" REQUIRED "glib-2.0")
 
-# Build the static libraries
-add_library(sterm-common-messages STATIC messages.cpp)
-add_library(sterm-common-strsplit STATIC strsplit.cpp)
-add_library(sterm-common-xdg STATIC xdg.cpp)
+set(COMPONENT_NAME "${PROJECT_NAME}-common")
 
-target_include_directories(sterm-common-messages PUBLIC ../../include)
-target_include_directories(sterm-common-strsplit PUBLIC ../../include)
-target_include_directories(sterm-common-xdg PUBLIC ../../include
-                                            PUBLIC ${GLIB_INCLUDE_DIRS})
+add_library(${COMPONENT_NAME} STATIC)
+add_library(${PROJECT_NAME}::common ALIAS ${COMPONENT_NAME})
 
-target_link_libraries(sterm-common-xdg PRIVATE ${GLIB_LIBRARIES})
+target_sources(
+    ${COMPONENT_NAME}
+    PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/src/messages.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/strsplit.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/xdg.cpp
+)
 
+target_include_directories(
+    ${COMPONENT_NAME}
+    PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR}/inc
+    PRIVATE
+        ${GLIB_INCLUDE_DIRS}
+)
+
+target_link_libraries(
+    ${COMPONENT_NAME}
+    PRIVATE
+        ${GLIB_LIBRARIES}
+)
