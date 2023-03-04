@@ -25,6 +25,19 @@
 
 namespace sterm {
 
+  static void terminal_spawn_cb(VteTerminal *terminal, GPid pid, GError *error, gpointer user_data) {
+    if ( error != NULL ) {
+      sterm::common::warning("sterm::terminal", "failed to spawn child process");
+      sterm::common::debug("sterm::terminal", "VteTerminal error message: %s", error->message);
+
+      g_error_free(error);
+    }
+
+    if ( pid >= 0 ) {
+      ((sterm::terminal*)user_data)->set_child_pid(pid);
+    }
+  }
+
   terminal::terminal() {
     this->create_vte_terminal();
   }
@@ -127,7 +140,6 @@ namespace sterm {
 
   void terminal::spawn_child(std::string i_command) {
     if ( m_terminal != NULL ) {
-      GError *error = NULL;
       gchar **args = NULL;
       GSpawnFlags spawn_flags = G_SPAWN_SEARCH_PATH;
 
@@ -141,17 +153,14 @@ namespace sterm {
         g_shell_parse_argv(i_command.c_str(), 0, &args, 0);
       }
 
-      vte_terminal_spawn_sync(m_terminal, VTE_PTY_DEFAULT, NULL, args, NULL, spawn_flags, NULL, NULL, &m_child_pid, NULL, &error);
-
-      if ( error != NULL ) {
-        sterm::common::warning("sterm::terminal", "failed to spawn child process");
-        sterm::common::debug("sterm::terminal", "VteTerminal error message: %s", error->message);
-
-        g_error_free(error);
-      }
+      vte_terminal_spawn_async(m_terminal, VTE_PTY_DEFAULT, NULL, args, NULL, spawn_flags, NULL, NULL, NULL, -1, NULL, terminal_spawn_cb, this);
       
       g_strfreev(args);
     }
+  }
+
+  void terminal::set_child_pid(GPid pid) {
+    this->m_child_pid = pid;
   }
 
   void terminal::attach_to_container(GtkContainer *i_container) {

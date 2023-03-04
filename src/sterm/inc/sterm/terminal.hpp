@@ -63,6 +63,7 @@ namespace sterm {
       void          link_property_to_terminal(std::string terminal_property, GObject *target, std::string target_property);
 
       void          spawn_child(std::string command);
+      void          set_child_pid(GPid pid);
 
       void          reload_configuration();
       void          reset_terminal(gboolean full);
